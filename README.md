@@ -8,7 +8,7 @@
 ![Último commit](https://img.shields.io/github/last-commit/maryycarrera/ComparteTuTiempo)
 ![Issues abiertas](https://img.shields.io/github/issues/maryycarrera/ComparteTuTiempo)
 ![Pull Requests abiertas](https://img.shields.io/github/issues-pr/maryycarrera/ComparteTuTiempo)
-![Licencia](https://img.shields.io/github/license/maryycarrera/ComparteTuTiempo)
+![Licencia MIT](https://img.shields.io/github/license/maryycarrera/ComparteTuTiempo?label=license)
 ![Tamaño del repo](https://img.shields.io/github/repo-size/maryycarrera/ComparteTuTiempo)
 ![Estado de CI](https://img.shields.io/github/actions/workflow/status/maryycarrera/ComparteTuTiempo/commits.yml?branch=main)
 ![Release](https://img.shields.io/github/v/release/maryycarrera/ComparteTuTiempo)
