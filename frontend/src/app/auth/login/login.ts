@@ -58,7 +58,7 @@ export class Login {
       });
     } else {
       this.loginForm.markAllAsTouched();
-      alert('Credenciales no válidas');
+      this.loginError = 'Credenciales no válidas';
     }
   }
 
