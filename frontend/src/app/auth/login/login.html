@@ -1,0 +1,39 @@
+<form [formGroup]="loginForm">
+    <p class="text-danger">{{loginError}}</p>
+    <div class="mb-3">
+        <label for="username" class="form-label">Nombre de usuario</label>
+        <input type="text" class="form-control" id="username" formControlName="username">
+
+        @if (username.invalid && (username.dirty || username.touched)) {
+            <div class="text-danger">
+                @if (username.hasError('required')) {
+                <div>
+                    El Nombre de usuario es obligatorio.
+                </div>
+                }
+                @if (username.hasError('pattern')) {
+                <div>
+                    El Nombre de usuario debe contener sólo letras minúsculas (excluyendo 'ñ' y 'ç'), números, puntos y guiones bajos. Cualquier otro carácter no está permitido.
+                </div>
+                }
+            </div>
+        }
+
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+
+        @if (password.invalid && (password.dirty || password.touched)) {
+            <div class="text-danger">
+                @if (password.hasError('required')) {
+                <div>
+                    La Contraseña es obligatoria.
+                </div>
+                }
+            </div>
+        }
+
+    </div>
+    <button type="submit" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+</form>
