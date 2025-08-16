@@ -6,3 +6,12 @@
 @if (userLoginOn) {
   <p>Usuario autenticado</p>
 }
+
+@if (userLoginOn) {
+  <div>
+    <p>Nombre: {{ userData?.name }}</p>
+    <p>Apellido: {{ userData?.lastName }}</p>
+    <p>Email: {{ userData?.email }}</p>
+    <p>Nombre de usuario: {{ userData?.username }}</p>
+  </div>
+}
