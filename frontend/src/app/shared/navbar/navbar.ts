@@ -9,6 +9,6 @@ import { RouterModule } from '@angular/router';
 })
 export class Navbar {
 
-  userLoginOn:boolean = false;
+  userLoginOn: boolean = false;
 
 }

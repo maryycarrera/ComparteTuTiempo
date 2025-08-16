@@ -18,10 +18,9 @@ export class Login {
   private loginService = inject(LoginService);
   private http = inject(HttpClient);
 
-  loginForm;
+  loginError: string = '';
 
-  constructor() {
-    this.loginForm = this.fb.group({
+  loginForm = this.fb.group({
       username: ['admin1', [
         Validators.required,
         Validators.pattern('^[a-z0-9_.]+$')
@@ -30,7 +29,8 @@ export class Login {
         Validators.required,
       ]]
     });
-  }
+
+  constructor() { }
 
   get username() {
     return this.loginForm.controls.username;
@@ -48,16 +48,17 @@ export class Login {
         },
         error: (errorData) => {
           console.error(errorData);
+          this.loginError = errorData;
         },
         complete: () => {
-          console.info('Login request completed')
+          console.info('Login request completed');
+          this.router.navigateByUrl('/inicio');
+          this.loginForm.reset();
         }
-      })
-      this.router.navigateByUrl('/inicio');
-      this.loginForm.reset();
+      });
     } else {
       this.loginForm.markAllAsTouched();
-      alert('Credenciales no válidas')
+      alert('Credenciales no válidas');
     }
   }
 

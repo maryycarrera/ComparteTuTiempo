@@ -9,6 +9,6 @@ import { Navbar } from '../../shared/navbar/navbar';
 })
 export class Dashboard {
 
-  userLoginOn:boolean = false;
+  userLoginOn: boolean = false;
 
 }
