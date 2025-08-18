@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.User;
+package com.compartetutiempo.timebank.user;
 
 import org.springframework.stereotype.Service;
 

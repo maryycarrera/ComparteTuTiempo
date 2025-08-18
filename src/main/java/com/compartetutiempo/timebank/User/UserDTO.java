@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.User;
+package com.compartetutiempo.timebank.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,5 +16,5 @@ public class UserDTO {
     String name;
     String lastName;
     String email;
-    
+
 }
