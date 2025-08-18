@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TimebankApplication {
+public class ComparteTuTiempo {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TimebankApplication.class, args);
+		SpringApplication.run(ComparteTuTiempo.class, args);
 	}
 
 }
