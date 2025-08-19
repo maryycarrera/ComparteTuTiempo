@@ -16,7 +16,7 @@
         }
         @if (userLoginOn) {
           <li class="nav-item">
-            <a class="nav-link" routerLink="/inicio">Cerrar Sesión</a>
+            <a class="nav-link" (click)="logout()">Cerrar Sesión</a>
           </li>
         }
       </ul>

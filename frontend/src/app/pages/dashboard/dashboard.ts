@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Navbar } from '../../shared/navbar/navbar';
 import { LoginService } from '../../services/auth/login.service';
 import { User } from '../../services/auth/user';
@@ -11,7 +11,7 @@ import { PersonalDetails } from '../../components/personal-details/personal-deta
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class Dashboard implements OnInit, OnDestroy {
+export class Dashboard implements OnInit {
 
   userLoginOn: boolean = false;
   userData?: User;
@@ -27,7 +27,7 @@ export class Dashboard implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnDestroy(): void {
-    this.userLoginSubscription.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.userLoginSubscription.unsubscribe();
+  // }
 }
