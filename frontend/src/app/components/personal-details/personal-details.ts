@@ -13,7 +13,7 @@ import { LoginService } from '../../services/auth/login.service';
 })
 export class PersonalDetails {
 
-  errorMessage: String = '';
+  errorMessage: string = '';
   user?: User;
   userLoginOn: boolean = false;
   editMode: boolean = false;
