@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { User } from '../../services/auth/user';
 import { UserService } from '../../services/user/user.service';
 import { environment } from '../../../environments/environment';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/auth/login.service';
 
 @Component({
   selector: 'app-personal-details',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './personal-details.html',
   styleUrl: './personal-details.css'
 })
@@ -22,7 +22,7 @@ export class PersonalDetails {
   private formBuilder = inject(FormBuilder);
   private loginService = inject(LoginService);
 
-  private registerForm = this.formBuilder.group({
+  registerForm = this.formBuilder.group({
     id: [''],
     name: ['', Validators.required],
     lastName: ['', Validators.required]
