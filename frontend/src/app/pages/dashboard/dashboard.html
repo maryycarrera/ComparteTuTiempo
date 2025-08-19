@@ -1,10 +1,10 @@
 <app-navbar></app-navbar>
 
 @if (!userLoginOn) {
-  <p>Usuario NO autenticado</p>
+  <p class="alert alert-danger">Usuario NO autenticado</p>
 }
 @if (userLoginOn) {
-  <p>Usuario autenticado</p>
+  <p class="alert alert-success">Usuario autenticado</p>
 }
 
 @if (userLoginOn) {
