@@ -3,10 +3,11 @@ import { Navbar } from '../../shared/navbar/navbar';
 import { LoginService } from '../../services/auth/login.service';
 import { User } from '../../services/auth/user';
 import { Subscription } from 'rxjs';
+import { PersonalDetails } from '../../components/personal-details/personal-details';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Navbar],
+  imports: [Navbar, PersonalDetails],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

@@ -7,11 +7,36 @@
   <p class="alert alert-success">Usuario autenticado</p>
 }
 
-@if (userLoginOn) {
-  <div>
-    <p>Nombre: {{ userData?.name }}</p>
-    <p>Apellido: {{ userData?.lastName }}</p>
-    <p>Email: {{ userData?.email }}</p>
-    <p>Nombre de usuario: {{ userData?.username }}</p>
+<div class="card ">
+  <div class="card-header">
+    Datos Personales
   </div>
-}
+  <div class="card-body m-0">
+    <app-personal-details></app-personal-details>
+  </div>
+
+</div>
+<div class="card">
+  <div class="card-header">
+    Perfil Profesional
+  </div>
+  <div class="card-body m-0">
+  </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+      Datos Académicos
+    </div>
+    <div class="card-body m-0">
+    </div>
+
+</div>
+
+<div class="card">
+    <div class="card-header">
+      Experiencia Laboral
+    </div>
+    <div class="card-body m-0">
+    </div>
+</div>
