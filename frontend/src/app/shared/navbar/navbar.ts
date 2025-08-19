@@ -1,5 +1,5 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
 import { Subscription } from 'rxjs';
 
@@ -9,10 +9,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class Navbar implements OnInit, OnDestroy {
+export class Navbar implements OnInit {
 
   userLoginOn: boolean = false;
+
   private loginService = inject(LoginService);
+  private router = inject(Router);
+
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
@@ -23,7 +26,12 @@ export class Navbar implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  // ngOnDestroy(): void {
+  //   this.subscription.unsubscribe();
+  // }
+
+  logout(): void {
+    this.loginService.logout();
+    this.router.navigate(['/inicio']);
   }
 }

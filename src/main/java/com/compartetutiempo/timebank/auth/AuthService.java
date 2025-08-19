@@ -7,10 +7,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.compartetutiempo.timebank.User.Role;
-import com.compartetutiempo.timebank.User.User;
-import com.compartetutiempo.timebank.User.UserRepository;
 import com.compartetutiempo.timebank.jwt.JwtService;
+import com.compartetutiempo.timebank.user.Role;
+import com.compartetutiempo.timebank.user.User;
+import com.compartetutiempo.timebank.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

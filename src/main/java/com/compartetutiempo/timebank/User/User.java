@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.User;
+package com.compartetutiempo.timebank.user;
 
 import java.util.Collection;
 import java.util.List;
