@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { LoginRequest } from './login-request';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject, tap, map } from 'rxjs';
-import { User } from './user';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -20,11 +19,11 @@ export class LoginService {
     this.currentUserData = new BehaviorSubject<String>(sessionStorage.getItem('token') || '');
   }
 
-  login(credentials: LoginRequest): Observable<User> {
+  login(credentials: LoginRequest): Observable<any> {
     return this.http.post<any>(environment.hostUrl + 'auth/login', credentials).pipe(
       tap((userData) => {
         sessionStorage.setItem('token', userData.token);
-        this.currentUserData.next(userData);
+        this.currentUserData.next(userData.token);
         this.currentUserLoginOn.next(true);
       }),
       map((userData) => userData.token),
@@ -41,7 +40,7 @@ export class LoginService {
     if (error.status === 0) {
       console.error('An error occurred:', error.error);
     } else {
-      console.error('Backend returned code:', error.status, 'body was:', error.error);
+      console.error('Backend returned error:', error);
     }
     return throwError(() => new Error('Something went wrong; please try again.'));
   }
