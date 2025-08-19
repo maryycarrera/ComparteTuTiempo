@@ -18,7 +18,6 @@ export class Dashboard implements OnInit, OnDestroy {
 
   private loginService = inject(LoginService);
   private userLoginSubscription: Subscription = new Subscription();
-  private userDataSubscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.userLoginSubscription.add(this.loginService.currentUserLoginOn.subscribe({
@@ -26,16 +25,9 @@ export class Dashboard implements OnInit, OnDestroy {
         this.userLoginOn = userLoginOn;
       }
     }));
-
-    this.userDataSubscription.add(this.loginService.userData.subscribe({
-      next: (userData) => {
-        this.userData = userData;
-      }
-    }));
   }
 
   ngOnDestroy(): void {
     this.userLoginSubscription.unsubscribe();
-    this.userDataSubscription.unsubscribe();
   }
 }
