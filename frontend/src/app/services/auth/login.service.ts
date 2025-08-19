@@ -12,7 +12,13 @@ export class LoginService {
   private http = inject(HttpClient);
 
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  currentUserData: BehaviorSubject<User> = new BehaviorSubject<User>({ id: 0, username: '' });
+  currentUserData: BehaviorSubject<User> = new BehaviorSubject<User>({
+    id: 0,
+    username: '',
+    name: '',
+    lastName: '',
+    email: ''
+  });
 
   constructor() { }
 
