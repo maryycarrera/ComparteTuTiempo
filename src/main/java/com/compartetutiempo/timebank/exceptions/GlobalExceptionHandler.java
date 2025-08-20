@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.exceptionhandler;
+package com.compartetutiempo.timebank.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
