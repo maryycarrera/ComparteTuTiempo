@@ -52,7 +52,7 @@ public class Person extends BaseEntity {
 
     @Column(name = "profile_picture")
     @Size(max = 255)
-    @Pattern(regexp = "[\\w\\-.]+\\.(png|jpg|jpeg|gif)$", message = "The profile picture must end with .png, .jpg, .jpeg, or .gif")
+    @Pattern(regexp = "[\\w\\-.]+\\.(png|jpg|jpeg|gif|PNG|JPG|JPEG|GIF)$", message = "The profile picture must end with .png, .jpg, .jpeg, or .gif (case-insensitive)")
     protected String profilePicture;
 
     public String getFullName() {
