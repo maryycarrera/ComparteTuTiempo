@@ -23,10 +23,10 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-        AuthResponse response = authService.register(request);
-        return ResponseEntity.ok(response);
-    }
+    // @PostMapping("/register")
+    // public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+    //     AuthResponse response = authService.register(request);
+    //     return ResponseEntity.ok(response);
+    // }
 
 }
