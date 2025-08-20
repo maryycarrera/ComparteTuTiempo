@@ -32,30 +32,6 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
     }
 
-    // @Transactional(readOnly = true)
-    // public Administrator findAdministratorByUser(String username) {
-    //     return userRepository.findAdministratorByUser(username)
-    //             .orElseThrow(() -> new ResourceNotFoundException("Administrator", "username", username));
-    // }
-
-    // @Transactional(readOnly = true)
-    // public Administrator findAdministratorByUser(int userId) {
-    //     return userRepository.findAdministratorByUser(userId)
-    //             .orElseThrow(() -> new ResourceNotFoundException("Administrator", "id", userId));
-    // }
-
-    // @Transactional(readOnly = true)
-    // public Member findMemberByUser(String username) {
-    //     return userRepository.findMemberByUser(username)
-    //             .orElseThrow(() -> new ResourceNotFoundException("Member", "username", username));
-    // }
-
-    // @Transactional(readOnly = true)
-    // public Member findMemberByUser(int userId) {
-    //     return userRepository.findMemberByUser(userId)
-    //             .orElseThrow(() -> new ResourceNotFoundException("Member", "id", userId));
-    // }
-
     @Transactional(readOnly = true)
     public User findCurrentUser() {
         throw new UnsupportedOperationException("Method not implemented yet");

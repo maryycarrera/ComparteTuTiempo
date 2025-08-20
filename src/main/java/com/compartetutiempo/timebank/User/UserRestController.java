@@ -36,9 +36,9 @@ public class UserRestController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping(value = "{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") Integer id) {
-        User user = userService.findUser(id);
+    @GetMapping(value = "{userId}")
+    public ResponseEntity<User> findById(@PathVariable("userId") Integer userId) {
+        User user = userService.findUser(userId);
         return ResponseEntity.ok(user);
     }
 
