@@ -1,6 +1,8 @@
 package com.compartetutiempo.timebank.admin;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,9 @@ public class AdministratorRestController {
 
     @GetMapping
     public ResponseEntity<List<Administrator>> findAllAdministrators() {
-        List<Administrator> administrators = (List<Administrator>) administratorService.findAll();
+        List<Administrator> administrators = StreamSupport
+                .stream(administratorService.findAll().spliterator(), false)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(administrators);
     }
 
