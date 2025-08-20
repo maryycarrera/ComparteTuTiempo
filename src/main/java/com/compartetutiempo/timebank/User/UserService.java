@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.compartetutiempo.exceptions.ResourceNotFoundException;
+import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
