@@ -19,14 +19,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.hibernate.validator.constraints.URL;
-
 /**
- * Simple JavaBean domain object representing an person.
+ * Simple JavaBean domain object representing a person.
  *
  * @author Ken Krebs
  */
@@ -45,23 +44,18 @@ public class Person extends BaseEntity {
     @Size(min = 3, max = 100)
 	protected String lastName;
 
-	// @Column(name = "username", unique = true)
-	// @NotEmpty
-    // @Size(min = 5, max = 15)
-	// protected String username;
-
     @Column(name = "email", unique = true)
     @NotEmpty
     @Size(max = 255)
     @Email
     protected String email;
 
-    // @Column(name = "password")
-    // @NotEmpty
-    // protected String password;
-
     @Column(name = "profile_picture")
     @Size(max = 255)
-    @URL
+    @Pattern(regexp = "[\\w\\-.]+\\.(png|jpg|jpeg|gif)$", message = "The profile picture must end with .png, .jpg, .jpeg, or .gif")
     protected String profilePicture;
+
+    public String getFullName() {
+        return name + " " + lastName;
+    }
 }
