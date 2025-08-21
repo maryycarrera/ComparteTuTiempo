@@ -8,6 +8,7 @@ import com.compartetutiempo.timebank.admin.Administrator;
 import com.compartetutiempo.timebank.admin.AdministratorRepository;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.user.UserRepository;
+import com.opencsv.exceptions.CsvValidationException;
 import com.compartetutiempo.timebank.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,11 +30,11 @@ public class AdministratorCsvImporter {
     }
 
     @PostConstruct
-    public void importAdministrators() throws IOException {
+    public void importAdministrators() throws IOException, CsvValidationException {
         List<Administrator> admins = CsvImporterUtil.importCsvWithComma("/data/admins.csv", fields -> {
             Administrator admin = new Administrator();
-            admin.setName(fields[0].replaceAll("'", "").trim());
-            admin.setLastName(fields[1].replaceAll("'", "").trim());
+            admin.setName(fields[0].trim());
+            admin.setLastName(fields[1].trim());
             admin.setEmail(fields[2].trim());
             admin.setProfilePicture(fields[3].trim());
             int userId = Integer.parseInt(fields[4].trim());

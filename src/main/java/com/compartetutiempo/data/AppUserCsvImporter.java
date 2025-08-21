@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.UserRepository;
+import com.opencsv.exceptions.CsvValidationException;
 
 import jakarta.annotation.PostConstruct;
 
@@ -27,7 +28,7 @@ public class AppUserCsvImporter {
     }
 
     @PostConstruct
-    public void importAppUsers() throws IOException {
+    public void importAppUsers() throws IOException, CsvValidationException {
         List<User> users = CsvImporterUtil.importCsvWithComma("/data/appusers.csv", fields -> {
             User user = new User();
             user.setId(Integer.parseInt(fields[0].trim()));
