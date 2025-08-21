@@ -1,0 +1,6 @@
+id,username,password,authority
+1,admin1,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W,ADMIN
+2,admin2,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W,ADMIN
+3,admin3,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W,ADMIN
+4,admin4,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W,ADMIN
+5,maryycarrera,$2b$10$6UP7P9GrSbnHqimp14i9D.QaGmCkbGCVSPaXMeiO4ZsAcvkRYpO1.,MEMBER
