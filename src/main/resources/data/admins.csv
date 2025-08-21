@@ -1,0 +1,5 @@
+name,last_name,email,profile_picture,user_id
+Administrador,'del Sistema',admin1@example.com,profilepics/purple.png,1
+Sys,Adm,admin2@example.com,,2
+'Lorem ipsum dolor sit amet. consectetur adipiscing elit. Maecenas semper turpis arcu. non pulvinar e','ros facilisis vel. Maecenas aliquet tortor vel neque mollis. eget semper quam tincidunt. Suspendisse',admin3@example.com,profilepics/blue.png,3
+System,'Administrador',admin4@example.com,profilepics/green.png,4

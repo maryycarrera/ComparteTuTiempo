@@ -21,6 +21,7 @@
 
 - [Qué es ComparteTuTiempo](#qué-es-compartetutiempo)
 - [Ejecutar el proyecto](#ejecutar-el-proyecto)
+- [Utilizar ComparteTuTiempo](#utilizar-compartetutiempo)
 - [Contribuciones](#contribuciones)
 
 ---
@@ -58,6 +59,8 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
     .\mvnw spring-boot:run
     ```
 
+El backend estará disponible en http://localhost:8080.
+
 ### Frontend (Angular)
 
 En otra terminal:
@@ -73,6 +76,26 @@ En otra terminal:
     ```
 
 La aplicación estará disponible en http://localhost:4200.
+
+## Utilizar ComparteTuTiempo
+
+Las credenciales de los usuarios de ComparteTuTiempo son las siguientes:
+
+| usuario           | contraseña |
+| - | - |
+| **Administrador** |
+| admin1            | sys4dm1n*! |
+| admin2            | sys4dm1n*! |
+| admin3            | sys4dm1n*! |
+| admin4            | sys4dm1n*! |
+| **Miembro**       |
+| maryycarrera      | m13mbr0CTT |
+
+Contraseñas encriptadas utilizando Node.js:
+```
+cd frontend
+node -e "console.log(require('bcryptjs').hashSync('tu_contraseña', 10))"
+```
 
 ---
 
