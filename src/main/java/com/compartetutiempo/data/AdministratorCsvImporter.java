@@ -6,6 +6,7 @@ package com.compartetutiempo.data;
 
 import com.compartetutiempo.timebank.admin.Administrator;
 import com.compartetutiempo.timebank.admin.AdministratorRepository;
+import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.user.UserRepository;
 import com.compartetutiempo.timebank.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class AdministratorCsvImporter {
             admin.setEmail(fields[2].trim());
             admin.setProfilePicture(fields[3].trim());
             int userId = Integer.parseInt(fields[4].trim());
-            User user = userRepository.findById(userId).orElse(null);
+            User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
             admin.setUser(user);
             return admin;
         });
