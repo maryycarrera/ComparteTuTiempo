@@ -1,0 +1,12 @@
+id,name,last_name,email,profile_picture,date_of_membership,biography,hours,minutes,user_id
+1,John,Doe,member1@example.com,profilepics/blue.png,2022-01-16,"Hola, soy John Doe. Me gusta cocinar y jugar al baloncesto.",4,30,5
+2,Jane,Smith,member2@example.com,profilepics/gray.png,2022-02-04,"H",-5,0,6
+3,Bob,Johnson,member3@example.com,profilepics/green.png,2023-01-28,"Ho",-4,-59,7
+4,Alice,Williams,member4@example.com,profilepics/orange.png,2023-02-07,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum libero quam, sit amet ullamcorper nisi malesuada volutpat. Duis vestibulum condimentum dolor, ac ultrices augue bibendum ut. Sed pulvinar nisi sed egestas elementum. Donec quam libero, maximus at nulla id, vulputate imperdiet nunc. Proin quis ultricies odio, ut efficitur quam. Suspendisse id velit feugiat justo vestibulum pellentesque. Nam in lorem at mauris laoreet mattis in id metus. Nulla interdum nisl eget metus.",10,0,8
+5,Charlie,Brown,member5@example.com,profilepics/pink.png,2024-03-09,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vestibulum libero quam, sit amet ullamcorper nisi malesuada volutpat. Duis vestibulum condimentum dolor, ac ultrices augue bibendum ut. Sed pulvinar nisi sed egestas elementum. Donec quam libero, maximus at nulla id, vulputate imperdiet nunc. Proin quis ultricies odio, ut efficitur quam. Suspendisse id velit feugiat justo vestibulum pellentesque. Nam in lorem at mauris laoreet mattis in id metus. Nulla interdum nisl eget metus",9,59,9
+6,Emily,Davis,member6@example.com,profilepics/purple.png,2024-04-10,"Hola, soy Emily Davis. Hablo inglés y tengo experiencia en desarrollo de software.",0,-59,10
+7,Michael,Wilson,member7@example.com,profilepics/red.png,2025-05-13,"Carpe diem!",0,59,11
+8,Sarah,Moore,member8@example.com,profilepics/yellow.png,2025-06-02,"",-4,-58,12
+9,David,Taylor,member9@example.com,,2025-07-30,"Arreglo bicicletas",9,58,13
+10,Laura,Anderson,member10@example.com,null,2025-08-21,"Los espíritus nos hablan. Leo el tarot y hago sesiones de espiritismo. Good vibes only <3",3,8,14
+11,María,Carrera,marcartal1@alum.us.es,profilepics/blue.png,2025-08-22,,5,0,15

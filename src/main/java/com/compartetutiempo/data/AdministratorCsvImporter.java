@@ -33,11 +33,15 @@ public class AdministratorCsvImporter {
     public void importAdministrators() throws IOException, CsvValidationException {
         List<Administrator> admins = CsvImporterUtil.importCsvWithComma("/data/admins.csv", fields -> {
             Administrator admin = new Administrator();
-            admin.setName(fields[0].trim());
-            admin.setLastName(fields[1].trim());
-            admin.setEmail(fields[2].trim());
-            admin.setProfilePicture(fields[3].trim());
-            int userId = Integer.parseInt(fields[4].trim());
+            admin.setId(Integer.parseInt(fields[0].trim()));
+            admin.setName(fields[1].trim());
+            admin.setLastName(fields[2].trim());
+            admin.setEmail(fields[3].trim());
+
+            String profilePictureStr = fields[4].trim();
+            admin.setProfilePicture(profilePictureStr.isEmpty() ? null : profilePictureStr);
+
+            int userId = Integer.parseInt(fields[5].trim());
             User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
             admin.setUser(user);
             return admin;
