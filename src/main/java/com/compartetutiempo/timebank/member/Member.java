@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.compartetutiempo.timebank.model.Person;
 import com.compartetutiempo.timebank.user.User;
@@ -17,6 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +31,8 @@ public class Member extends Person {
 
     @Column(name = "date_of_membership")
     @NotNull
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @PastOrPresent
     private LocalDate dateOfMembership;
 
     @Size(max = 500)
@@ -40,7 +44,7 @@ public class Member extends Person {
     private Integer hours;
 
     @NotNull
-    @Min(0)
+    @Min(-59) // TODO: Puede ser negativo si hours es negativo o 0. Si hours es positivo, debe ser positivo.
     @Max(59)
     private Integer minutes;
 
