@@ -36,12 +36,16 @@ public class MemberCsvImporter {
             member.setName(fields[1].trim());
             member.setLastName(fields[2].trim());
             member.setEmail(fields[3].trim());
-            member.setProfilePicture(fields[4].trim());
+
+            String profilePictureStr = fields[4].trim();
+            member.setProfilePicture(profilePictureStr.isEmpty() ? null : profilePictureStr);
 
             String dateStr = fields[5].trim();
             member.setDateOfMembership(LocalDate.parse(dateStr));
 
-            member.setBiography(fields[6].trim());
+            String biographyStr = fields[6].trim();
+            member.setBiography(biographyStr.isEmpty() ? null : biographyStr);
+
             member.setHours(Integer.parseInt(fields[7].trim()));
             member.setMinutes(Integer.parseInt(fields[8].trim()));
             int userId = Integer.parseInt(fields[9].trim());

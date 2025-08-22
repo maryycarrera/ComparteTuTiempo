@@ -37,7 +37,10 @@ public class AdministratorCsvImporter {
             admin.setName(fields[1].trim());
             admin.setLastName(fields[2].trim());
             admin.setEmail(fields[3].trim());
-            admin.setProfilePicture(fields[4].trim());
+
+            String profilePictureStr = fields[4].trim();
+            admin.setProfilePicture(profilePictureStr.isEmpty() ? null : profilePictureStr);
+
             int userId = Integer.parseInt(fields[5].trim());
             User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
             admin.setUser(user);
