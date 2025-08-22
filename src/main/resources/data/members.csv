@@ -7,6 +7,6 @@ id,name,last_name,email,profile_picture,date_of_membership,biography,hours,minut
 6,Emily,Davis,member6@example.com,profilepics/purple.png,2024-04-10,"Hola, soy Emily Davis. Hablo inglés y tengo experiencia en desarrollo de software.",0,-59,10
 7,Michael,Wilson,member7@example.com,profilepics/red.png,2025-05-13,"Carpe diem!",0,59,11
 8,Sarah,Moore,member8@example.com,profilepics/yellow.png,2025-06-02,"",-4,-58,12
-9,David,Taylor,member9@example.com,,2025-07-30,"Arreglo biciletas",9,58,13
+9,David,Taylor,member9@example.com,,2025-07-30,"Arreglo bicicletas",9,58,13
 10,Laura,Anderson,member10@example.com,null,2025-08-21,"Los espíritus nos hablan. Leo el tarot y hago sesiones de espiritismo. Good vibes only <3",3,8,14
 11,María,Carrera,marcartal1@alum.us.es,profilepics/blue.png,2025-08-22,,5,0,15
