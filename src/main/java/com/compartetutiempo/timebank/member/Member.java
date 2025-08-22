@@ -51,7 +51,7 @@ public class Member extends Person {
 
     // TODO: Debe estar entre -5 y 10
     public Double getTimeBalance() {
-        return hours + minutes / 60.0;
+        return hours + (double) minutes / 60.0;
     }
 
 }
