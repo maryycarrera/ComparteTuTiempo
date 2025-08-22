@@ -34,7 +34,6 @@ import lombok.Setter;
 @Setter
 public class Person extends BaseEntity {
 
-	@Column(name = "name")
 	@NotEmpty
     @Size(min = 3, max = 100)
 	protected String name;
