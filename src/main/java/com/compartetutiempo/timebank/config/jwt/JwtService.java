@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.jwt;
+package com.compartetutiempo.timebank.config.jwt;
 
 import java.security.Key;
 import java.util.Date;
