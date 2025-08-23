@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.compartetutiempo.timebank.jwt.JwtService;
+import com.compartetutiempo.timebank.config.jwt.JwtService;
 import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserRepository;
 

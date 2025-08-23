@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,9 +24,6 @@ import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
-    @Autowired
-    private AuthenticationProvider authProvider;
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -51,7 +49,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/admins/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/members/**").hasAnyAuthority(ADMIN, MEMBER)
                 .anyRequest().authenticated())
-            .authenticationProvider(authProvider)
+            .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -69,6 +67,13 @@ public class SecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
 
 }
