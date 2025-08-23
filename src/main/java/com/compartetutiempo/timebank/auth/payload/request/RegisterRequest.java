@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.auth;
+package com.compartetutiempo.timebank.auth.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class RegisterRequest {
 
     String username;
     String password;
-    
+    String email;
+    String name;
+    String lastName;
+
 }
