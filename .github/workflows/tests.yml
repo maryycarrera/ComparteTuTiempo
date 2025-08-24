@@ -37,7 +37,7 @@ jobs:
       - name: Start MariaDB
         uses: samin/mysql-action@v1
         with:
-          mysql version: '10.11'
+          mysql version: 'latest'
           mysql database: 'compartetutiempo'
           mysql user: 'compartetutiempo'
           mysql password: 'compartetutiempo'
