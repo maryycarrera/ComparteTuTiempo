@@ -9,9 +9,10 @@ import java.util.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.compartetutiempo.timebank.config.userdetails.UserDetailsImpl;
 import com.compartetutiempo.timebank.user.User;
 
 import io.jsonwebtoken.Claims;
@@ -32,17 +33,30 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public String getToken(User user) {
-        return getToken(new HashMap<>(), user);
+    @Value("${jwt.expiration}")
+    private int expiration;
+
+    public String generateToken(Authentication authentication) {
+        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("authorities", principal.getAuthorities().stream().map(auth -> auth.getAuthority()).toList());
+
+        return generateToken(claims, principal);
     }
 
-    private String getToken(Map<String, Object> extraClaims, User user) {
+    public String generateToken(User user) {
+        UserDetailsImpl userDetailsImpl = UserDetailsImpl.build(user);
+        return generateToken(new HashMap<>(), userDetailsImpl);
+    }
+
+    private String generateToken(Map<String, Object> extraClaims, UserDetailsImpl userDetailsImpl) {
         return Jwts
             .builder()
             .setClaims(extraClaims)
-            .setSubject(user.getUsername())
+            .setSubject(userDetailsImpl.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // Un día
+            .setExpiration(new Date(System.currentTimeMillis() + expiration))
             .signWith(getKey(), SignatureAlgorithm.HS256)
             .compact();
     }
@@ -56,7 +70,7 @@ public class JwtService {
         return getClaim(token, Claims::getSubject);
     }
 
-    public Boolean isTokenValid(String token, UserDetails userDetails) {
+    public Boolean isTokenValid(String token, UserDetailsImpl userDetails) {
         try {
             final String username = getUsernameFromToken(token);
             boolean valid = username.equals(userDetails.getUsername()) && !isTokenExpired(token);
@@ -75,6 +89,11 @@ public class JwtService {
         return false;
     }
 
+    public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = getAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
     private Claims getAllClaims(String token) {
         return Jwts
             .parserBuilder()
@@ -82,11 +101,6 @@ public class JwtService {
             .build()
             .parseClaimsJws(token)
             .getBody();
-    }
-
-    public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = getAllClaims(token);
-        return claimsResolver.apply(claims);
     }
 
     private Date getExpiration(String token) {
