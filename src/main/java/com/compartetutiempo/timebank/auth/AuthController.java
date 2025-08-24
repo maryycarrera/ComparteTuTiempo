@@ -1,26 +1,84 @@
 package com.compartetutiempo.timebank.auth;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
+import com.compartetutiempo.timebank.auth.payload.request.LoginRequest;
+import com.compartetutiempo.timebank.auth.payload.response.JwtResponse;
+import com.compartetutiempo.timebank.config.jwt.JwtService;
+import com.compartetutiempo.timebank.config.userdetails.UserDetailsImpl;
+import com.compartetutiempo.timebank.user.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
-@RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:4200"}) // TODO: Modificar posteriormente para desplegar en la nube
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final JwtService jwtService;
     private final AuthService authService;
 
+    public AuthController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.authService = authService;
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        AuthResponse response = authService.login(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+            );
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtService.generateToken(authentication);
+
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
+
+            return ResponseEntity.ok().body(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getId(), roles));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid credentials");
+        }
+    }
+
+    @GetMapping("/validate")
+    public ResponseEntity<Object> validateToken(@RequestParam String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        String username = jwtService.getUsernameFromToken(token);
+        if (username == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid");
+        }
+
+        UserDetailsImpl userDetails = UserDetailsImpl.build(userService.findUser(username));
+        boolean isValid = jwtService.isTokenValid(token, userDetails);
+
+        if (isValid) {
+            return ResponseEntity.ok().body("Token is valid");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid");
+        }
     }
 
     // @PostMapping("/register")

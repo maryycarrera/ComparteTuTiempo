@@ -44,7 +44,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authRequest -> authRequest
                 .requestMatchers("/resources/**").permitAll()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/users/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/admins/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/members/**").hasAnyAuthority(ADMIN, MEMBER)
