@@ -73,8 +73,7 @@ public class JwtService {
     public Boolean isTokenValid(String token, UserDetailsImpl userDetails) {
         try {
             final String username = getUsernameFromToken(token);
-            boolean valid = username.equals(userDetails.getUsername()) && !isTokenExpired(token);
-            return valid;
+            return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
