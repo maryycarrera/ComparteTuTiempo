@@ -3,6 +3,7 @@ package com.compartetutiempo.timebank.auth;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,7 @@ import com.compartetutiempo.timebank.auth.payload.request.LoginRequest;
 import com.compartetutiempo.timebank.auth.payload.response.JwtResponse;
 import com.compartetutiempo.timebank.config.jwt.JwtService;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsImpl;
+import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
 import com.compartetutiempo.timebank.user.UserService;
 
 import jakarta.validation.Valid;
@@ -33,12 +35,15 @@ public class AuthRestController {
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthService authService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService) {
+    @Autowired
+    public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService, UserDetailsServiceImpl userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtService = jwtService;
         this.authService = authService;
+        this.userDetailsService = userDetailsService;
     }
 
     @PostMapping("/login")
@@ -71,7 +76,7 @@ public class AuthRestController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid");
         }
 
-        UserDetailsImpl userDetails = UserDetailsImpl.build(userService.findUser(username));
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
         boolean isValid = jwtService.isTokenValid(token, userDetails);
 
         if (isValid) {
