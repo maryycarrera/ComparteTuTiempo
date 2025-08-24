@@ -1,5 +1,7 @@
 package com.compartetutiempo.timebank.auth.payload.response;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,15 +13,13 @@ public class JwtResponse {
     private String type = "Bearer";
     private Integer id;
     private String username;
-    private String email;
-    private String role;
+    private List<String> authorities;
 
-    public JwtResponse(String token, String username, String email, Integer id, String role) {
+    public JwtResponse(String token, String username, Integer id, List<String> authorities) {
         this.token = token;
         this.username = username;
-        this.email = email;
         this.id = id;
-        this.role = role;
+        this.authorities = authorities;
     }
 
     @Override
@@ -29,8 +29,7 @@ public class JwtResponse {
                 ", type='" + type + '\'' +
                 ", id=" + id +
                 ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
+                ", authorities='" + authorities + '\'' +
                 '}';
     }
 
