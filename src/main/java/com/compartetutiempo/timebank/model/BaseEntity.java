@@ -21,7 +21,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.SequenceGenerator;
 
 /**
  * Simple JavaBean domain object with an id property. Used as a base class for objects
@@ -34,10 +33,7 @@ import jakarta.persistence.SequenceGenerator;
 public class BaseEntity {
 
 	@Id
-	@SequenceGenerator(name = "entity_seq", 
-        sequenceName = "entity_sequence", 
-        initialValue = 100)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE	, generator = "entity_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 
 	public Integer getId() {

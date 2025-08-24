@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name = "admins")
 public class Administrator extends Person {
 
-    @OneToOne(cascade = { CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST })
+    @OneToOne(cascade = { CascadeType.DETACH, CascadeType.REFRESH })
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
