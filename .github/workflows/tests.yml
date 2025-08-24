@@ -1,4 +1,4 @@
-name: Backend Tests
+name: Run Tests
 
 on:
   push:
@@ -30,6 +30,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+
+      - name: Grant execute permission to mvnw
+        run: chmod +x mvnw
 
       - name: Build and run tests
         run: ./mvnw test
