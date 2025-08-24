@@ -24,20 +24,27 @@ public class AppUserCsvImporter {
 
     @Autowired
     public AppUserCsvImporter(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    this.userRepository = userRepository;
+    System.out.println("[IMPORT] Bean AppUserCsvImporter creado");
     }
 
     @PostConstruct
     public void importAppUsers() throws IOException, CsvValidationException {
-        List<User> users = CsvImporterUtil.importCsvWithComma("/data/appusers.csv", fields -> {
-            User user = new User();
-            user.setId(Integer.parseInt(fields[0].trim()));
-            user.setUsername(fields[1].trim());
-            user.setPassword(fields[2].trim());
-            user.setAuthority(Authority.valueOf(fields[3].trim()));
-            return user;
-        });
-        userRepository.saveAll(users);
+        System.out.println("[IMPORT] Iniciando importación de usuarios...");
+        try {
+            List<User> users = CsvImporterUtil.importCsvWithComma("/data/appusers.csv", fields -> {
+                User user = new User();
+                user.setUsername(fields[0].trim());
+                user.setPassword(fields[1].trim());
+                user.setAuthority(Authority.valueOf(fields[2].trim()));
+                return user;
+            });
+            userRepository.saveAll(users);
+            System.out.println("[IMPORT] Usuarios importados: " + users.size());
+        } catch (Exception e) {
+            System.out.println("[IMPORT][ERROR] Error importando usuarios: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }
