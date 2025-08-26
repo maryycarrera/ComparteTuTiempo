@@ -13,7 +13,7 @@ const inicioGuard: CanActivateFn = (route, state) => {
 
 export const routes: Routes = [
     { path: 'inicio', component: Home },
-    { path: '', component: Login, canActivate: [inicioGuard] },
+    { path: '', redirectTo: '/inicio', pathMatch: 'full' },
     { path: 'iniciar-sesion', component: Login },
     { path: '**', redirectTo: '/inicio' }
 ];
