@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
-import { LoggedoutNavbar } from '../loggedout-navbar/loggedout-navbar';
+import { LoggedoutNavbar } from './loggedout-navbar/loggedout-navbar';
 import { AdminNavbar } from '../../admin/admin-navbar/admin-navbar';
 import { MemberNavbar } from '../../member/member-navbar/member-navbar';
 import { Subscription } from 'rxjs';
