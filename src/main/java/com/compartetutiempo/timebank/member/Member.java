@@ -48,7 +48,7 @@ public class Member extends Person {
     @Max(59)
     private Integer minutes;
 
-    @OneToOne(cascade = { CascadeType.DETACH, CascadeType.REFRESH })
+    @OneToOne(cascade = { CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST })
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
