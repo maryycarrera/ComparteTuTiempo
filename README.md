@@ -89,6 +89,16 @@ Las credenciales de los usuarios de ComparteTuTiempo son las siguientes:
 | admin3            | sys4dm1n*! |
 | admin4            | sys4dm1n*! |
 | **Miembro**       |
+| member1           | m13mbr0CTT |
+| member2           | m13mbr0CTT |
+| member3           | m13mbr0CTT |
+| member4           | m13mbr0CTT |
+| member5           | m13mbr0CTT |
+| member6           | m13mbr0CTT |
+| member7           | m13mbr0CTT |
+| member8           | m13mbr0CTT |
+| member9           | m13mbr0CTT |
+| member10          | m13mbr0CTT |
 | maryycarrera      | m13mbr0CTT |
 
 Contraseñas encriptadas utilizando Node.js:

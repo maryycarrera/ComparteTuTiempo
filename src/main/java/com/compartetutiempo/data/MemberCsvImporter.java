@@ -5,29 +5,24 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
-import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.member.Member;
 import com.compartetutiempo.timebank.member.MemberRepository;
+import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
-import com.compartetutiempo.timebank.user.UserRepository;
 import com.opencsv.exceptions.CsvValidationException;
 
 import jakarta.annotation.PostConstruct;
 
 @Component
-@DependsOn("appUserCsvImporter")
 public class MemberCsvImporter {
 
     private final MemberRepository memberRepository;
-    private final UserRepository userRepository;
 
     @Autowired
-    public MemberCsvImporter(MemberRepository memberRepository, UserRepository userRepository) {
+    public MemberCsvImporter(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
-        this.userRepository = userRepository;
         System.out.println("[IMPORT] Bean MemberCsvImporter creado");
     }
 
@@ -52,9 +47,13 @@ public class MemberCsvImporter {
 
                 member.setHours(Integer.parseInt(fields[6].trim()));
                 member.setMinutes(Integer.parseInt(fields[7].trim()));
-                String username = fields[8].trim();
-                User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found with username: " + username));
+
+                User user = new User();
+                user.setUsername(fields[8].trim());
+                user.setPassword(fields[9].trim());
+                user.setAuthority(Authority.MEMBER);
                 member.setUser(user);
+
                 return member;
             });
             memberRepository.saveAll(members);
