@@ -34,14 +34,6 @@ jobs:
       - name: Grant execute permission to mvnw
         run: chmod +x mvnw
 
-      - name: Start MariaDB
-        uses: samin/mysql-action@v1
-        with:
-          mysql version: 'latest'
-          mysql database: 'compartetutiempo'
-          mysql user: 'compartetutiempo'
-          mysql password: 'compartetutiempo'
-
       - name: Build and run tests
         run: ./mvnw test
 
