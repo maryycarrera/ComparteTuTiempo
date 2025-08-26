@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
+import { LoggedoutNavbar } from '../loggedout-navbar/loggedout-navbar';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterModule],
+  imports: [RouterModule, LoggedoutNavbar],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -24,14 +25,5 @@ export class Navbar implements OnInit {
         this.userLoginOn = userLoginOn;
       }
     }));
-  }
-
-  // ngOnDestroy(): void {
-  //   this.subscription.unsubscribe();
-  // }
-
-  logout(): void {
-    this.loginService.logout();
-    this.router.navigate(['/inicio']);
   }
 }
