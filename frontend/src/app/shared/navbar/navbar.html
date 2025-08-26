@@ -1,3 +1,6 @@
 @if (!userLoginOn) {
   <app-loggedout-navbar></app-loggedout-navbar>
+} @else {
+  <app-admin-navbar></app-admin-navbar>
+  <app-member-navbar></app-member-navbar>
 }
