@@ -29,7 +29,6 @@ export class Navbar implements OnInit {
     }));
     this.subscription.add(this.loginService.userIsAdmin.subscribe({
       next: (userAdminOn) => {
-        console.log(this.loginService.userAuthorities)
         this.userIsAdmin = userAdminOn;
       }
     }));
