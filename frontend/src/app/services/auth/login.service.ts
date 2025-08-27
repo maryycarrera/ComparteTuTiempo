@@ -56,4 +56,14 @@ export class LoginService {
     return this.currentUserData.getValue()?.token || '';
   }
 
+  get userAuthorities(): string[] {
+    return this.currentUserData.getValue()?.authorities || [];
+  }
+
+  get userIsAdmin(): Observable<boolean> {
+    return this.currentUserData.asObservable().pipe(
+      map(userData => Array.isArray(userData?.authorities) && userData.authorities.includes('ADMIN'))
+    );
+  }
+
 }

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
 import { LoggedoutNavbar } from './loggedout-navbar/loggedout-navbar';
 import { AdminNavbar } from '../../admin/admin-navbar/admin-navbar';
@@ -14,17 +14,23 @@ import { Subscription } from 'rxjs';
 })
 export class Navbar implements OnInit {
 
-  userLoginOn: boolean = false;
+  userIsLoggedIn: boolean = false;
+  userIsAdmin: boolean = false;
 
   private loginService = inject(LoginService);
-  private router = inject(Router);
 
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
     this.subscription.add(this.loginService.currentIsUserLoggedIn.subscribe({
       next: (userLoginOn) => {
-        this.userLoginOn = userLoginOn;
+        this.userIsLoggedIn = userLoginOn;
+      }
+    }));
+    this.subscription.add(this.loginService.userIsAdmin.subscribe({
+      next: (userAdminOn) => {
+        console.log(this.loginService.userAuthorities)
+        this.userIsAdmin = userAdminOn;
       }
     }));
   }
