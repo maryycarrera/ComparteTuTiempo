@@ -8,7 +8,7 @@ import { Home } from './shared/home/home';
 const inicioGuard: CanActivateFn = (route, state) => {
     const loginService = inject(LoginService);
     const router = inject(Router);
-    const isLoggedIn = loginService.userLoginOn;
+    const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
     if (isLoggedIn) {
         return true;
     } else {
@@ -19,7 +19,7 @@ const inicioGuard: CanActivateFn = (route, state) => {
 const loginGuard: CanActivateFn = (route, state) => {
     const loginService = inject(LoginService);
     const router = inject(Router);
-    const isLoggedIn = loginService.userLoginOn;
+    const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
     if (isLoggedIn) {
         return router.parseUrl('/inicio');
     } else {
