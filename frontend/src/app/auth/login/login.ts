@@ -50,7 +50,15 @@ export class Login {
           this.loginSuccess = 'Inicio de sesión exitoso.';
         },
         error: (errorData) => {
-          this.loginError = errorData;
+          let msg = '';
+          if (typeof errorData === 'string') {
+            msg = errorData.replace('Error: ', '');
+          } else if (errorData && typeof errorData.message === 'string') {
+            msg = errorData.message.replace('Error: ', '');
+          } else {
+            msg = 'Ha ocurrido un error inesperado.';
+          }
+          this.loginError = msg;
         },
         complete: () => {
           this.router.navigateByUrl('/inicio');
