@@ -2,8 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
-import { LoginRequest } from '../../services/auth/login-request';
-import { HttpClient } from '@angular/common/http';
+import { LoginRequest } from '../../services/auth/payload/request/login-request';
 
 @Component({
   selector: 'app-login',
@@ -16,17 +15,23 @@ export class Login {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private loginService = inject(LoginService);
-  private http = inject(HttpClient);
 
   loginError: string = '';
+  loginSuccess: string = '';
+
+  showPassword: boolean = false;
 
   loginForm = this.fb.group({
-      username: ['admin1', [
+      username: ['', [
         Validators.required,
-        Validators.pattern('^[a-z0-9_.]+$')
+        Validators.pattern('^[a-z0-9_.]+$'),
+        Validators.minLength(5),
+        Validators.maxLength(15)
       ]],
       password: ['', [
         Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(12)
       ]]
     });
 
@@ -40,25 +45,35 @@ export class Login {
     return this.loginForm.controls.password;
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
   login() {
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData) => {
-          console.log(userData);
+          this.loginSuccess = 'Inicio de sesión exitoso.';
         },
         error: (errorData) => {
-          console.error(errorData);
-          this.loginError = errorData;
+          let msg = '';
+          if (typeof errorData === 'string') {
+            msg = errorData.replace('Error: ', '');
+          } else if (errorData && typeof errorData.message === 'string') {
+            msg = errorData.message.replace('Error: ', '');
+          } else {
+            msg = 'Ha ocurrido un error inesperado.';
+          }
+          this.loginError = msg;
         },
         complete: () => {
-          console.info('Login request completed');
           this.router.navigateByUrl('/inicio');
           this.loginForm.reset();
         }
       });
     } else {
       this.loginForm.markAllAsTouched();
-      this.loginError = 'Credenciales no válidas';
+      this.loginError = 'Credenciales no válidas.';
     }
   }
 

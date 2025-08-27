@@ -1,10 +1,37 @@
-import { Routes } from '@angular/router';
-import { Dashboard } from './pages/dashboard/dashboard';
+import { Routes, Router, CanActivateFn } from '@angular/router';
 import { Login } from './auth/login/login';
+import { inject } from '@angular/core';
+import { LoginService } from './services/auth/login.service';
+import { Home } from './shared/home/home';
+
+// START Generado con GitHub Copilot Chat Extension
+const inicioGuard: CanActivateFn = (route, state) => {
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
+    if (isLoggedIn) {
+        return true;
+    } else {
+        return router.parseUrl('/iniciar-sesion');
+    }
+};
+
+const loginGuard: CanActivateFn = (route, state) => {
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
+    if (isLoggedIn) {
+        return router.parseUrl('/inicio');
+    } else {
+        return true;
+    }
+};
+
+// END Generado con GitHub Copilot Chat Extension
 
 export const routes: Routes = [
-    { path: 'inicio', component: Dashboard },
+    { path: 'inicio', component: Home, canActivate: [inicioGuard] },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-    { path: 'iniciar-sesion', component: Login },
+    { path: 'iniciar-sesion', component: Login, canActivate: [loginGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];

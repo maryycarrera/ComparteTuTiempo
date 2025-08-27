@@ -28,24 +28,24 @@ export class PersonalDetails {
     lastName: ['', Validators.required]
   });
 
-  constructor() {
-    this.userService.getUser(environment.userId).subscribe({
-      next: (userData) => {
-        this.user = userData;
-        this.registerForm.controls.id.setValue(userData.id.toString());
-        this.registerForm.controls.name.setValue(userData.name);
-        this.registerForm.controls.lastName.setValue(userData.lastName);
-      },
-      error: (err) => this.errorMessage = err,
-      complete: () => console.info('User data fetched successfully')
-    });
+  // constructor() {
+  //   this.userService.getUser(environment.userId).subscribe({
+  //     next: (userData) => {
+  //       this.user = userData;
+  //       this.registerForm.controls.id.setValue(userData.id.toString());
+  //       this.registerForm.controls.name.setValue(userData.name);
+  //       this.registerForm.controls.lastName.setValue(userData.lastName);
+  //     },
+  //     error: (err) => this.errorMessage = err,
+  //     complete: () => console.info('User data fetched successfully')
+  //   });
 
-    this.loginService.userLoginOn.subscribe({
-      next: (isLoggedIn) => {
-        this.userLoginOn = isLoggedIn;
-      }
-    });
-  }
+  //   this.loginService.userLoginOn.subscribe({
+  //     next: (isLoggedIn) => {
+  //       this.userLoginOn = isLoggedIn;
+  //     }
+  //   });
+  // }
 
   get name() {
     return this.registerForm.controls.name;

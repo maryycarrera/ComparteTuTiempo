@@ -1,7 +1,71 @@
+:root {
+  --color-lila-claro: #d8b2ee;
+  --color-lila-suave: #f3e6fa;
+  --color-morado-medio: #a259e6;
+  --color-morado-oscuro: #6c3483;
+  --color-lila-pastel: #e9d6f7;
+  --color-morado-intenso: #7c3aed;
+  --color-blanco: #ffffff;
+  --color-rosa-pastel: #f8c6d8;
+  --color-rosa-oscuro: #d14f83;
+  --color-crema: #eed1c6;
+
+  --color-verde-correcto: #42A948;
+  --color-rojo-incorrecto: #a94442;
+
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-blanco);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+}
+
+app-footer {
+  margin-top: auto;
+}
+
 .ng-valid:not(form).ng-touched   {
-    border-left: 5px solid #42A948; /* green */
-  }
+  border-left: 5px solid var(--color-verde-correcto);
+}
  
 .ng-invalid:not(form).ng-touched  {
-    border-left: 5px solid #a94442; /* red */
-  }
+  border-left: 5px solid var(--color-rojo-incorrecto);
+}
+
+.navbar, footer {
+  background-color: var(--color-lila-claro) !important;
+}
+
+.btn-primary {
+  background-color: var(--color-morado-medio);
+  border-color: var(--color-morado-medio);
+  color: var(--color-blanco);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-morado-intenso);
+  border-color: var(--color-morado-intenso);
+}
+
+.card, .bg-secondary {
+  background-color: var(--color-lila-pastel);
+}
+
+.text-important {
+  color: var(--color-morado-oscuro);
+}

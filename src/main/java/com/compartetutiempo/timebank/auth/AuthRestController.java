@@ -54,14 +54,14 @@ public class AuthRestController {
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtService.generateToken(authentication);
+            String jwtToken = jwtService.generateToken(authentication);
 
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
 
-            return ResponseEntity.ok().body(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getId(), roles));
+            return ResponseEntity.ok().body(new JwtResponse(jwtToken, userDetails.getUsername(), userDetails.getId(), roles));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Credenciales no válidas.");
         }
     }
 
@@ -73,16 +73,16 @@ public class AuthRestController {
 
         String username = jwtService.getUsernameFromToken(token);
         if (username == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no válido.");
         }
 
         UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(username);
         boolean isValid = jwtService.isTokenValid(token, userDetails);
 
         if (isValid) {
-            return ResponseEntity.ok().body("Token is valid");
+            return ResponseEntity.ok().body("Token válido.");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token is invalid");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token no válido.");
         }
     }
 

@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { LoginRequest } from './login-request';
+import { LoginRequest } from './payload/request/login-request';
+import { JwtResponse } from './payload/response/jwt-response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -11,50 +12,59 @@ export class LoginService {
 
   private http = inject(HttpClient);
 
-  currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>('');
+  currentIsUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  currentUserData: BehaviorSubject<JwtResponse | null> = new BehaviorSubject<JwtResponse | null>(null);
 
   constructor() {
-    this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem('token') != null);
-    this.currentUserData = new BehaviorSubject<String>(sessionStorage.getItem('token') || '');
+    const userData = JSON.parse(sessionStorage.getItem('userData') || 'null');
+    this.currentUserData = new BehaviorSubject<JwtResponse | null>(userData);
+    this.currentIsUserLoggedIn = new BehaviorSubject<boolean>(!!userData && !!userData.token);
   }
 
-  login(credentials: LoginRequest): Observable<any> {
-    return this.http.post<any>(environment.hostUrl + 'auth/login', credentials).pipe(
+  login(credentials: LoginRequest): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(environment.apiUrl + 'auth/login', credentials).pipe(
       tap((userData) => {
-        sessionStorage.setItem('token', userData.token);
-        this.currentUserData.next(userData.token);
-        this.currentUserLoginOn.next(true);
+        sessionStorage.setItem('userData', JSON.stringify(userData));
+        this.currentUserData.next(userData);
+        this.currentIsUserLoggedIn.next(true);
       }),
-      map((userData) => userData.token),
       catchError(this.handleError)
     );
   }
 
-  logout(): void {
-    sessionStorage.removeItem('token');
-    this.currentUserLoginOn.next(false);
-  }
+  // logout(): void {
+  //   sessionStorage.removeItem('token');
+  //   this.currentIsUserLoggedIn.next(false);
+  // }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('An error occurred:', error.error);
-    } else {
-      console.error('Backend returned error:', error);
+    let errorMsg = 'Algo salió mal; inténtalo de nuevo.';
+    if (error.status === 400 && error.error) {
+      errorMsg = error.error;
     }
-    return throwError(() => new Error('Something went wrong; please try again.'));
+    return throwError(() => new Error(errorMsg));
   }
 
-  get userData(): Observable<String> {
+  get userData(): Observable<JwtResponse | null> {
     return this.currentUserData.asObservable();
   }
 
   get userLoginOn(): Observable<boolean> {
-    return this.currentUserLoginOn.asObservable();
+    return this.currentIsUserLoggedIn.asObservable();
   }
 
   get userToken(): String {
-    return this.currentUserData.getValue();
+    return this.currentUserData.getValue()?.token || '';
+  }
+
+  get userAuthorities(): string[] {
+    return this.currentUserData.getValue()?.authorities || [];
+  }
+
+  get userIsAdmin(): Observable<boolean> {
+    return this.currentUserData.asObservable().pipe(
+      map(userData => Array.isArray(userData?.authorities) && userData.authorities.includes('ADMIN'))
+    );
   }
 
 }

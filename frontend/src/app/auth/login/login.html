@@ -1,5 +1,10 @@
 <form [formGroup]="loginForm">
-    <p class="text-danger">{{loginError}}</p>
+        @if (loginError && loginError !== '') {
+            <p class="alert alert-danger">{{loginError}}</p>
+        }
+        @if (loginSuccess && loginSuccess !== '') {
+            <p class="alert alert-success">{{loginSuccess}}</p>
+        }
     <div class="mb-3">
         <label for="username" class="form-label">Nombre de usuario</label>
         <input type="text" class="form-control" id="username" formControlName="username">
@@ -7,14 +12,19 @@
         @if (username.invalid && (username.dirty || username.touched)) {
             <div class="text-danger">
                 @if (username.hasError('required')) {
-                <div>
-                    El Nombre de usuario es obligatorio.
-                </div>
+                    <div>
+                        El Nombre de usuario es obligatorio.
+                    </div>
                 }
                 @if (username.hasError('pattern')) {
-                <div>
-                    El Nombre de usuario debe contener sólo letras minúsculas (excluyendo 'ñ' y 'ç'), números, puntos y guiones bajos. Cualquier otro carácter no está permitido.
-                </div>
+                    <div>
+                        El Nombre de usuario debe contener sólo letras minúsculas (excluyendo 'ñ' y 'ç'), números, puntos y guiones bajos. Cualquier otro carácter no está permitido.
+                    </div>
+                }
+                @if (username.hasError('minlength') || username.hasError('maxlength')) {
+                    <div>
+                        El Nombre de usuario debe tener entre 5 y 15 caracteres.
+                    </div>
                 }
             </div>
         }
@@ -22,14 +32,35 @@
     </div>
     <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" id="password" formControlName="password">
+        <!-- START Generado con GitHub Copilot Chat Extension -->
+        <div class="input-group">
+            <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="password" formControlName="password">
+            <span class="input-group-text bg-white border-start-0" style="cursor:pointer;" (click)="togglePasswordVisibility()">
+                @if (showPassword) {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                        <path d="M13.359 11.238l2.147 2.147a.5.5 0 0 1-.708.708l-2.147-2.147A8.354 8.354 0 0 1 8 13.5c-3.468 0-6.44-2.02-7.781-5.016a.5.5 0 0 1 0-.468A8.468 8.468 0 0 1 4.58 4.58l-2.147-2.147a.5.5 0 1 1 .708-.708l13 13a.5.5 0 0 1-.708.708l-2.147-2.147zM8 12.5c2.982 0 5.522-1.723 6.813-4.5C13.522 5.223 10.982 3.5 8 3.5c-.86 0-1.687.13-2.47.37l1.06 1.06A6.978 6.978 0 0 1 8 4.5c2.21 0 4.2 1.28 5.197 3.5-.997 2.22-2.987 3.5-5.197 3.5-.345 0-.682-.03-1.01-.09l1.06 1.06c.783.24 1.61.37 2.47.37z"/>
+                    </svg>
+                } @else {
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 4.5c-2.982 0-5.522-1.723-6.813-4.5C2.478 5.223 5.018 3.5 8 3.5c2.982 0 5.522 1.723 6.813 4.5-1.291 2.777-3.831 4.5-6.813 4.5z"/>
+                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm0 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                    </svg>
+                }
+            </span>
+        </div>
+        <!-- END Generado con GitHub Copilot Chat Extension -->
 
         @if (password.invalid && (password.dirty || password.touched)) {
             <div class="text-danger">
                 @if (password.hasError('required')) {
-                <div>
-                    La Contraseña es obligatoria.
-                </div>
+                    <div>
+                        La Contraseña es obligatoria.
+                    </div>
+                }
+                @if (password.hasError('minlength') || password.hasError('maxlength')) {
+                    <div>
+                        La Contraseña debe tener entre 8 y 12 caracteres.
+                    </div>
                 }
             </div>
         }
