@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
-import { LoginRequest } from '../../services/auth/login-request';
+import { LoginRequest } from '../../services/auth/payload/request/login-request';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
