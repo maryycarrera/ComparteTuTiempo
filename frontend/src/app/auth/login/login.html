@@ -1,5 +1,10 @@
 <form [formGroup]="loginForm">
-    <p class="text-danger">{{loginError}}</p>
+        @if (loginError && loginError !== '') {
+            <p class="alert alert-danger">{{loginError}}</p>
+        }
+        @if (loginSuccess && loginSuccess !== '') {
+            <p class="alert alert-success">{{loginSuccess}}</p>
+        }
     <div class="mb-3">
         <label for="username" class="form-label">Nombre de usuario</label>
         <input type="text" class="form-control" id="username" formControlName="username">
@@ -16,6 +21,11 @@
                     El Nombre de usuario debe contener sólo letras minúsculas (excluyendo 'ñ' y 'ç'), números, puntos y guiones bajos. Cualquier otro carácter no está permitido.
                 </div>
                 }
+                @if (username.hasError('minlength') || username.hasError('maxlength')) {
+                <div>
+                    El Nombre de usuario debe tener entre 5 y 15 caracteres.
+                </div>
+                }
             </div>
         }
 
@@ -29,6 +39,11 @@
                 @if (password.hasError('required')) {
                 <div>
                     La Contraseña es obligatoria.
+                </div>
+                }
+                @if (password.hasError('minlength') || password.hasError('maxlength')) {
+                <div>
+                    La Contraseña debe tener entre 8 y 12 caracteres.
                 </div>
                 }
             </div>
