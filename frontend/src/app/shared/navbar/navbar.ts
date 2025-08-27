@@ -22,7 +22,7 @@ export class Navbar implements OnInit {
   private subscription: Subscription = new Subscription();
 
   ngOnInit(): void {
-    this.subscription.add(this.loginService.currentIsUserLoggedIn.subscribe({
+    this.subscription.add(this.loginService.userLoginOn.subscribe({
       next: (userLoginOn) => {
         this.userIsLoggedIn = userLoginOn;
       }

@@ -16,8 +16,9 @@ export class LoginService {
   currentUserData: BehaviorSubject<JwtResponse | null> = new BehaviorSubject<JwtResponse | null>(null);
 
   constructor() {
-    this.currentIsUserLoggedIn = new BehaviorSubject<boolean>(sessionStorage.getItem('token') != null);
-    this.currentUserData = new BehaviorSubject<JwtResponse | null>(JSON.parse(sessionStorage.getItem('userData') || 'null'));
+    const userData = JSON.parse(sessionStorage.getItem('userData') || 'null');
+    this.currentUserData = new BehaviorSubject<JwtResponse | null>(userData);
+    this.currentIsUserLoggedIn = new BehaviorSubject<boolean>(!!userData && !!userData.token);
   }
 
   login(credentials: LoginRequest): Observable<JwtResponse> {
