@@ -6,9 +6,13 @@
   --color-lila-pastel: #e9d6f7;
   --color-morado-intenso: #7c3aed;
   --color-blanco: #ffffff;
+  --color-rosa-pastel: #f8c6d8;
+  --color-rosa-oscuro: #d14f83;
+  --color-crema: #eed1c6;
 
   --color-verde-correcto: #42A948;
   --color-rojo-incorrecto: #a94442;
+
 }
 
 html, body {
