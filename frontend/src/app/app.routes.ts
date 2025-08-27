@@ -1,19 +1,37 @@
-import { Routes } from '@angular/router';
+import { Routes, Router, CanActivateFn } from '@angular/router';
 import { Login } from './auth/login/login';
-
-import { CanActivateFn } from '@angular/router';
+import { inject } from '@angular/core';
+import { LoginService } from './services/auth/login.service';
 import { Home } from './shared/home/home';
 
-// Guard temporal para decidir si mostrar login o home
+// START Generado con GitHub Copilot Chat Extension
 const inicioGuard: CanActivateFn = (route, state) => {
-    // Aquí deberías inyectar el servicio de login y devolver true/false según el estado
-    // Por ahora, siempre redirige al login
-    return false;
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const isLoggedIn = loginService.userLoginOn;
+    if (isLoggedIn) {
+        return true;
+    } else {
+        return router.parseUrl('/iniciar-sesion');
+    }
 };
 
+const loginGuard: CanActivateFn = (route, state) => {
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const isLoggedIn = loginService.userLoginOn;
+    if (isLoggedIn) {
+        return router.parseUrl('/inicio');
+    } else {
+        return true;
+    }
+};
+
+// END Generado con GitHub Copilot Chat Extension
+
 export const routes: Routes = [
-    { path: 'inicio', component: Home },
+    { path: 'inicio', component: Home, canActivate: [inicioGuard] },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-    { path: 'iniciar-sesion', component: Login },
+    { path: 'iniciar-sesion', component: Login, canActivate: [loginGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];
