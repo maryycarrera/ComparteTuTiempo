@@ -19,6 +19,8 @@ export class Login {
   loginError: string = '';
   loginSuccess: string = '';
 
+  showPassword: boolean = false;
+
   loginForm = this.fb.group({
       username: ['', [
         Validators.required,
@@ -41,6 +43,10 @@ export class Login {
 
   get password() {
     return this.loginForm.controls.password;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   login() {
