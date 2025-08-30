@@ -15,7 +15,11 @@ export class Logout {
 
   logout() {
     this.logoutService.logout().subscribe({
-      complete: () => {
+      next: () => {
+        this.router.navigateByUrl('/');
+      },
+      error: (err) => {
+        console.error('Error al cerrar sesión', err);
         this.router.navigateByUrl('/');
       }
     });
