@@ -35,6 +35,12 @@ app-root {
   min-height: 100vh;
 }
 
+
+main.content {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 app-footer {
   margin-top: auto;
 }
@@ -68,4 +74,21 @@ app-footer {
 
 .text-important {
   color: var(--color-morado-oscuro);
+}
+
+.main-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.main-title-container {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
+  width: 100vw;
+  box-sizing: border-box;
 }

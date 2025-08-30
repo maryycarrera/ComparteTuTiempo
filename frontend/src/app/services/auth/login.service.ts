@@ -32,11 +32,6 @@ export class LoginService {
     );
   }
 
-  // logout(): void {
-  //   sessionStorage.removeItem('token');
-  //   this.currentIsUserLoggedIn.next(false);
-  // }
-
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'Algo salió mal; inténtalo de nuevo.';
     if (error.status === 400 && error.error) {
