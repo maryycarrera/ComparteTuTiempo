@@ -36,14 +36,16 @@ public class AuthRestController {
     private final JwtService jwtService;
     private final AuthService authService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final JwtBlacklist jwtBlacklist;
 
     @Autowired
     public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService, UserDetailsServiceImpl userDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.jwtService = jwtService;
-        this.authService = authService;
-        this.userDetailsService = userDetailsService;
+    this.authenticationManager = authenticationManager;
+    this.userService = userService;
+    this.jwtService = jwtService;
+    this.authService = authService;
+    this.userDetailsService = userDetailsService;
+    this.jwtBlacklist = null; // será inyectado por Spring
     }
 
     @PostMapping("/login")
@@ -91,5 +93,17 @@ public class AuthRestController {
     //     AuthResponse response = authService.register(request);
     //     return ResponseEntity.ok(response);
     // }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Object> logout(@RequestParam(required = false) String token) {
+        if (token != null && token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        if (token != null && !token.isEmpty()) {
+            jwtBlacklist.add(token);
+        }
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok().body("Sesión cerrada con éxito.");
+    }
 
 }
