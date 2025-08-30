@@ -5,40 +5,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer;
-import com.jayway.jsonpath.JsonPath;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.jayway.jsonpath.JsonPath;
+
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    private static String memberToken;
-    private static String adminToken;
-
     @Test
-    @Order(1)
-    public void shouldLoginMemberWhenCredentialsAreValid() throws Exception {
-        String json = """
+    public void shouldLoginAndLogoutMember() throws Exception {
+        String loginJson = """
         {
             "username": "maryycarrera",
             "password": "m13mbr0CTT"
         }
         """;
 
-        String response = mockMvc.perform(post("/api/v1/auth/login")
+        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .content(json))
+                                    .content(loginJson))
                                     .andExpect(status().isOk())
                                     .andExpect(jsonPath("$.token").exists())
                                     .andExpect(jsonPath("$.username").value("maryycarrera"))
@@ -46,33 +39,32 @@ public class AuthTest {
                                     .andExpect(jsonPath("$.authorities[0]").value("MEMBER"))
                                     .andReturn().getResponse().getContentAsString();
 
-        memberToken = JsonPath.read(response, "$.token");
-    }
+        String memberToken = JsonPath.read(loginResponse, "$.token");
 
-    @Test
-    @Order(2)
-    public void shouldLogoutMember() throws Exception {
-        String json = String.format("{\"token\": \"%s\"}", memberToken);
-
+        String logoutJson = String.format("{\"token\": \"%s\"}", memberToken);
         mockMvc.perform(post("/api/v1/auth/logout")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                .content(logoutJson))
                 .andExpect(status().isOk());
+
+        // Intentar acceder con el token después del logout (opcional, si tienes endpoint protegido)
+        // mockMvc.perform(get("/api/v1/protected-endpoint")
+        //         .header("Authorization", "Bearer " + memberToken))
+        //         .andExpect(status().isUnauthorized());
     }
 
     @Test
-    @Order(3)
-    public void shouldLoginAdminWhenCredentialsAreValid() throws Exception {
-        String json = """
+    public void shouldLoginAndLogoutAdmin() throws Exception {
+        String loginJson = """
         {
             "username": "admin1",
             "password": "sys4dm1n*!"
         }
         """;
 
-        String response = mockMvc.perform(post("/api/v1/auth/login")
+        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
                                     .contentType(MediaType.APPLICATION_JSON)
-                                    .content(json))
+                                    .content(loginJson))
                                     .andExpect(status().isOk())
                                     .andExpect(jsonPath("$.token").exists())
                                     .andExpect(jsonPath("$.username").value("admin1"))
@@ -80,17 +72,12 @@ public class AuthTest {
                                     .andExpect(jsonPath("$.authorities[0]").value("ADMIN"))
                                     .andReturn().getResponse().getContentAsString();
 
-        adminToken = JsonPath.read(response, "$.token");
-    }
+        String adminToken = JsonPath.read(loginResponse, "$.token");
 
-    @Test
-    @Order(4)
-    public void shouldLogoutAdmin() throws Exception {
-        String json = String.format("{\"token\": \"%s\"}", adminToken);
-
+        String logoutJson = String.format("{\"token\": \"%s\"}", adminToken);
         mockMvc.perform(post("/api/v1/auth/logout")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+                .content(logoutJson))
                 .andExpect(status().isOk());
     }
 
