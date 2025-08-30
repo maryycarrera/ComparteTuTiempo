@@ -94,16 +94,20 @@ public class AuthRestController {
     //     return ResponseEntity.ok(response);
     // }
 
+    // START Generado con IntelliCode Extension
     @PostMapping("/logout")
     public ResponseEntity<Object> logout(@RequestParam(required = false) String token) {
+        // START Generado con GitHub Copilot Chat Extension
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
         }
         if (token != null && !token.isEmpty()) {
             jwtBlacklist.add(token);
         }
+        // END Generado con GitHub Copilot Chat Extension
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok().body("Sesión cerrada con éxito.");
     }
+    // END Generado con IntelliCode Extension
 
 }

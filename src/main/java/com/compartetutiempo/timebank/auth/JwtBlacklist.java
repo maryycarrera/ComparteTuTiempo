@@ -1,3 +1,7 @@
+/*
+ * Clase generada con GitHub Copilot Chat Extension
+ */
+
 package com.compartetutiempo.timebank.auth;
 
 import org.springframework.stereotype.Component;
