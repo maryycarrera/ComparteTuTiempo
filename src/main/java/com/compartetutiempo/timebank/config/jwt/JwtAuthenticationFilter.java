@@ -46,7 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 LoggerFactory.getLogger(JwtAuthenticationFilter.class)
                     .info("Token JWT en blacklist, acceso denegado");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token inválido (logout). Por favor, inicia sesión de nuevo.");
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Token inválido (logout). Por favor, inicia sesión de nuevo.\"}");
+                response.getWriter().flush();
                 return;
             }
             // END Generado con GitHub Copilot Chat Extension
