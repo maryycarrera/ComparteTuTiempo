@@ -35,6 +35,11 @@ app-root {
   min-height: 100vh;
 }
 
+router-outlet ~ * {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 app-footer {
   margin-top: auto;
 }
@@ -85,5 +90,4 @@ app-footer {
   min-height: 0;
   width: 100vw;
   box-sizing: border-box;
-  margin-top: 30px;
 }
