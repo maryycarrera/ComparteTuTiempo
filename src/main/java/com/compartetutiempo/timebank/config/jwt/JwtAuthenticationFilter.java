@@ -27,6 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private com.compartetutiempo.timebank.auth.JwtBlacklist jwtBlacklist;
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
@@ -37,6 +40,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
+
+            // START Generado con GitHub Copilot Chat Extension
+            if (jwtBlacklist != null && jwtBlacklist.contains(token)) {
+                LoggerFactory.getLogger(JwtAuthenticationFilter.class)
+                    .info("Token JWT en blacklist, acceso denegado");
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"Token inválido (logout). Por favor, inicia sesión de nuevo.\"}");
+                response.getWriter().flush();
+                return;
+            }
+            // END Generado con GitHub Copilot Chat Extension
 
             String username = jwtService.getUsernameFromToken(token);
 
