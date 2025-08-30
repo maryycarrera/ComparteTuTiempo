@@ -6,7 +6,8 @@ import { Home } from './shared/home/home';
 import { AdminProfile } from './admin/admin-profile/admin-profile';
 
 // START Generado con GitHub Copilot Chat Extension
-const inicioGuard: CanActivateFn = (route, state) => {
+
+const authGuard: CanActivateFn = (route, state) => {
     const loginService = inject(LoginService);
     const router = inject(Router);
     const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
@@ -17,7 +18,7 @@ const inicioGuard: CanActivateFn = (route, state) => {
     }
 };
 
-const loginGuard: CanActivateFn = (route, state) => {
+const guestGuard: CanActivateFn = (route, state) => {
     const loginService = inject(LoginService);
     const router = inject(Router);
     const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
@@ -31,9 +32,9 @@ const loginGuard: CanActivateFn = (route, state) => {
 // END Generado con GitHub Copilot Chat Extension
 
 export const routes: Routes = [
-    { path: 'inicio', component: Home, canActivate: [inicioGuard] },
+    { path: 'inicio', component: Home, canActivate: [authGuard] },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-    { path: 'iniciar-sesion', component: Login, canActivate: [loginGuard] },
-    { path: 'perfil', component: AdminProfile },
+    { path: 'iniciar-sesion', component: Login, canActivate: [guestGuard] },
+    { path: 'perfil', component: AdminProfile, canActivate: [authGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];

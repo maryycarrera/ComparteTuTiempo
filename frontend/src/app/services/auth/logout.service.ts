@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { LoginService } from './login.service';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -13,9 +13,9 @@ export class LogoutService {
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
-  logout(): Observable<any> {
+  logout(): Observable<string> {
     const token = this.loginService.userToken;
-    return this.http.post(environment.apiUrl + 'auth/logout', { token }).pipe(
+    return this.http.post<string>(environment.apiUrl + 'auth/logout', { token }).pipe(
       tap(() => {
         sessionStorage.removeItem('userData');
         this.loginService.currentUserData.next(null);
@@ -25,7 +25,7 @@ export class LogoutService {
         sessionStorage.removeItem('userData');
         this.loginService.currentUserData.next(null);
         this.loginService.currentIsUserLoggedIn.next(false);
-        return of(error);
+        return throwError(() => error);
       })
     );
   }
