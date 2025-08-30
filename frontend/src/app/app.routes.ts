@@ -2,7 +2,7 @@ import { Routes, Router, CanActivateFn } from '@angular/router';
 import { Login } from './auth/login/login';
 import { inject } from '@angular/core';
 import { LoginService } from './services/auth/login.service';
-import { Home } from './shared/home/home';
+import { Home } from './shared/pages/home/home';
 import { AdminProfile } from './admin/admin-profile/admin-profile';
 
 // START Generado con GitHub Copilot Chat Extension
