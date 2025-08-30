@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { Logout } from '../../auth/logout/logout';
 
 @Component({
   selector: 'app-member-profile',
-  imports: [Logout],
+  imports: [],
   templateUrl: './member-profile.html',
   styleUrl: './member-profile.css'
 })
