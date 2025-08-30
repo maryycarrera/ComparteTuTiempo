@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AdminProfile } from '../../../admin/admin-profile/admin-profile';
 import { MemberProfile } from '../../../member/member-profile/member-profile';
 import { Logout } from '../../../auth/logout/logout';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
-export class Profile implements OnInit {
+export class Profile implements OnInit, OnDestroy {
 
   userIsAdmin: boolean = false;
 
@@ -24,6 +24,10 @@ export class Profile implements OnInit {
         this.userIsAdmin = userAdminOn;
       }
     }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
