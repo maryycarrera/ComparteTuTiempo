@@ -6,18 +6,49 @@ package com.compartetutiempo.timebank.auth;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.Iterator;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Component
 public class JwtBlacklist {
-    private final Set<String> blacklist = ConcurrentHashMap.newKeySet();
+    // token -> expiration timestamp (ms)
+    private final Map<String, Long> blacklist = new ConcurrentHashMap<>();
 
-    public void add(String token) {
-        blacklist.add(token);
+    /**
+     * Añade un token a la blacklist con su tiempo de expiración (en ms).
+     */
+    public void add(String token, long expirationMillis) {
+        blacklist.put(token, expirationMillis);
+        cleanup();
     }
 
+    /**
+     * Verifica si el token está en la blacklist y no ha expirado.
+     */
     public boolean contains(String token) {
-        return blacklist.contains(token);
+        Long exp = blacklist.get(token);
+        if (exp == null) return false;
+        if (exp < System.currentTimeMillis()) {
+            blacklist.remove(token);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Limpia tokens expirados (llamado manualmente o por scheduler).
+     */
+    @Scheduled(fixedDelay = 60000) // cada minuto
+    public void cleanup() {
+        long now = System.currentTimeMillis();
+        Iterator<Map.Entry<String, Long>> it = blacklist.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Long> entry = it.next();
+            if (entry.getValue() < now) {
+                it.remove();
+            }
+        }
     }
 }

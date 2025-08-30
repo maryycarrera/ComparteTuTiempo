@@ -102,7 +102,7 @@ public class AuthRestController {
             token = token.substring(7);
         }
         if (token != null && !token.isEmpty()) {
-            jwtBlacklist.add(token);
+            jwtBlacklist.add(token, jwtService.getExpiration(token).getTime());
         }
         // END Generado con GitHub Copilot Chat Extension
         SecurityContextHolder.clearContext();

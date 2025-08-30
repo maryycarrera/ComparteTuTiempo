@@ -102,7 +102,7 @@ public class JwtService {
             .getBody();
     }
 
-    private Date getExpiration(String token) {
+    public Date getExpiration(String token) {
         return getClaim(token, Claims::getExpiration);
     }
 
