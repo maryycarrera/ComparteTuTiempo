@@ -39,13 +39,13 @@ public class AuthRestController {
     private final JwtBlacklist jwtBlacklist;
 
     @Autowired
-    public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService, UserDetailsServiceImpl userDetailsService) {
+    public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService, UserDetailsServiceImpl userDetailsService, JwtBlacklist jwtBlacklist) {
     this.authenticationManager = authenticationManager;
     this.userService = userService;
     this.jwtService = jwtService;
     this.authService = authService;
     this.userDetailsService = userDetailsService;
-    this.jwtBlacklist = null; // será inyectado por Spring
+    this.jwtBlacklist = jwtBlacklist;
     }
 
     @PostMapping("/login")
