@@ -3,6 +3,7 @@ import { Login } from './auth/login/login';
 import { inject } from '@angular/core';
 import { LoginService } from './services/auth/login.service';
 import { Home } from './shared/home/home';
+import { AdminProfile } from './admin/admin-profile/admin-profile';
 
 // START Generado con GitHub Copilot Chat Extension
 const inicioGuard: CanActivateFn = (route, state) => {
@@ -33,5 +34,6 @@ export const routes: Routes = [
     { path: 'inicio', component: Home, canActivate: [inicioGuard] },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
     { path: 'iniciar-sesion', component: Login, canActivate: [loginGuard] },
+    { path: 'perfil', component: AdminProfile },
     { path: '**', redirectTo: '/inicio' }
 ];
