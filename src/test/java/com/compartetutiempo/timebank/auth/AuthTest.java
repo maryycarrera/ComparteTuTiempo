@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -118,6 +119,85 @@ public class AuthTest {
         mockMvc.perform(post("/api/v1/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldRegisterMemberSuccessfully() throws Exception {
+        String signupJson = """
+        {
+            "name": "Juan",
+            "lastName": "Pérez",
+            "username": "juanperez1",
+            "email": "juan.perez1@example.com",
+            "password": "seguro123"
+        }
+        """;
+
+        mockMvc.perform(post("/api/v1/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Registro exitoso."))
+                .andExpect(jsonPath("$.object.hours").value(5))
+                .andExpect(jsonPath("$.object.minutes").value(0))
+                .andExpect(jsonPath("$.object.biography").value(""))
+                .andExpect(jsonPath("$.object.dateOfMembership").value(LocalDate.now().toString()));
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenUsernameAlreadyExists() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "member1",
+            "email": "taylor.swift13@example.com",
+            "password": "il0vecats89"
+        }
+        """;
+
+        mockMvc.perform(post("/api/v1/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value("El dato 'Nombre de usuario' con valor 'member1' ya está en uso."));
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenEmailAlreadyExists() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "admin1@example.com",
+            "password": "il0vecats89"
+        }
+        """;
+
+        mockMvc.perform(post("/api/v1/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value("El dato 'Dirección de correo electrónico' con valor 'admin1@example.com' ya está en uso."));
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenDataIsInvalid() throws Exception {
+        String signupJson = """
+        {
+            "name": "Al",
+            "lastName": "",
+            "username": "a",
+            "email": "invalid-email",
+            "password": "123"
+        }
+        """;
+
+        mockMvc.perform(post("/api/v1/auth/signup")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
                 .andExpect(status().isBadRequest());
     }
 
