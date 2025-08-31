@@ -22,10 +22,10 @@ import com.compartetutiempo.timebank.admin.AdministratorService;
 import com.compartetutiempo.timebank.auth.payload.request.LoginRequest;
 import com.compartetutiempo.timebank.auth.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.auth.payload.response.JwtResponse;
-import com.compartetutiempo.timebank.auth.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.config.jwt.JwtService;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsImpl;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
+import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.MemberService;
 import com.compartetutiempo.timebank.user.UserService;
 
@@ -113,18 +113,15 @@ public class AuthRestController {
     // END Generado con IntelliCode Extension
 
     @PostMapping("/signup")
-    public ResponseEntity<MessageResponse> register(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<Object> register(@Valid @RequestBody SignupRequest request) {
         if (userService.existsByUsername(request.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("El nombre de usuario ya está en uso."));
+            throw new AttributeDuplicatedException("'Nombre de usuario'", request.getUsername());
         }
-        if (memberService.findMember(request.getEmail()) != null) {
-            return ResponseEntity.badRequest().body(new MessageResponse("El correo electrónico ya está en uso."));
-        }
-        if (administratorService.findAdministrator(request.getEmail()) != null) {
-            return ResponseEntity.badRequest().body(new MessageResponse("El correo electrónico ya está en uso."));
+        if (memberService.findMember(request.getEmail()) != null || administratorService.findAdministrator(request.getEmail()) != null) {
+            throw new AttributeDuplicatedException("'Dirección de correo electrónico'", request.getEmail());
         }
         authService.registerMember(request);
-        return ResponseEntity.ok().body(new MessageResponse("Registro exitoso."));
+        return ResponseEntity.ok().body("Registro exitoso.");
     }
 
 }
