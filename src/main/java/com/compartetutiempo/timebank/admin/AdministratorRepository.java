@@ -13,8 +13,7 @@ public interface AdministratorRepository extends CrudRepository<Administrator, I
     @Query("SELECT admin FROM Administrator admin WHERE admin.user.id = :userId")
     Optional<Administrator> findAdministratorByUser(int userId);
 
-    @Query("SELECT admin FROM Administrator admin WHERE admin.email = :email")
-    Optional<Administrator> findAdministratorByEmail(String email);
+    Optional<Administrator> findByEmail(String email);
 
     Boolean existsByEmail(String email);
 

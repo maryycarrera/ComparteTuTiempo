@@ -41,7 +41,7 @@ public class AdministratorService {
 
     @Transactional(readOnly = true)
     public Administrator findAdministrator(String email) {
-        return administratorRepository.findAdministratorByEmail(email)
+        return administratorRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Administrator", "email", email));
     }
 
