@@ -34,7 +34,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void registerMember(@Valid SignupRequest signupRequest) {
+    public Member registerMember(@Valid SignupRequest signupRequest) {
         User user = new User();
         user.setUsername(signupRequest.getUsername());
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
@@ -51,7 +51,7 @@ public class AuthService {
         member.setHours(5);
         member.setMinutes(0);
 
-        memberService.save(member);
+        return memberService.save(member);
     }
 
 }
