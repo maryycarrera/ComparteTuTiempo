@@ -39,4 +39,10 @@ public class AdministratorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Administrator", "id", adminId));
     }
 
+    @Transactional(readOnly = true)
+    public Administrator findAdministrator(String email) {
+        return administratorRepository.findAdministratorByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Administrator", "email", email));
+    }
+
 }
