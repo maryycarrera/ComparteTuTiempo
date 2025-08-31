@@ -115,10 +115,10 @@ public class AuthRestController {
     @PostMapping("/signup")
     public ResponseEntity<Object> register(@Valid @RequestBody SignupRequest request) {
         if (userService.existsByUsername(request.getUsername())) {
-            throw new AttributeDuplicatedException("'Nombre de usuario'", request.getUsername());
+            throw new AttributeDuplicatedException("Nombre de usuario", request.getUsername());
         }
         if (memberService.existsByEmail(request.getEmail()) || administratorService.existsByEmail(request.getEmail())) {
-            throw new AttributeDuplicatedException("'Dirección de correo electrónico'", request.getEmail());
+            throw new AttributeDuplicatedException("Dirección de correo electrónico", request.getEmail());
         }
         authService.registerMember(request);
         return ResponseEntity.ok().body("Registro exitoso.");
