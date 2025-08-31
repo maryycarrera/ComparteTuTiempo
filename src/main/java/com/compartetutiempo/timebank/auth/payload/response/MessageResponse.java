@@ -5,17 +5,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MessageResponse {
+public class MessageResponse<T> {
 
     private String message;
-    private Object object;
+    private T object;
 
     public MessageResponse(String message) {
         this.message = message;
         this.object = null;
     }
 
-    public MessageResponse(String message, Object object) {
+    public MessageResponse(String message, T object) {
         this.message = message;
         this.object = object;
     }
