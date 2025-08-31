@@ -18,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.admin.AdministratorService;
 import com.compartetutiempo.timebank.auth.payload.request.LoginRequest;
+import com.compartetutiempo.timebank.auth.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.auth.payload.response.JwtResponse;
 import com.compartetutiempo.timebank.config.jwt.JwtService;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsImpl;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
+import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
+import com.compartetutiempo.timebank.member.MemberService;
 import com.compartetutiempo.timebank.user.UserService;
 
 import jakarta.validation.Valid;
@@ -37,15 +41,19 @@ public class AuthRestController {
     private final AuthService authService;
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtBlacklist jwtBlacklist;
+    private final MemberService memberService;
+    private final AdministratorService administratorService;
 
     @Autowired
-    public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService, UserDetailsServiceImpl userDetailsService, JwtBlacklist jwtBlacklist) {
-    this.authenticationManager = authenticationManager;
-    this.userService = userService;
-    this.jwtService = jwtService;
-    this.authService = authService;
-    this.userDetailsService = userDetailsService;
-    this.jwtBlacklist = jwtBlacklist;
+    public AuthRestController(AuthenticationManager authenticationManager, UserService userService, JwtService jwtService, AuthService authService, UserDetailsServiceImpl userDetailsService, JwtBlacklist jwtBlacklist, MemberService memberService, AdministratorService administratorService) {
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.authService = authService;
+        this.userDetailsService = userDetailsService;
+        this.jwtBlacklist = jwtBlacklist;
+        this.memberService = memberService;
+        this.administratorService = administratorService;
     }
 
     @PostMapping("/login")
@@ -88,12 +96,6 @@ public class AuthRestController {
         }
     }
 
-    // @PostMapping("/register")
-    // public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
-    //     AuthResponse response = authService.register(request);
-    //     return ResponseEntity.ok(response);
-    // }
-
     // START Generado con IntelliCode Extension
     @PostMapping("/logout")
     public ResponseEntity<Object> logout(@RequestParam(required = false) String token) {
@@ -109,5 +111,17 @@ public class AuthRestController {
         return ResponseEntity.ok().body("Sesión cerrada con éxito.");
     }
     // END Generado con IntelliCode Extension
+
+    @PostMapping("/signup")
+    public ResponseEntity<Object> register(@Valid @RequestBody SignupRequest request) {
+        if (userService.existsByUsername(request.getUsername())) {
+            throw new AttributeDuplicatedException("Nombre de usuario", request.getUsername());
+        }
+        if (memberService.existsByEmail(request.getEmail()) || administratorService.existsByEmail(request.getEmail())) {
+            throw new AttributeDuplicatedException("Dirección de correo electrónico", request.getEmail());
+        }
+        authService.registerMember(request);
+        return ResponseEntity.ok().body("Registro exitoso.");
+    }
 
 }

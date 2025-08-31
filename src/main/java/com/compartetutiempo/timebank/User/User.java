@@ -24,7 +24,6 @@ public class User extends BaseEntity {
     @Size(min = 5, max = 15)
     String username;
 
-    // TODO: Encriptar. Antes de encriptar, debe tener entre 8 y 12 caracteres alfanuméricos.
     @NotEmpty
     String password;
 

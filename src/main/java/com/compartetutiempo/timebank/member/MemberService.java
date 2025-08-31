@@ -39,4 +39,19 @@ public class MemberService {
                 .orElseThrow(() -> new ResourceNotFoundException("Member", "id", memberId));
     }
 
+    @Transactional(readOnly = true)
+    public Member findMember(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Member", "email", email));
+    }
+
+    @Transactional
+    public Member save(Member member) {
+        return memberRepository.save(member);
+    }
+
+    public Boolean existsByEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
 }

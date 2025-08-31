@@ -13,4 +13,8 @@ public interface MemberRepository extends CrudRepository<Member, Integer> {
     @Query("SELECT m FROM Member m WHERE m.user.id = :userId")
     Optional<Member> findMemberByUser(int userId);
 
+    Optional<Member> findByEmail(String email);
+
+    Boolean existsByEmail(String email);
+
 }
