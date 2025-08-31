@@ -123,7 +123,7 @@ public class AuthRestController {
             throw new AttributeDuplicatedException("Dirección de correo electrónico", request.getEmail());
         }
         Member member = authService.registerMember(request);
-        return ResponseEntity.ok().body(new MessageResponse("Registro exitoso.", member));
+        return ResponseEntity.ok().body(new MessageResponse<Member>("Registro exitoso.", member));
     }
 
 }
