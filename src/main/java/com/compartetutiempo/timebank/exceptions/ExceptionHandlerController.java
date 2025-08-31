@@ -51,6 +51,11 @@ public class ExceptionHandlerController {
         return buildResponseEntity(HttpStatus.FORBIDDEN, exception, request);
     }
 
+    @ExceptionHandler(AttributeDuplicatedException.class)
+    public ResponseEntity<ErrorMessage> attributeDuplicatedExceptionHandler(AttributeDuplicatedException exception, WebRequest request) {
+        return buildResponseEntity(HttpStatus.CONFLICT, exception, request);
+    }
+
     private ResponseEntity<ErrorMessage> buildResponseEntity(HttpStatus status, Exception exception, WebRequest request) {
         return buildResponseEntity(status, exception.getMessage(), request);
     }
