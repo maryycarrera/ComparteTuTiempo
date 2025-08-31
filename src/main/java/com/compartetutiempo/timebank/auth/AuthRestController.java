@@ -117,7 +117,7 @@ public class AuthRestController {
         if (userService.existsByUsername(request.getUsername())) {
             throw new AttributeDuplicatedException("'Nombre de usuario'", request.getUsername());
         }
-        if (memberService.findMember(request.getEmail()) != null || administratorService.findAdministrator(request.getEmail()) != null) {
+        if (memberService.existsByEmail(request.getEmail()) || administratorService.existsByEmail(request.getEmail())) {
             throw new AttributeDuplicatedException("'Dirección de correo electrónico'", request.getEmail());
         }
         authService.registerMember(request);

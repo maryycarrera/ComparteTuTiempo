@@ -45,4 +45,8 @@ public class AdministratorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Administrator", "email", email));
     }
 
+    public Boolean existsByEmail(String email) {
+        return administratorRepository.existsByEmail(email);
+    }
+
 }

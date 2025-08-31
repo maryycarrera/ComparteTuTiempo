@@ -50,4 +50,8 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public Boolean existsByEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
 }
