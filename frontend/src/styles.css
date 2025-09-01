@@ -92,3 +92,10 @@ app-footer {
   width: 100vw;
   box-sizing: border-box;
 }
+
+form {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  align-self: center;
+}
