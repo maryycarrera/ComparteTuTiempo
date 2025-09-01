@@ -14,7 +14,7 @@ export class SignupService {
   private http = inject(HttpClient);
 
   signup(data: SignupRequest): Observable<MessageResponse> {
-    return this.http.post<MessageResponse>(environment.apiUrl + 'auth/login', data).pipe(
+    return this.http.post<MessageResponse>(environment.apiUrl + 'auth/signup', data).pipe(
       catchError(this.handleError)
     );
   }
