@@ -142,7 +142,8 @@ public class AuthTest {
                 .andExpect(jsonPath("$.object.hours").value(5))
                 .andExpect(jsonPath("$.object.minutes").value(0))
                 .andExpect(jsonPath("$.object.biography").value(""))
-                .andExpect(jsonPath("$.object.dateOfMembership").value(LocalDate.now().toString()));
+                .andExpect(jsonPath("$.object.dateOfMembership").value(LocalDate.now().toString()))
+                .andExpect(jsonPath("$.object.profilePicture").value("/profilepics/gray.png"));
     }
 
     @Test
