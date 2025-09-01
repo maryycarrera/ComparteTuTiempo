@@ -50,6 +50,7 @@ public class AuthService {
         member.setBiography("");
         member.setHours(5);
         member.setMinutes(0);
+        member.setProfilePicture("/profilepics/gray.png");
 
         return memberService.save(member);
     }

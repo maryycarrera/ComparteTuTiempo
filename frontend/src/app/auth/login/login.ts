@@ -35,7 +35,12 @@ export class Login {
       ]]
     });
 
-  constructor() { }
+  constructor() {
+    const navigation = window.history.state;
+    if (navigation && navigation.signupSuccess) {
+      this.loginSuccess = navigation.signupSuccess;
+    }
+  }
 
   get username() {
     return this.loginForm.controls.username;
@@ -52,9 +57,6 @@ export class Login {
   login() {
     if (this.loginForm.valid) {
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
-        next: (userData) => {
-          this.loginSuccess = 'Inicio de sesión exitoso.';
-        },
         error: (errorData) => {
           let msg = '';
           if (typeof errorData === 'string') {

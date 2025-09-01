@@ -66,5 +66,5 @@
         }
 
     </div>
-    <button type="submit" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+    <button type="submit" (click)="login()" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesión</button>
 </form>

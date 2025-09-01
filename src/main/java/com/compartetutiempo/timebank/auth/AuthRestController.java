@@ -115,7 +115,7 @@ public class AuthRestController {
     // END Generado con IntelliCode Extension
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> register(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<MessageResponse<Member>> register(@Valid @RequestBody SignupRequest request) {
         if (userService.existsByUsername(request.getUsername())) {
             throw new AttributeDuplicatedException("Nombre de usuario", request.getUsername());
         }
