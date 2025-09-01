@@ -123,11 +123,6 @@
                         La Contraseña debe tener entre 8 y 12 caracteres.
                     </div>
                 }
-                @if (signupForm.hasError('passwordsMismatch') && (password.dirty || password.touched)) {
-                    <div>
-                        Las contraseñas no coinciden.
-                    </div>
-                }
             </div>
         }
     </div>
@@ -162,12 +157,14 @@
                         La Confirmación de Contraseña debe tener entre 8 y 12 caracteres.
                     </div>
                 }
-                @if (signupForm.hasError('passwordsMismatch') && (confirmPassword.dirty || confirmPassword.touched)) {
-                    <div>
-                        Las contraseñas no coinciden.
-                    </div>
-                }
             </div>
+        }
+        @if (confirmPassword.valid && (confirmPassword.dirty || confirmPassword.touched)) {
+            @if (signupForm.hasError('passwordsMismatch')) {
+                <div class="text-danger">
+                    Las contraseñas no coinciden.
+                </div>
+            }
         }
     </div>
     <button type="submit" (click)="signup()" class="btn btn-primary" [disabled]="signupForm.invalid">

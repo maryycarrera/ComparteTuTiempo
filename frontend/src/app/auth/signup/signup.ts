@@ -57,25 +57,9 @@ export class Signup {
 
   // START Generado con GitHub Copilot Chat Extension
   private passwordsMatchValidator(formGroup: any) {
-    const passwordControl = formGroup.get('password');
-    const confirmPasswordControl = formGroup.get('confirmPassword');
-    const password = passwordControl?.value;
-    const confirmPassword = confirmPasswordControl?.value;
-
-    if (password !== confirmPassword) {
-      confirmPasswordControl?.setErrors({ passwordsMismatch: true });
-      passwordControl?.setErrors({ passwordsMismatch: true });
-      return { passwordsMismatch: true };
-    } else {
-      // Si ya tenían ese error, lo eliminamos
-      if (confirmPasswordControl?.hasError('passwordsMismatch')) {
-        confirmPasswordControl.setErrors(null);
-      }
-      if (passwordControl?.hasError('passwordsMismatch')) {
-        passwordControl.setErrors(null);
-      }
-      return null;
-    }
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordsMismatch: true };
   }
   // END Generado con GitHub Copilot Chat Extension
 
