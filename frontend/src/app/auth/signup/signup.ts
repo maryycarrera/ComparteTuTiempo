@@ -71,21 +71,21 @@ export class Signup {
     this.showConfirmPassword = !this.showConfirmPassword;
   }
 
-  get name() { return this.signupForm.get('name'); }
-  get lastName() { return this.signupForm.get('lastName'); }
-  get username() { return this.signupForm.get('username'); }
-  get email() { return this.signupForm.get('email'); }
-  get password() { return this.signupForm.get('password'); }
-  get confirmPassword() { return this.signupForm.get('confirmPassword'); }
+  get name() { return this.signupForm.controls.name; }
+  get lastName() { return this.signupForm.controls.lastName; }
+  get username() { return this.signupForm.controls.username; }
+  get email() { return this.signupForm.controls.email; }
+  get password() { return this.signupForm.controls.password; }
+  get confirmPassword() { return this.signupForm.controls.confirmPassword; }
 
   signup() {
     if (this.signupForm.valid) {
       const signupRequest: SignupRequest = {
-        name: this.name!.value!,
-        lastName: this.lastName!.value!,
-        username: this.username!.value!,
-        email: this.email!.value!,
-        password: this.password!.value!
+        name: this.name.value!,
+        lastName: this.lastName.value!,
+        username: this.username.value!,
+        email: this.email.value!,
+        password: this.password.value!
       };
 
       this.signupService.signup(signupRequest).subscribe({
