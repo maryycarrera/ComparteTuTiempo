@@ -4,6 +4,7 @@ import { inject } from '@angular/core';
 import { LoginService } from './services/auth/login.service';
 import { Home } from './shared/pages/home/home';
 import { Profile } from './shared/pages/profile/profile';
+import { Signup } from './auth/signup/signup';
 
 // START Generado con GitHub Copilot Chat Extension
 
@@ -36,6 +37,7 @@ export const routes: Routes = [
     { path: 'inicio', component: Home, canActivate: [authGuard] },
     { path: '', redirectTo: '/inicio', pathMatch: 'full' },
     { path: 'iniciar-sesion', component: Login, canActivate: [guestGuard] },
+    { path: 'registro', component: Signup, canActivate: [guestGuard] },
     { path: 'perfil', component: Profile, canActivate: [authGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];
