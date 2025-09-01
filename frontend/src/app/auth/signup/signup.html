@@ -160,13 +160,18 @@
                         La Confirmación de Contraseña debe tener entre 8 y 12 caracteres.
                     </div>
                 }
-                @if (signupForm.hasError('passwordMismatch')) {
-                    <div>
-                        Las contraseñas no coinciden.
-                    </div>
-                }
+                
             </div>
         }
+        @if (confirmPassword.valid && (confirmPassword.dirty || confirmPassword.touched)) {
+            @if (signupForm.hasError('passwordsMismatch')) {
+                <div class="text-danger">
+                    Las contraseñas no coinciden.
+                </div>
+            }
+        }
     </div>
-    <button type="submit" (click)="signup()" class="btn btn-primary">Registrarse</button>
+    <button type="submit" (click)="signup()" class="btn btn-primary" [disabled]="signupForm.invalid">
+      Registrarse
+    </button>
 </form>
