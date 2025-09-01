@@ -104,7 +104,7 @@ export class Signup {
           this.signupError = msg;
         },
         complete: () => {
-          this.router.navigateByUrl('/inicio');
+          this.router.navigateByUrl('/iniciar-sesion', { state: { signupSuccess: this.signupSuccess } });
           this.signupForm.reset();
         }
       });
