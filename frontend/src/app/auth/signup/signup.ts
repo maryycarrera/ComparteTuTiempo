@@ -91,6 +91,8 @@ export class Signup {
       this.signupService.signup(signupRequest).subscribe({
         next: () => {
           this.signupSuccess = 'Cuenta creada correctamente. Inicia sesión para comenzar a utilizar el Banco de Tiempo.';
+          this.router.navigateByUrl('/iniciar-sesion', { state: { signupSuccess: this.signupSuccess } });
+          this.signupForm.reset();
         },
         error: (error) => {
           let msg = '';
@@ -102,10 +104,6 @@ export class Signup {
             msg = 'Error al crear la cuenta. Por favor, inténtalo de nuevo.';
           }
           this.signupError = msg;
-        },
-        complete: () => {
-          this.router.navigateByUrl('/iniciar-sesion', { state: { signupSuccess: this.signupSuccess } });
-          this.signupForm.reset();
         }
       });
     } else {
