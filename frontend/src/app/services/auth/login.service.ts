@@ -49,7 +49,8 @@ export class LoginService {
   }
 
   get userToken(): String {
-    return this.currentUserData.getValue()?.token || '';
+    const userData = JSON.parse(sessionStorage.getItem('userData') || 'null');
+    return this.currentUserData.getValue()?.token || userData?.token || '';
   }
 
   get userAuthorities(): string[] {

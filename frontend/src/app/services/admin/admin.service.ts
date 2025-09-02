@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AdminDTO } from './admin-dto';
 import { environment } from '../../../environments/environment';
+import { LoginService } from '../auth/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,15 @@ import { environment } from '../../../environments/environment';
 export class AdminService {
 
   private http = inject(HttpClient);
+  private loginService = inject(LoginService);
 
   getProfile(): Observable<AdminDTO> {
-    return this.http.get<AdminDTO>(environment.apiUrl + 'auth/profile').pipe(
+    const token = this.loginService.userToken;
+    return this.http.get<AdminDTO>(environment.apiUrl + 'auth/profile', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
       catchError(this.handleError)
     );
   }
