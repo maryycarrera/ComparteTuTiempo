@@ -243,4 +243,36 @@ public class AuthTest {
                 .andExpect(jsonPath("$.profilePic").value("profilepics/purple.png"));
     }
 
+    @Test
+    public void shouldReturnMemberProfileWhenLoggedIn() throws Exception {
+        String loginJson = """
+        {
+            "username": "member1",
+            "password": "m13mbr0CTT"
+        }
+        """;
+
+        String loginResponse = mockMvc.perform(post(LOGIN_URL)
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(loginJson))
+                                    .andExpect(status().isOk())
+                                    .andExpect(jsonPath("$.token").exists())
+                                    .andReturn().getResponse().getContentAsString();
+
+        String memberToken = JsonPath.read(loginResponse, "$.token");
+
+        mockMvc.perform(get(PROFILE_URL)
+                .header("Authorization", "Bearer " + memberToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("John"))
+                .andExpect(jsonPath("$.lastName").value("Doe"))
+                .andExpect(jsonPath("$.username").value("member1"))
+                .andExpect(jsonPath("$.email").value("member1@example.com"))
+                .andExpect(jsonPath("$.profilePic").value("profilepics/blue.png"))
+                .andExpect(jsonPath("$.biography").value("Hola, soy John Doe. Me gusta cocinar y jugar al baloncesto."))
+                .andExpect(jsonPath("$.dateOfMembership").value("16/01/2022"))
+                .andExpect(jsonPath("$.hours").value("4"))
+                .andExpect(jsonPath("$.minutes").value("30"));
+    }
+
 }
