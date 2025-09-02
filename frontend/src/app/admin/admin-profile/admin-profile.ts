@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AdminService } from '../../services/admin/admin.service';
 import { AdminDTO } from '../../services/admin/admin-dto';
 import { FormBuilder, Validators } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-profile',
@@ -25,7 +26,7 @@ export class AdminProfile {
     email: ['', [Validators.required, Validators.email]]
   });
 
-  profilePicture?: string;
+  profilePicture: string = environment.hostUrl + 'profilepics/gray.png';
 
   constructor() {
     this.adminService.getProfile().subscribe({
@@ -37,7 +38,9 @@ export class AdminProfile {
           lastName: adminData.lastName,
           email: adminData.email
         });
-        this.profilePicture = adminData.profilePic;
+        if (adminData.profilePic && adminData.profilePic !== '') {
+          this.profilePicture = adminData.profilePic;
+        }
       },
       error: (err) => {
         this.errorMessage = err;
