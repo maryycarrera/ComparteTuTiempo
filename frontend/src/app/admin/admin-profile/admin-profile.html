@@ -1,3 +1,17 @@
 <div class="main-title-container">
-    <p class="main-title">Mi Perfil (Admin)</p>
+    <p class="main-title">Mi Perfil</p>
+</div>
+
+<div class="profile-container">
+    <div class="profile-pic">
+        <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
+    </div>
+    <div class="profile-data">
+        <div class="profile-box">
+            <p><b>Nombre:</b> {{ currentAdmin?.name }}</p>
+            <p><b>Apellido/s:</b> {{ currentAdmin?.lastName }}</p>
+            <p><b>Nombre de usuario:</b> {{ currentAdmin?.username }}</p>
+            <p><b>Correo electrónico:</b> {{ currentAdmin?.email }}</p>
+        </div>
+    </div>
 </div>
