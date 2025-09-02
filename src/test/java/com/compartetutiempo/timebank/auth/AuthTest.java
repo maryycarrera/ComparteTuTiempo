@@ -1,5 +1,6 @@
 package com.compartetutiempo.timebank.auth;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,9 +50,9 @@ public class AuthTest {
                 .andExpect(status().isOk());
 
         // Intentar acceder con el token después del logout (opcional, si tienes endpoint protegido)
-        // mockMvc.perform(get("/api/v1/protected-endpoint")
-        //         .header("Authorization", "Bearer " + memberToken))
-        //         .andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/api/v1/auth/profile")
+                .header("Authorization", "Bearer " + memberToken))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -200,6 +201,40 @@ public class AuthTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailProfileRouteWhenNotLoggedIn() throws Exception {
+        mockMvc.perform(get("/api/v1/auth/profile"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void shouldReturnAdminProfileWhenLoggedIn() throws Exception {
+        String loginJson = """
+        {
+            "username": "admin1",
+            "password": "sys4dm1n*!"
+        }
+        """;
+
+        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
+                                    .contentType(MediaType.APPLICATION_JSON)
+                                    .content(loginJson))
+                                    .andExpect(status().isOk())
+                                    .andExpect(jsonPath("$.token").exists())
+                                    .andReturn().getResponse().getContentAsString();
+
+        String adminToken = JsonPath.read(loginResponse, "$.token");
+
+        mockMvc.perform(get("/api/v1/auth/profile")
+                .header("Authorization", "Bearer " + adminToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Administrador"))
+                .andExpect(jsonPath("$.lastName").value("del Sistema"))
+                .andExpect(jsonPath("$.username").value("admin1"))
+                .andExpect(jsonPath("$.email").value("admin1@example.com"))
+                .andExpect(jsonPath("$.profilePic").value("profilepics/purple.png"));
     }
 
 }
