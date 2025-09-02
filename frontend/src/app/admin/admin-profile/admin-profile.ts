@@ -39,7 +39,19 @@ export class AdminProfile {
           email: adminData.email
         });
         if (adminData.profilePic && adminData.profilePic !== '') {
-          this.profilePicture = adminData.profilePic;
+          // Construir la URL completa apuntando al backend
+          let picUrl = adminData.profilePic;
+          if (!picUrl.startsWith('http')) {
+            picUrl = environment.hostUrl + adminData.profilePic;
+          }
+          this.adminService.getProfilePicture(picUrl).subscribe({
+            next: (blob) => {
+              this.profilePicture = URL.createObjectURL(blob);
+            },
+            error: (err) => {
+              this.errorMessage = 'No se pudo cargar la foto de perfil.';
+            }
+          });
         }
       },
       error: (err) => {

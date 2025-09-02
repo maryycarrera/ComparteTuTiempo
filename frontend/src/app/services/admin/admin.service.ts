@@ -13,11 +13,12 @@ export class AdminService {
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
+  token = this.loginService.userToken;
+
   getProfile(): Observable<AdminDTO> {
-    const token = this.loginService.userToken;
     return this.http.get<AdminDTO>(environment.apiUrl + 'auth/profile', {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${this.token}`
       }
     }).pipe(
       catchError(this.handleError)
@@ -32,6 +33,15 @@ export class AdminService {
       errorMsg = error.error;
     }
     return throwError(() => new Error(errorMsg));
+  }
+
+  getProfilePicture(picUrl: string): Observable<Blob> {
+    return this.http.get(picUrl, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      },
+      responseType: 'blob'
+    });
   }
 
 }
