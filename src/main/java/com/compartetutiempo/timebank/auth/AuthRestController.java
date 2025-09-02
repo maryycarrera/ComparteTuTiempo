@@ -106,7 +106,7 @@ public class AuthRestController {
 
     // START Generado con IntelliCode Extension
     @PostMapping("/logout")
-    public ResponseEntity<Object> logout(@RequestBody Map<String, String> body) {
+    public ResponseEntity<MessageResponse<String>> logout(@RequestBody Map<String, String> body) {
         String token = body.get("token");
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
@@ -115,7 +115,7 @@ public class AuthRestController {
             jwtBlacklist.add(token, jwtService.getExpiration(token).getTime());
         }
         SecurityContextHolder.clearContext();
-        return ResponseEntity.ok().body("Sesión cerrada con éxito.");
+        return ResponseEntity.ok().body(new MessageResponse<String>("Sesión cerrada con éxito."));
     }
     // END Generado con IntelliCode Extension
 
