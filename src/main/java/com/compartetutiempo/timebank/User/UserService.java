@@ -1,10 +1,13 @@
 package com.compartetutiempo.timebank.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 @Service
 public class UserService {
@@ -34,7 +37,15 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User findCurrentUser() {
-        throw new UnsupportedOperationException("Method not implemented yet");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new AuthenticationCredentialsNotFoundException("No hay usuario autenticado actualmente.");
+        }
+
+        String username = auth.getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
     }
 
     public boolean existsByUsername(String username) {
