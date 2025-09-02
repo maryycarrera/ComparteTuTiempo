@@ -5,7 +5,6 @@
   --color-morado-oscuro: #6c3483;
   --color-lila-pastel: #e9d6f7;
   --color-morado-intenso: #7c3aed;
-  --color-blanco: #ffffff;
   --color-rosa-pastel: #f8c6d8;
   --color-rosa-oscuro: #d14f83;
   --color-crema: #eed1c6;
@@ -22,7 +21,7 @@ html, body {
 }
 
 body {
-  background-color: var(--color-blanco);
+  background-color: white;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -60,7 +59,7 @@ app-footer {
 .btn-primary {
   background-color: var(--color-morado-medio);
   border-color: var(--color-morado-medio);
-  color: var(--color-blanco);
+  color: white;
 }
 
 .btn-primary:disabled,
