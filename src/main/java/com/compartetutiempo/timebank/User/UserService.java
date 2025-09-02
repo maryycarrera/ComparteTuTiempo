@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 @Service
 public class UserService {
@@ -39,7 +40,7 @@ public class UserService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (auth == null || !auth.isAuthenticated()) {
-            throw new ResourceNotFoundException("No hay usuario autenticado actualmente.");
+            throw new AuthenticationCredentialsNotFoundException("No hay usuario autenticado actualmente.");
         }
 
         String username = auth.getName();
