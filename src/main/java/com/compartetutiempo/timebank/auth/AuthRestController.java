@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.admin.AdminDTO;
+import com.compartetutiempo.timebank.admin.Administrator;
 import com.compartetutiempo.timebank.admin.AdministratorService;
 import com.compartetutiempo.timebank.auth.payload.request.LoginRequest;
 import com.compartetutiempo.timebank.auth.payload.request.SignupRequest;
@@ -29,6 +31,8 @@ import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.Member;
 import com.compartetutiempo.timebank.member.MemberService;
+import com.compartetutiempo.timebank.user.Authority;
+import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserService;
 
 import jakarta.validation.Valid;
@@ -124,6 +128,27 @@ public class AuthRestController {
         }
         Member member = authService.registerMember(request);
         return ResponseEntity.ok().body(new MessageResponse<Member>("Registro exitoso.", member));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<Object> getProfile() {
+        User currentUser = userService.findCurrentUser();
+
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autorizado.");
+        }
+
+        Authority authority = currentUser.getAuthority();
+        if (authority.equals(Authority.ADMIN)) {
+            Administrator admin = administratorService.findAdministratorByUser(currentUser.getId());
+            AdminDTO adminDTO = new AdminDTO(admin);
+            return ResponseEntity.ok().body(adminDTO);
+        } else if (authority.equals(Authority.MEMBER)) {
+            Member member = memberService.findMemberByUser(currentUser.getId());
+            return ResponseEntity.ok().body(member);
+        } else {
+            throw new IllegalStateException("El usuario tiene un rol desconocido.");
+        }
     }
 
 }
