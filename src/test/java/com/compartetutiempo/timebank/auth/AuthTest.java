@@ -18,6 +18,7 @@ import com.jayway.jsonpath.JsonPath;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AuthTest {
+    private static final String BASE_URL = "/api/v1/auth";
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,7 +32,7 @@ public class AuthTest {
         }
         """;
 
-        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
+        String loginResponse = mockMvc.perform(post(BASE_URL + "/login")
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(loginJson))
                                     .andExpect(status().isOk())
@@ -44,13 +45,13 @@ public class AuthTest {
         String memberToken = JsonPath.read(loginResponse, "$.token");
 
         String logoutJson = String.format("{\"token\": \"%s\"}", memberToken);
-        mockMvc.perform(post("/api/v1/auth/logout")
+        mockMvc.perform(post(BASE_URL + "/logout")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(logoutJson))
                 .andExpect(status().isOk());
 
         // Intentar acceder con el token después del logout (opcional, si tienes endpoint protegido)
-        mockMvc.perform(get("/api/v1/auth/profile")
+        mockMvc.perform(get(BASE_URL + "/profile")
                 .header("Authorization", "Bearer " + memberToken))
                 .andExpect(status().isUnauthorized());
     }
@@ -64,7 +65,7 @@ public class AuthTest {
         }
         """;
 
-        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
+        String loginResponse = mockMvc.perform(post(BASE_URL + "/login")
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(loginJson))
                                     .andExpect(status().isOk())
@@ -77,7 +78,7 @@ public class AuthTest {
         String adminToken = JsonPath.read(loginResponse, "$.token");
 
         String logoutJson = String.format("{\"token\": \"%s\"}", adminToken);
-        mockMvc.perform(post("/api/v1/auth/logout")
+        mockMvc.perform(post(BASE_URL + "/logout")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(logoutJson))
                 .andExpect(status().isOk());
@@ -92,7 +93,7 @@ public class AuthTest {
         }
         """;
 
-        mockMvc.perform(post("/api/v1/auth/login")
+        mockMvc.perform(post(BASE_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isBadRequest());
@@ -107,7 +108,7 @@ public class AuthTest {
         }
         """;
 
-        mockMvc.perform(post("/api/v1/auth/login")
+        mockMvc.perform(post(BASE_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isBadRequest());
@@ -117,7 +118,7 @@ public class AuthTest {
     public void shouldFailLoginWhenCredentialsAreNotProvided() throws Exception {
         String json = "{}";
 
-        mockMvc.perform(post("/api/v1/auth/login")
+        mockMvc.perform(post(BASE_URL + "/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
                 .andExpect(status().isBadRequest());
@@ -135,7 +136,7 @@ public class AuthTest {
         }
         """;
 
-        mockMvc.perform(post("/api/v1/auth/signup")
+        mockMvc.perform(post(BASE_URL + "/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isOk())
@@ -159,7 +160,7 @@ public class AuthTest {
         }
         """;
 
-        mockMvc.perform(post("/api/v1/auth/signup")
+        mockMvc.perform(post(BASE_URL + "/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isConflict())
@@ -178,7 +179,7 @@ public class AuthTest {
         }
         """;
 
-        mockMvc.perform(post("/api/v1/auth/signup")
+        mockMvc.perform(post(BASE_URL + "/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isConflict())
@@ -197,7 +198,7 @@ public class AuthTest {
         }
         """;
 
-        mockMvc.perform(post("/api/v1/auth/signup")
+        mockMvc.perform(post(BASE_URL + "/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isBadRequest());
@@ -205,7 +206,7 @@ public class AuthTest {
 
     @Test
     public void shouldFailProfileRouteWhenNotLoggedIn() throws Exception {
-        mockMvc.perform(get("/api/v1/auth/profile"))
+        mockMvc.perform(get(BASE_URL + "/profile"))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -218,7 +219,7 @@ public class AuthTest {
         }
         """;
 
-        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
+        String loginResponse = mockMvc.perform(post(BASE_URL + "/login")
                                     .contentType(MediaType.APPLICATION_JSON)
                                     .content(loginJson))
                                     .andExpect(status().isOk())
@@ -227,7 +228,7 @@ public class AuthTest {
 
         String adminToken = JsonPath.read(loginResponse, "$.token");
 
-        mockMvc.perform(get("/api/v1/auth/profile")
+        mockMvc.perform(get(BASE_URL + "/profile")
                 .header("Authorization", "Bearer " + adminToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Administrador"))
