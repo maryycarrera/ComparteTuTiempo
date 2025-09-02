@@ -20,6 +20,7 @@ public class JwtBlacklist {
      * Añade un token a la blacklist con su tiempo de expiración (en ms).
      */
     public void add(String token, long expirationMillis) {
+        System.out.println("[Blacklist] Añadiendo token: '" + token + "' con expiración: " + expirationMillis);
         blacklist.put(token, expirationMillis);
         cleanup();
     }
@@ -28,12 +29,18 @@ public class JwtBlacklist {
      * Verifica si el token está en la blacklist y no ha expirado.
      */
     public boolean contains(String token) {
+        System.out.println("[Blacklist] Comprobando token: '" + token + "'");
         Long exp = blacklist.get(token);
-        if (exp == null) return false;
+        if (exp == null) {
+            System.out.println("[Blacklist] Token NO encontrado");
+            return false;
+        }
         if (exp < System.currentTimeMillis()) {
+            System.out.println("[Blacklist] Token expirado, eliminando");
             blacklist.remove(token);
             return false;
         }
+        System.out.println("[Blacklist] Token ENCONTRADO y válido");
         return true;
     }
 

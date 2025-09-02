@@ -15,7 +15,7 @@ export class LogoutService {
 
   logout(): Observable<string> {
     const token = this.loginService.userToken;
-    return this.http.post<string>(environment.apiUrl + 'auth/logout', { token }).pipe(
+    return this.http.post<string>(environment.apiUrl + 'auth/logout', { token: token }).pipe(
       tap(() => {
         sessionStorage.removeItem('userData');
         this.loginService.currentUserData.next(null);

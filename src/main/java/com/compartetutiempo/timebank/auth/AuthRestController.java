@@ -1,6 +1,7 @@
 package com.compartetutiempo.timebank.auth;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,15 +105,14 @@ public class AuthRestController {
 
     // START Generado con IntelliCode Extension
     @PostMapping("/logout")
-    public ResponseEntity<Object> logout(@RequestParam(required = false) String token) {
-        // START Generado con GitHub Copilot Chat Extension
+    public ResponseEntity<Object> logout(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
         if (token != null && token.startsWith("Bearer ")) {
             token = token.substring(7);
         }
         if (token != null && !token.isEmpty()) {
             jwtBlacklist.add(token, jwtService.getExpiration(token).getTime());
         }
-        // END Generado con GitHub Copilot Chat Extension
         SecurityContextHolder.clearContext();
         return ResponseEntity.ok().body("Sesión cerrada con éxito.");
     }
