@@ -1,6 +1,7 @@
 package com.compartetutiempo.timebank.member;
 
 import lombok.Getter;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 public class MemberProfile {
@@ -22,7 +23,10 @@ public class MemberProfile {
         this.email = member.getEmail();
         this.profilePic = member.getProfilePicture();
         this.biography = member.getBiography();
-        this.dateOfMembership = member.getDateOfMembership().toString();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        this.dateOfMembership = member.getDateOfMembership().format(formatter);
+
         this.hours = member.getHours().toString();
         this.minutes = member.getMinutes().toString();
     }
