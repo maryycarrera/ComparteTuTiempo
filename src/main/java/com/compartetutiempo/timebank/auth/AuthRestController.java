@@ -134,10 +134,6 @@ public class AuthRestController {
     public ResponseEntity<Object> getProfile() {
         User currentUser = userService.findCurrentUser();
 
-        if (currentUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No autorizado.");
-        }
-
         Authority authority = currentUser.getAuthority();
         if (authority.equals(Authority.ADMIN)) {
             Administrator admin = administratorService.findAdministratorByUser(currentUser.getId());
