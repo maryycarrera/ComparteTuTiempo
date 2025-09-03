@@ -12,7 +12,14 @@
 
   --color-verde-correcto: #42A948;
   --color-rojo-incorrecto: #a94442;
+  --color-amarillo-advertencia: #f6eb61;
 
+  --color-sombras: rgba(0,0,0,0.05);
+  --color-texto-destacado: #222;
+  --color-texto-importante: #333;
+  --color-texto-secundario: #444;
+  --color-texto-terciario: #555;
+  --color-texto-ayuda: #666;
 }
 
 html, body {
@@ -122,4 +129,10 @@ form {
   max-width: 400px;
   margin: 10px auto;
   align-self: center;
+}
+
+.profile-pic img {
+	border-radius: 50%;
+	background: lightgray;
+	border: 2px solid var(--color-texto-destacado);
 }
