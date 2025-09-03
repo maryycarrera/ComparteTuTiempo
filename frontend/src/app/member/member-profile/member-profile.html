@@ -1,3 +1,36 @@
+<!-- Plantilla generada con GitHub Copilot Chat Extension, modificada posteriormente -->
 <div class="main-title-container">
-    <p class="main-title">Mi Perfil (Miembro)</p>
+    <p class="main-title">Mi Perfil</p>
+</div>
+
+
+<div class="profile-card">
+    <div class="profile-row">
+        <div class="profile-left">
+            <div class="profile-pic">
+                <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
+            </div>
+            <div class="profile-username">
+                <p class="profile-username-value">{{ currentMember?.username }}</p>
+                <p class="profile-date">Te uniste el {{ dateOfMembership }}</p>
+            </div>
+        </div>
+        <div class="profile-right">
+            <div class="profile-time">
+                <div class="profile-hours">
+                    <span class="profile-hours-value">{{ hours }}</span>
+                    <span class="profile-hours-label">Horas</span>
+                </div>
+                <div class="profile-minutes">
+                    <span class="profile-minutes-value">{{ minutes }}</span>
+                    <span class="profile-minutes-label">Minutos</span>
+                </div>
+            </div>
+            <div class="profile-main-data">
+                <p class="profile-name">{{ currentMember?.name }} {{ currentMember?.lastName }}</p>
+                <p class="profile-email"><b>{{ email }}</b></p>
+                <p class="profile-bio">{{ currentMember?.biography }}</p>
+            </div>
+        </div>
+    </div>
 </div>

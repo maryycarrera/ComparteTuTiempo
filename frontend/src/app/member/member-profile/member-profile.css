@@ -1,0 +1,92 @@
+/* Hoja de estilos generada con GitHub Copilot Chat Extension, modificada posteriormente */
+
+.profile-card {
+	background: var(--color-lavanda);
+	border: 2px dashed var(--color-morado-medio);
+	border-radius: 2rem;
+	max-width: 700px;
+	margin: 2rem auto;
+	padding: 2rem 2rem 1.5rem 2rem;
+	box-shadow: 0 2px 8px var(--color-sombras);
+}
+
+.profile-row {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 3rem;
+}
+
+.profile-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	min-width: 220px;
+}
+
+.profile-right {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex: 1;
+}
+
+.profile-time {
+	display: flex;
+	flex-direction: row;
+	gap: 2.5rem;
+	margin-bottom: 1.2rem;
+	justify-content: flex-start;
+}
+
+.profile-hours, .profile-minutes {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 80px;
+}
+.profile-hours-value, .profile-minutes-value {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+.profile-hours-label, .profile-minutes-label {
+	font-size: 1.1rem;
+	color: var(--color-texto-importante);
+}
+
+.profile-main-data {
+	text-align: left;
+	margin-bottom: 1.2rem;
+}
+.profile-name {
+	font-size: 1.3rem;
+	font-weight: bold;
+	margin-bottom: 0.2rem;
+}
+.profile-email {
+	font-size: 1rem;
+	color: var(--color-texto-secundario);
+	margin-bottom: 0.2rem;
+}
+.profile-bio {
+	font-size: 1rem;
+	color: var(--color-texto-destacado);
+	margin-bottom: 0.2rem;
+}
+.profile-username {
+	text-align: center;
+	margin-top: 0.5rem;
+}
+.profile-username-value {
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 0.1rem;
+}
+.profile-date {
+	font-size: 1rem;
+	color: var(--color-texto-ayuda);
+}
