@@ -2,16 +2,32 @@
     <p class="main-title">Mi Perfil</p>
 </div>
 
+@if (errorMessage && errorMessage.length != 0) {
+    <p class="alert alert-danger">{{errorMessage}}</p>
+}
+
 <div class="profile-container">
     <div class="profile-pic">
         <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
     </div>
     <div class="profile-data">
-        <div class="profile-box">
-            <p><b>Nombre:</b> {{ currentAdmin?.name }}</p>
-            <p><b>Apellido/s:</b> {{ currentAdmin?.lastName }}</p>
-            <p><b>Nombre de usuario:</b> {{ currentAdmin?.username }}</p>
-            <p><b>Correo electrónico:</b> {{ currentAdmin?.email }}</p>
-        </div>
+        <form [formGroup]="profileForm">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nombre de usuario</label>
+                <input type="text" class="form-control" id="username" formControlName="username">
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+            </div>
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Apellido/s</label>
+                <input type="text" class="form-control" id="lastName" formControlName="lastName">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+        </form>
     </div>
 </div>
