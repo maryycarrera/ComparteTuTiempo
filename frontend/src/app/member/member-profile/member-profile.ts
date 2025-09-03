@@ -27,15 +27,13 @@ export class MemberProfile {
     biography: ['', [Validators.maxLength(500)]]
   });
 
-  email: string = 'example@example.com';
-  profilePicture: string = environment.hostUrl + 'profilepics/gray.png';
-  dateOfMembership: string = new Intl.DateTimeFormat('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  }).format(new Date());
-  hours: string = '5';
-  minutes: string = '0';
+  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/gray.png';
+
+  email: string = '';
+  profilePicture: string = MemberProfile.DEFAULT_PROFILE_PICTURE;
+  dateOfMembership: string = '';
+  hours: string = '';
+  minutes: string = '';
 
   constructor() {
     this.memberService.getProfile().subscribe({

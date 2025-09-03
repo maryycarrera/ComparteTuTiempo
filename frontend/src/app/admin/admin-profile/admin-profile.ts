@@ -28,7 +28,9 @@ export class AdminProfile {
     email: ['']
   });
 
-  profilePicture: string = environment.hostUrl + 'profilepics/gray.png';
+  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/gray.png';
+
+  profilePicture: string = AdminProfile.DEFAULT_PROFILE_PICTURE;
 
   constructor() {
     this.adminService.getProfile().subscribe({
