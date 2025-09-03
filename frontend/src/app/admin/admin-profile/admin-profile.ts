@@ -25,7 +25,7 @@ export class AdminProfile {
     username: [''],
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
     lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-    email: ['', [Validators.required, Validators.email]]
+    email: ['']
   });
 
   profilePicture: string = environment.hostUrl + 'profilepics/gray.png';
