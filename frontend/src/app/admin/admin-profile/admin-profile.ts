@@ -39,7 +39,6 @@ export class AdminProfile {
           email: adminData.email
         });
         if (adminData.profilePic && adminData.profilePic !== '') {
-          // Construir la URL completa apuntando al backend
           let picUrl = adminData.profilePic;
           if (!picUrl.startsWith('http')) {
             picUrl = environment.hostUrl + adminData.profilePic;
