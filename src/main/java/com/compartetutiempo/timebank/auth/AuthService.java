@@ -72,7 +72,7 @@ public class AuthService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        if (user.getAuthority() == Authority.ADMINISTRATOR) {
+        if (user.getAuthority() == Authority.ADMIN) {
             Administrator admin = administratorRepository.findAdministratorByUser(username)
                     .orElseThrow(() -> new ResourceNotFoundException("Administrator", "username", username));
             return admin.getFullName();
