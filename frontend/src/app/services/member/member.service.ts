@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { LoginService } from '../auth/login.service';
-import { MemberProfile } from './member-profile';
+import { MemberProfileDTO } from './member-profile-dto';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -13,9 +13,9 @@ export class MemberService {
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
-  getProfile(): Observable<MemberProfile> {
+  getProfile(): Observable<MemberProfileDTO> {
     const token = this.loginService.userToken;
-    return this.http.get<MemberProfile>(environment.apiUrl + 'auth/profile', {
+    return this.http.get<MemberProfileDTO>(environment.apiUrl + 'auth/profile', {
       headers: {
         Authorization: `Bearer ${token}`
       }
