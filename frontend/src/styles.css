@@ -8,6 +8,7 @@
   --color-rosa-pastel: #f8c6d8;
   --color-rosa-oscuro: #d14f83;
   --color-crema: #eed1c6;
+  --color-lavanda: #e6e6fa;
 
   --color-verde-correcto: #42A948;
   --color-rojo-incorrecto: #a94442;
@@ -75,6 +76,22 @@ app-footer {
   border-color: var(--color-morado-intenso);
 }
 
+.btn-secondary {
+	background: var(--main-title-color, #888);
+	color: #fff;
+	border: none;
+	border-radius: 2rem;
+	padding: 0.8rem 2.5rem;
+	font-size: 1.1rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+	background: var(--main-title-color, #555);
+}
+
 .card, .bg-secondary {
   background-color: var(--color-lila-pastel);
 }
@@ -103,6 +120,6 @@ app-footer {
 form {
   width: 100%;
   max-width: 400px;
-  margin: 20px auto;
+  margin: 10px auto;
   align-self: center;
 }
