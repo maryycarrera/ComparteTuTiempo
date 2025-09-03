@@ -34,14 +34,4 @@ export class AdminService {
     return throwError(() => new Error(errorMsg));
   }
 
-  getProfilePicture(picUrl: string): Observable<Blob> {
-    const token = this.loginService.userToken;
-    return this.http.get(picUrl, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      responseType: 'blob'
-    });
-  }
-
 }

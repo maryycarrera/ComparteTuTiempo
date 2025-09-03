@@ -3,6 +3,7 @@ import { AdminService } from '../../services/admin/admin.service';
 import { AdminDTO } from '../../services/admin/admin-dto';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { ResourcesService } from '../../services/resources/resources.service';
 
 @Component({
   selector: 'app-admin-profile',
@@ -17,6 +18,7 @@ export class AdminProfile {
   editMode: boolean = false;
 
   private adminService = inject(AdminService);
+  private resourcesService = inject(ResourcesService);
   private fb = inject(FormBuilder);
 
   profileForm = this.fb.group({
@@ -48,7 +50,7 @@ export class AdminProfile {
             picUrl = environment.hostUrl + adminData.profilePic;
           }
         }
-        this.adminService.getProfilePicture(picUrl).subscribe({
+        this.resourcesService.getProfilePicture(picUrl).subscribe({
           next: (blob) => {
             this.profilePicture = URL.createObjectURL(blob);
           },
