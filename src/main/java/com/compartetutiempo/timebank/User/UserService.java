@@ -39,7 +39,7 @@ public class UserService {
     public User findCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if (auth == null || !auth.isAuthenticated()) {
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
             throw new AuthenticationCredentialsNotFoundException("No hay usuario autenticado actualmente.");
         }
 

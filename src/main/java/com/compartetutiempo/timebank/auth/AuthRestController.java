@@ -149,4 +149,10 @@ public class AuthRestController {
         }
     }
 
+    @GetMapping("/fullname")
+    public ResponseEntity<MessageResponse<String>> getFullName() {
+        String fullName = authService.getFullName();
+        return ResponseEntity.ok().body(new MessageResponse<String>("Nombre completo recuperado con éxito.", fullName));
+    }
+
 }
