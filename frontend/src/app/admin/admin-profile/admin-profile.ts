@@ -3,6 +3,7 @@ import { AdminService } from '../../services/admin/admin.service';
 import { AdminDTO } from '../../services/admin/admin-dto';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { ResourcesService } from '../../services/resources/resources.service';
 
 @Component({
   selector: 'app-admin-profile',
@@ -17,16 +18,19 @@ export class AdminProfile {
   editMode: boolean = false;
 
   private adminService = inject(AdminService);
+  private resourcesService = inject(ResourcesService);
   private fb = inject(FormBuilder);
 
   profileForm = this.fb.group({
     username: [''],
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
     lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-    email: ['', [Validators.required, Validators.email]]
+    email: ['']
   });
 
-  profilePicture: string = environment.hostUrl + 'profilepics/gray.png';
+  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/gray.png';
+
+  profilePicture: string = AdminProfile.DEFAULT_PROFILE_PICTURE;
 
   constructor() {
     this.adminService.getProfile().subscribe({
@@ -48,7 +52,7 @@ export class AdminProfile {
             picUrl = environment.hostUrl + adminData.profilePic;
           }
         }
-        this.adminService.getProfilePicture(picUrl).subscribe({
+        this.resourcesService.getProfilePicture(picUrl).subscribe({
           next: (blob) => {
             this.profilePicture = URL.createObjectURL(blob);
           },

@@ -10,12 +10,6 @@
 	margin-right: 3rem;
 }
 
-.profile-pic img {
-	border-radius: 50%;
-	background: lightgray;
-	border: 2px solid black;
-}
-
 .profile-data {
 	display: flex;
 	flex-direction: column;

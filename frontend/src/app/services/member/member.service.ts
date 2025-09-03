@@ -1,21 +1,21 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
-import { AdminDTO } from './admin-dto';
-import { environment } from '../../../environments/environment';
 import { LoginService } from '../auth/login.service';
+import { MemberProfileDTO } from './member-profile-dto';
+import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class MemberService {
 
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
-  getProfile(): Observable<AdminDTO> {
+  getProfile(): Observable<MemberProfileDTO> {
     const token = this.loginService.userToken;
-    return this.http.get<AdminDTO>(environment.apiUrl + 'auth/profile', {
+    return this.http.get<MemberProfileDTO>(environment.apiUrl + 'auth/profile', {
       headers: {
         Authorization: `Bearer ${token}`
       }
