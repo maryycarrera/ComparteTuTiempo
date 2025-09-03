@@ -53,12 +53,12 @@ export class AdminProfile {
             this.profilePicture = URL.createObjectURL(blob);
           },
           error: (err) => {
-            this.errorMessage = err;
+            this.errorMessage = err && err.message ? err.message : String(err);
           }
         });
       },
       error: (err) => {
-        this.errorMessage = err;
+        this.errorMessage = err && err.message ? err.message : String(err);
       },
       complete: () => {
         console.info('Datos del perfil cargados correctamente');
