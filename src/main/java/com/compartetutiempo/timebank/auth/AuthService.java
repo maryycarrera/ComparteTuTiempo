@@ -69,13 +69,20 @@ public class AuthService {
 
         String username = auth.getName();
 
-        Administrator admin = administratorRepository.findAdministratorByUser(username).orElse(null);
-        if (admin != null) {
-            return admin.getFullName();
-        }
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
-        Member member = memberRepository.findMemberByUser(username).orElseThrow(() -> new ResourceNotFoundException("Member", "username", username));
-        return member.getFullName();
+        if (user.getAuthority() == Authority.ADMINISTRATOR) {
+            Administrator admin = administratorRepository.findAdministratorByUser(username)
+                    .orElseThrow(() -> new ResourceNotFoundException("Administrator", "username", username));
+            return admin.getFullName();
+        } else if (user.getAuthority() == Authority.MEMBER) {
+            Member member = memberRepository.findMemberByUser(username)
+                    .orElseThrow(() -> new ResourceNotFoundException("Member", "username", username));
+            return member.getFullName();
+        } else {
+            throw new AuthenticationCredentialsNotFoundException("Unknown user authority.");
+        }
     }
 
 }
