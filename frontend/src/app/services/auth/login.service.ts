@@ -4,6 +4,7 @@ import { JwtResponse } from './payload/response/jwt-response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { MessageResponse } from './payload/response/message-response';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,16 @@ export class LoginService {
         this.currentUserData.next(userData);
         this.currentIsUserLoggedIn.next(true);
       }),
+      catchError(this.handleError)
+    );
+  }
+
+  fullname(): Observable<MessageResponse> {
+    return this.http.get<MessageResponse>(environment.apiUrl + 'auth/fullname', {
+      headers: {
+        Authorization: `Bearer ${this.userToken}`
+      }
+    }).pipe(
       catchError(this.handleError)
     );
   }
