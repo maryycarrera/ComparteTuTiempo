@@ -9,12 +9,12 @@ import { LoginService } from '../../../services/auth/login.service';
 })
 export class Home {
 
-  private logginService = inject(LoginService);
+  private loginService = inject(LoginService);
 
   fullname: string = '';
 
   constructor() {
-    this.logginService.fullname().subscribe({
+    this.loginService.fullname().subscribe({
       next: (response) => {
         this.fullname = response.object;
       },
