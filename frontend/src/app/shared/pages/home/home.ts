@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { LoginService } from '../../../services/auth/login.service';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +8,20 @@ import { Component } from '@angular/core';
   styleUrl: './home.css'
 })
 export class Home {
+
+  private logginService = inject(LoginService);
+
+  fullname: string = '';
+
+  constructor() {
+    this.logginService.fullname().subscribe({
+      next: (response) => {
+        this.fullname = response.object;
+      },
+      error: (error) => {
+        console.error('Error al obtener el nombre completo:', error);
+      }
+    });
+  }
 
 }
