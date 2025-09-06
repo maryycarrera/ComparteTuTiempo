@@ -8,9 +8,11 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
 
 ENV SPRING_PROFILES_ACTIVE=prod
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["/wait-for-it.sh", "mariadb:3306", "--", "java", "-jar", "app.jar"]

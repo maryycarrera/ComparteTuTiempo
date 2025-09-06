@@ -27,18 +27,18 @@ services:
     restart: always
     networks:
       - appnet
+    entrypoint: ["/wait-for-it.sh", "mariadb:3306", "--", "java", "-jar", "app.jar"]
 
-  compartetiempo:
-    compartetutiempo:
-      build: ./frontend
-      container_name: compartetutiempo
-      depends_on:
-        - backend
-      ports:
-        - "80:80"
-      restart: always
-      networks:
-        - appnet
+  compartetutiempo:
+    build: ./frontend
+    container_name: compartetutiempo
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - appnet
 
 volumes:
   mariadb_data:
