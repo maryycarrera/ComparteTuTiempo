@@ -26,13 +26,13 @@ services:
     networks:
       - appnet
 
-  frontend:
+  compartetiempo:
     build: ./frontend
-    container_name: frontend
+    container_name: compartetiempo
     depends_on:
       - backend
     ports:
-      - "8081:8081"
+      - "80:80"
     restart: always
     networks:
       - appnet

@@ -9,5 +9,5 @@ FROM node:22-alpine AS serve
 WORKDIR /app
 RUN npm install -g http-server
 COPY --from=build /app/dist/frontend/ ./dist
-EXPOSE 8081
-CMD ["http-server", "./dist", "-p", "8081"]
+EXPOSE 80
+CMD ["http-server", "./dist", "-p", "80"]
