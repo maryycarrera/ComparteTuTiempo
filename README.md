@@ -32,9 +32,20 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 
 ---
 
-## Ejecutar el proyecto
+## Ejecutar el proyecto en desarrollo
 
 ### Backend (Spring Boot)
+
+1. **Genera un archivo para las variables de entorno:**
+    - Abre una terminal y escribe:
+        ```sh
+        cp .env.dev.example .env
+        ```
+    - Esto creará el archivo `.env`. En este archivo, sustituye los `<CHANGE_ME>` por los valores adecuados.
+        - Para la variable JWT_KEY, puedes generar una clave segura usando el comando:
+            ```sh
+            [Convert]::ToBase64String((1..32 | ForEach-Object {Get-Random -Maximum 256}) -as [byte[]])
+            ```
 
 1. **Configura la base de datos MariaDB/MySQL:**
      - Abre una terminal y accede a MariaDB como root:
