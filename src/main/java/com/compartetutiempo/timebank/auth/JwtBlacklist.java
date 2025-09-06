@@ -5,6 +5,8 @@
 package com.compartetutiempo.timebank.auth;
 
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +15,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 @Component
 public class JwtBlacklist {
+    @Autowired
+    private Environment environment;
     // token -> expiration timestamp (ms)
     private final Map<String, Long> blacklist = new ConcurrentHashMap<>();
 
@@ -20,7 +24,9 @@ public class JwtBlacklist {
      * Añade un token a la blacklist con su tiempo de expiración (en ms).
      */
     public void add(String token, long expirationMillis) {
-        System.out.println("[Blacklist] Añadiendo token: '" + token + "' con expiración: " + expirationMillis);
+        if (!isProd()) {
+            System.out.println("[Blacklist] Añadiendo token: '" + token + "' con expiración: " + expirationMillis);
+        }
         blacklist.put(token, expirationMillis);
         cleanup();
     }
@@ -29,19 +35,37 @@ public class JwtBlacklist {
      * Verifica si el token está en la blacklist y no ha expirado.
      */
     public boolean contains(String token) {
-        System.out.println("[Blacklist] Comprobando token: '" + token + "'");
+        if (!isProd()) {
+            System.out.println("[Blacklist] Comprobando token: '" + token + "'");
+        }
         Long exp = blacklist.get(token);
         if (exp == null) {
-            System.out.println("[Blacklist] Token NO encontrado");
+            if (!isProd()) {
+                System.out.println("[Blacklist] Token NO encontrado");
+            }
             return false;
         }
         if (exp < System.currentTimeMillis()) {
-            System.out.println("[Blacklist] Token expirado, eliminando");
+            if (!isProd()) {
+                System.out.println("[Blacklist] Token expirado, eliminando");
+            }
             blacklist.remove(token);
             return false;
         }
-        System.out.println("[Blacklist] Token ENCONTRADO y válido");
+        if (!isProd()) {
+            System.out.println("[Blacklist] Token ENCONTRADO y válido");
+        }
         return true;
+    }
+
+    private boolean isProd() {
+        if (environment == null) return false;
+        for (String profile : environment.getActiveProfiles()) {
+            if (profile.equalsIgnoreCase("prod")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
