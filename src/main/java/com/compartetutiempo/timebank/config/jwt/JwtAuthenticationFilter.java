@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.compartetutiempo.timebank.auth.JwtBlacklist;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsImpl;
 import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
@@ -28,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private com.compartetutiempo.timebank.auth.JwtBlacklist jwtBlacklist;
+    private JwtBlacklist jwtBlacklist;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
