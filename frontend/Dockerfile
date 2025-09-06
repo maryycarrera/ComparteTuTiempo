@@ -1,7 +1,7 @@
 # Etapa 1: Construcción
 FROM node:22 AS build
 WORKDIR /app
-COPY frontend/ .
+COPY . .
 RUN npm install && npm run build -- --configuration=production
 
 # Etapa 2: Servir archivos estáticos
