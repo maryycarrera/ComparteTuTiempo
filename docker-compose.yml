@@ -12,6 +12,8 @@ services:
       - "3306:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
+    networks:
+      - appnet
 
   backend:
     build: .
@@ -27,15 +29,16 @@ services:
       - appnet
 
   compartetiempo:
-    build: ./frontend
-    container_name: compartetiempo
-    depends_on:
-      - backend
-    ports:
-      - "80:80"
-    restart: always
-    networks:
-      - appnet
+    compartetutiempo:
+      build: ./frontend
+      container_name: compartetutiempo
+      depends_on:
+        - backend
+      ports:
+        - "80:80"
+      restart: always
+      networks:
+        - appnet
 
 volumes:
   mariadb_data:
