@@ -3,6 +3,7 @@ package com.compartetutiempo.data;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.core.env.Environment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,10 +20,12 @@ import jakarta.annotation.PostConstruct;
 public class MemberCsvImporter {
 
     private final MemberRepository memberRepository;
+    private final Environment env;
 
     @Autowired
-    public MemberCsvImporter(MemberRepository memberRepository) {
+    public MemberCsvImporter(MemberRepository memberRepository, Environment env) {
         this.memberRepository = memberRepository;
+        this.env = env;
         System.out.println("[IMPORT] Bean MemberCsvImporter creado");
     }
 
@@ -56,8 +59,22 @@ public class MemberCsvImporter {
 
                 return member;
             });
-            memberRepository.saveAll(members);
-            System.out.println("[IMPORT] Miembros importados: " + members.size());
+            String activeProfile = env.getProperty("spring.profiles.active", "dev");
+            if ("prod".equals(activeProfile)) {
+                int importados = 0;
+                for (Member member : members) {
+                    try {
+                        memberRepository.save(member);
+                        importados++;
+                    } catch (Exception e) {
+                        System.out.println("[IMPORT][WARN] Miembro duplicado ignorado: " + member.getUser().getUsername());
+                    }
+                }
+                System.out.println("[IMPORT] Miembros importados: " + importados);
+            } else {
+                memberRepository.saveAll(members);
+                System.out.println("[IMPORT] Miembros importados: " + members.size());
+            }
         } catch (Exception e) {
             System.out.println("[IMPORT][ERROR] Error importando miembros: " + e.getMessage());
             e.printStackTrace();

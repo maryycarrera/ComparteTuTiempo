@@ -20,10 +20,12 @@ import java.util.List;
 public class AdministratorCsvImporter {
 
     private final AdministratorRepository administratorRepository;
+    private final org.springframework.core.env.Environment env;
 
     @Autowired
-    public AdministratorCsvImporter(AdministratorRepository administratorRepository) {
+    public AdministratorCsvImporter(AdministratorRepository administratorRepository, org.springframework.core.env.Environment env) {
         this.administratorRepository = administratorRepository;
+        this.env = env;
         System.out.println("[IMPORT] Bean AdministratorCsvImporter creado");
     }
 
@@ -48,8 +50,22 @@ public class AdministratorCsvImporter {
 
                 return admin;
             });
-            administratorRepository.saveAll(admins);
-            System.out.println("[IMPORT] Administradores importados: " + admins.size());
+            String activeProfile = env.getProperty("spring.profiles.active", "dev");
+            if ("prod".equals(activeProfile)) {
+                int importados = 0;
+                for (Administrator admin : admins) {
+                    try {
+                        administratorRepository.save(admin);
+                        importados++;
+                    } catch (Exception e) {
+                        System.out.println("[IMPORT][WARN] Administrador duplicado ignorado: " + admin.getUser().getUsername());
+                    }
+                }
+                System.out.println("[IMPORT] Administradores importados: " + importados);
+            } else {
+                administratorRepository.saveAll(admins);
+                System.out.println("[IMPORT] Administradores importados: " + admins.size());
+            }
         } catch (Exception e) {
             System.out.println("[IMPORT][ERROR] Error importando administradores: " + e.getMessage());
             e.printStackTrace();
