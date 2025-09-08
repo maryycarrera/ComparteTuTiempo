@@ -138,7 +138,7 @@ public class AuthTest {
             "lastName": "Pérez",
             "username": "juanperez1",
             "email": "juan.perez1@example.com",
-            "password": "seguro123"
+            "password": "seguro123&"
         }
         """;
 
@@ -162,7 +162,7 @@ public class AuthTest {
             "lastName": "Swift",
             "username": "member1",
             "email": "taylor.swift13@example.com",
-            "password": "il0vecats89"
+            "password": "il0vecats89!"
         }
         """;
 
@@ -181,7 +181,7 @@ public class AuthTest {
             "lastName": "Swift",
             "username": "taylorswift13",
             "email": "admin1@example.com",
-            "password": "il0vecats89"
+            "password": "il0vecats89!"
         }
         """;
 
