@@ -1,4 +1,5 @@
 import { Routes, Router, CanActivateFn } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { Login } from './auth/login/login';
 import { inject } from '@angular/core';
 import { LoginService } from './services/auth/login.service';
@@ -25,12 +26,9 @@ const adminGuard: CanActivateFn = (route, state) => {
     const router = inject(Router);
     const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
     if (isLoggedIn) {
-        const isAdmin = loginService.userIsAdmin;
-        if (isAdmin) {
-            return true;
-        } else {
-            return router.parseUrl('/inicio');
-        }
+        return loginService.userIsAdmin.pipe(
+            map((isAdmin: boolean) => isAdmin ? true : router.parseUrl('/inicio'))
+        );
     } else {
         return router.parseUrl('/iniciar-sesion');
     }
