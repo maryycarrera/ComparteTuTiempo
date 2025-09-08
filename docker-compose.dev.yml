@@ -1,0 +1,48 @@
+services:
+  mariadb:
+    image: mariadb:11.7.2
+    container_name: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: compartetutiempo
+      MARIADB_USER: compartetutiempo
+      MARIADB_PASSWORD: compartetutiempo
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - appnet
+
+  backend:
+    build: .
+    container_name: backend
+    depends_on:
+      - mariadb
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - appnet
+    entrypoint: ["/wait-for-it.sh", "mariadb:3306", "--", "java", "-jar", "app.jar"]
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - appnet
+
+volumes:
+  mariadb_data:
+
+networks:
+  appnet:
+    driver: bridge
