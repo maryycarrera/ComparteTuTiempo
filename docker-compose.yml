@@ -29,9 +29,9 @@ services:
       - appnet
     entrypoint: ["/wait-for-it.sh", "mariadb:3306", "--", "java", "-jar", "app.jar"]
 
-  compartetutiempo:
+  frontend:
     build: ./frontend
-    container_name: compartetutiempo
+    container_name: frontend
     depends_on:
       - backend
     ports:
