@@ -21,7 +21,8 @@
 
 - [Qué es ComparteTuTiempo](#qué-es-compartetutiempo)
 - [Ejecutar el proyecto](#ejecutar-el-proyecto)
-- [Utilizar ComparteTuTiempo](#utilizar-compartetutiempo)
+- [Utilizar la aplicación ComparteTuTiempo](#utilizar-la-aplicación-compartetutiempo)
+- [Credenciales de ComparteTuTiempo](#credenciales-de-compartetutiempo)
 - [Contribuciones](#contribuciones)
 
 ---
@@ -33,6 +34,8 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 ---
 
 ## Ejecutar el proyecto
+
+Primero, haz un _fork_ de este repositorio y clónalo o descárgate el código fuente.
 
 ### Backend (Spring Boot)
 
@@ -77,7 +80,48 @@ En otra terminal:
 
 La aplicación estará disponible en http://localhost:4200.
 
-## Utilizar ComparteTuTiempo
+---
+
+## Utilizar la aplicación ComparteTuTiempo
+
+Puedes levantar toda la aplicación usando las imágenes públicas de Docker Hub y el archivo `docker-compose.prod.yml`.
+
+### Requisitos previos
+
+Antes de comenzar, asegúrate de tener instalado en tu sistema:
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+
+1. Descarga el archivo `docker-compose.prod.yml` de este repositorio.
+2. Renómbralo a `docker-compose.yml` (opcional, para facilitar el uso de comandos estándar).
+3. Ejecuta el siguiente comando en la raíz del proyecto:
+   ```sh
+   docker compose up -d
+   ```
+
+Esto descargará automáticamente las imágenes necesarias:
+- Backend: `marycarrera/comparte-tu-tiempo-backend:latest`
+- Frontend: `marycarrera/comparte-tu-tiempo-frontend:latest`
+- Base de datos: `mariadb:11.7.2`
+
+La aplicación estará disponible en:
+- Backend: http://localhost:8080
+- Frontend: http://localhost
+
+Para detener el contenedor de la aplicación:
+```sh
+docker compose down
+```
+
+Si prefieres detener el contenedor eliminando también los volúmenes:
+```sh
+docker compose down -v
+```
+
+---
+
+## Credenciales de ComparteTuTiempo
 
 Las credenciales de los usuarios de ComparteTuTiempo son las siguientes:
 
@@ -118,3 +162,5 @@ Gracias a nuestros contribuidores:
 <a href="https://github.com/maryycarrera/ComparteTuTiempo/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=maryycarrera/ComparteTuTiempo" />
 </a>
+
+---

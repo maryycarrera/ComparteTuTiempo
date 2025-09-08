@@ -13,6 +13,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +36,9 @@ public class SecurityConfiguration {
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
+
+    @Value("${allowed.origin}")
+    private String allowedOrigin;
 
     private static final String ADMIN = "ADMIN";
     private static final String MEMBER = "MEMBER";
@@ -85,7 +89,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedOrigins(List.of(allowedOrigin));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
         configuration.setAllowCredentials(true);
