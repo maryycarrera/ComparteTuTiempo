@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class User extends BaseEntity {
     @Column(name = "username", unique = true)
     @NotEmpty
     @Size(min = 5, max = 15)
+    @Pattern(regexp = "^[a-z0-9_.]+$", message = "El nombre de usuario solo puede contener letras minúsculas (sin tildes, excluyendo 'ñ' y 'ç'), números, guiones bajos y puntos.")
     String username;
 
     @NotEmpty
