@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.core.env.Environment;
+import com.compartetutiempo.util.ProfileUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,8 +60,7 @@ public class MemberCsvImporter {
 
                 return member;
             });
-            String activeProfile = env.getProperty("spring.profiles.active", "dev");
-            if ("prod".equals(activeProfile)) {
+            if (ProfileUtils.isProd(env)) {
                 int importados = 0;
                 for (Member member : members) {
                     try {

@@ -11,6 +11,8 @@ import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.core.env.Environment;
+import com.compartetutiempo.util.ProfileUtils;
 
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
@@ -20,10 +22,10 @@ import java.util.List;
 public class AdministratorCsvImporter {
 
     private final AdministratorRepository administratorRepository;
-    private final org.springframework.core.env.Environment env;
+    private final Environment env;
 
     @Autowired
-    public AdministratorCsvImporter(AdministratorRepository administratorRepository, org.springframework.core.env.Environment env) {
+    public AdministratorCsvImporter(AdministratorRepository administratorRepository, Environment env) {
         this.administratorRepository = administratorRepository;
         this.env = env;
         System.out.println("[IMPORT] Bean AdministratorCsvImporter creado");
@@ -50,8 +52,7 @@ public class AdministratorCsvImporter {
 
                 return admin;
             });
-            String activeProfile = env.getProperty("spring.profiles.active", "dev");
-            if ("prod".equals(activeProfile)) {
+            if (ProfileUtils.isProd(env)) {
                 int importados = 0;
                 for (Administrator admin : admins) {
                     try {
