@@ -5,6 +5,7 @@ import { LoginService } from './services/auth/login.service';
 import { Home } from './shared/pages/home/home';
 import { Profile } from './shared/pages/profile/profile';
 import { Signup } from './auth/signup/signup';
+import { AdminList } from './admin/admin-list/admin-list';
 
 // START Generado con GitHub Copilot Chat Extension
 
@@ -18,6 +19,22 @@ const authGuard: CanActivateFn = (route, state) => {
         return router.parseUrl('/iniciar-sesion');
     }
 };
+
+const adminGuard: CanActivateFn = (route, state) => {
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const isLoggedIn = loginService.currentIsUserLoggedIn.getValue();
+    if (isLoggedIn) {
+        const isAdmin = loginService.userIsAdmin;
+        if (isAdmin) {
+            return true;
+        } else {
+            return router.parseUrl('/inicio');
+        }
+    } else {
+        return router.parseUrl('/iniciar-sesion');
+    }
+}
 
 const guestGuard: CanActivateFn = (route, state) => {
     const loginService = inject(LoginService);
@@ -39,5 +56,6 @@ export const routes: Routes = [
     { path: 'iniciar-sesion', component: Login, canActivate: [guestGuard] },
     { path: 'registro', component: Signup, canActivate: [guestGuard] },
     { path: 'perfil', component: Profile, canActivate: [authGuard] },
+    { path: 'administradores', component: AdminList, canActivate: [adminGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];
