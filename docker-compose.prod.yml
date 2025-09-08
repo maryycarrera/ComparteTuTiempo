@@ -16,7 +16,7 @@ services:
       - appnet
 
   backend:
-    image: marycarrera/comparte-tu-tiempo-backend:1.0
+    image: marycarrera/comparte-tu-tiempo-backend:latest
     container_name: backend
     depends_on:
       - mariadb
@@ -29,9 +29,9 @@ services:
       - appnet
     entrypoint: ["/wait-for-it.sh", "mariadb:3306", "--", "java", "-jar", "app.jar"]
 
-  compartetutiempo:
-    image: marycarrera/comparte-tu-tiempo-frontend:1.0
-    container_name: compartetutiempo
+  frontend:
+    image: marycarrera/comparte-tu-tiempo-frontend:latest
+    container_name: frontend
     depends_on:
       - backend
     ports:
