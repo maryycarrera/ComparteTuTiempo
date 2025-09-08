@@ -35,6 +35,8 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 
 ## Ejecutar el proyecto
 
+Primero, haz un _fork_ de este repositorio y clónalo o descárgate el código fuente.
+
 ### Backend (Spring Boot)
 
 1. **Configura la base de datos MariaDB/MySQL:**
@@ -83,6 +85,13 @@ La aplicación estará disponible en http://localhost:4200.
 ## Utilizar la aplicación ComparteTuTiempo
 
 Puedes levantar toda la aplicación usando las imágenes públicas de Docker Hub y el archivo `docker-compose.prod.yml`.
+
+### Requisitos previos
+
+Antes de comenzar, asegúrate de tener instalado en tu sistema:
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
 
 1. Descarga el archivo `docker-compose.prod.yml` de este repositorio.
 2. Renómbralo a `docker-compose.yml` (opcional, para facilitar el uso de comandos estándar).
