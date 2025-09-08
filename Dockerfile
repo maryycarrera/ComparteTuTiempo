@@ -1,3 +1,4 @@
+# Archivo generado con GitHub Copilot Chat Extension
 # Etapa 1: Construcción
 FROM maven:3.9.11-eclipse-temurin-21 AS build
 WORKDIR /app

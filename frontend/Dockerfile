@@ -1,3 +1,4 @@
+# Archivo generado con GitHub Copilot Chat Extension
 # Etapa 1: Construcción
 FROM node:22 AS build
 WORKDIR /app

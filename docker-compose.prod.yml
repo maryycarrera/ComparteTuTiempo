@@ -1,3 +1,4 @@
+# Archivo generado con GitHub Copilot Chat Extension
 services:
   mariadb:
     image: mariadb:11.7.2
