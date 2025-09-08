@@ -31,6 +31,10 @@ public class SignupRequest {
 
     @NotEmpty
     @Size(min = 8, max = 12)
+    @Pattern(
+        regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).+$",
+        message = "La contraseña debe contener al menos una minúscula, un número y un símbolo."
+    )
     private String password;
 
 }
