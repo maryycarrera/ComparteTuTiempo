@@ -1,3 +1,7 @@
+/*
+ * Clase generada con GitHub Copilot Chat Extension
+ */
+
 package com.compartetutiempo.util;
 
 import org.springframework.core.env.Environment;
