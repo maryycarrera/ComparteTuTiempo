@@ -14,7 +14,11 @@ export class SignupService implements UserCreationService {
 
   private http = inject(HttpClient);
 
-  create(data: SignupRequest): Observable<MessageResponse> {
+  create(request: SignupRequest): Observable<MessageResponse> {
+    return this.signup(request);
+  }
+
+  private signup(data: SignupRequest): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(environment.apiUrl + 'auth/signup', data).pipe(
       catchError(this.handleError)
     );
