@@ -13,7 +13,7 @@ export class SignupService {
 
   private http = inject(HttpClient);
 
-  signup(data: SignupRequest): Observable<MessageResponse> {
+  create(data: SignupRequest): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(environment.apiUrl + 'auth/signup', data).pipe(
       catchError(this.handleError)
     );

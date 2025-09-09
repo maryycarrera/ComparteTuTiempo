@@ -88,10 +88,10 @@ export class Signup {
         password: this.password.value!
       };
 
-      this.signupService.signup(signupRequest).subscribe({
+      this.signupService.create(signupRequest).subscribe({
         next: () => {
           this.signupSuccess = 'Cuenta creada correctamente. Inicia sesión para comenzar a utilizar el Banco de Tiempo.';
-          this.router.navigateByUrl('/iniciar-sesion', { state: { signupSuccess: this.signupSuccess } });
+          this.router.navigateByUrl('/iniciar-sesion', { state: { successMsg: this.signupSuccess } });
           this.signupForm.reset();
         },
         error: (error) => {

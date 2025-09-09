@@ -37,8 +37,8 @@ export class Login {
 
   constructor() {
     const navigation = window.history.state;
-    if (navigation && navigation.signupSuccess) {
-      this.loginSuccess = navigation.signupSuccess;
+    if (navigation && navigation.successMsg) {
+      this.loginSuccess = navigation.successMsg;
     }
   }
 
