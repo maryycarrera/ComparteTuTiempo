@@ -7,6 +7,7 @@ import { Home } from './shared/pages/home/home';
 import { Profile } from './shared/pages/profile/profile';
 import { Signup } from './auth/signup/signup';
 import { AdminList } from './admin/admin-list/admin-list';
+import { CreateAdmin } from './admin/create-admin/create-admin';
 
 // START Generado con GitHub Copilot Chat Extension
 
@@ -55,5 +56,6 @@ export const routes: Routes = [
     { path: 'registro', component: Signup, canActivate: [guestGuard] },
     { path: 'perfil', component: Profile, canActivate: [authGuard] },
     { path: 'administradores', component: AdminList, canActivate: [adminGuard] },
+    { path: 'administradores/crear', component: CreateAdmin, canActivate: [adminGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];
