@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin/admin.service';
@@ -11,7 +11,7 @@ import { SignupService } from '../../services/auth/signup.service';
   templateUrl: './base-user-form.html',
   styleUrl: './base-user-form.css'
 })
-export class BaseUserForm {
+export class BaseUserForm implements OnInit {
 
   @Input() isSignup: boolean = false;
 
@@ -19,14 +19,21 @@ export class BaseUserForm {
   private router = inject(Router);
   private adminService = inject(AdminService);
   private signupService = inject(SignupService);
-  private service = this.isSignup ? this.signupService : this.adminService;
 
   successMsg: string = '';
   errorMsg: string = '';
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
-  navigateTo: string = this.isSignup ? '/iniciar-sesion' : '/administradores';
-  buttonText: string = this.isSignup ? 'Registrarse' : 'Guardar';
+
+  service: any = null;
+  navigateTo: string = '';
+  buttonText: string = '';
+
+  ngOnInit() {
+    this.service = this.isSignup ? this.signupService : this.adminService;
+    this.navigateTo = this.isSignup ? '/iniciar-sesion' : '/administradores';
+    this.buttonText = this.isSignup ? 'Registrarse' : 'Guardar';
+  }
 
   form = this.fb.group({
     name: ['', [
@@ -99,7 +106,7 @@ export class BaseUserForm {
             this.router.navigateByUrl(this.navigateTo, { state: { successMsg: this.successMsg } });
             this.form.reset();
           },
-          error: (error) => {
+          error: (error: any) => {
             let msg = '';
             if (typeof error === 'string') {
               msg = error.replace('Error: ', '');
