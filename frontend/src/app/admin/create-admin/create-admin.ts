@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { BaseUserForm } from '../../components/base-user-form/base-user-form';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'app-create-admin',
   imports: [BaseUserForm],
-  templateUrl: './signup.html',
-  styleUrl: './signup.css'
+  templateUrl: './create-admin.html',
+  styleUrl: './create-admin.css'
 })
-export class Signup {
+export class CreateAdmin {
 
 }

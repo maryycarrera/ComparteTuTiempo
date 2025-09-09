@@ -21,7 +21,7 @@ public class SignupRequest {
 
     @NotEmpty
     @Size(min = 5, max = 15)
-    @Pattern(regexp = "^[a-z0-9_.]+$", message = "El nombre de usuario solo puede contener letras minúsculas (sin tildes, excluyendo 'ñ' y 'ç'), números, guiones bajos y puntos.")
+    @Pattern(regexp = "^[a-z0-9_.]+$", message = "El nombre de usuario sólo puede contener letras minúsculas (sin tildes, excluyendo 'ñ' y 'ç'), números, guiones bajos y puntos.")
     private String username;
 
     @NotEmpty

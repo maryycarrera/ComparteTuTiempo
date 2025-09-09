@@ -63,7 +63,7 @@ public class AdminTest {
                 .content(createJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Registro exitoso."))
-                .andExpect(jsonPath("$.object.profilePicture").value("/profilepics/gray.png"));
+                .andExpect(jsonPath("$.object.profilePicture").value("profilepics/gray.png"));
     }
 
     @Test
