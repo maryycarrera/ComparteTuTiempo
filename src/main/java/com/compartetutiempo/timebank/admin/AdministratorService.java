@@ -70,7 +70,7 @@ public class AdministratorService {
         admin.setEmail(request.getEmail());
 
         admin.setUser(user);
-        admin.setProfilePicture("/profilepics/gray.png");
+        admin.setProfilePicture("profilepics/gray.png");
 
         return administratorRepository.save(admin);
     }
