@@ -12,6 +12,15 @@ export class AdminList {
 
   private router = inject(Router);
 
+  createSuccess: string = '';
+
+  constructor() {
+    const navigation = window.history.state;
+    if (navigation && navigation.successMsg) {
+      this.createSuccess = navigation.successMsg;
+    }
+  }
+
   create() {
     this.router.navigate(['/administradores/crear']);
   }

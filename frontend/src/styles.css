@@ -136,3 +136,10 @@ form {
 	background: lightgray;
 	border: 2px solid var(--color-texto-destacado);
 }
+
+.success-message-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 10px auto;
+  align-self: center;
+}
