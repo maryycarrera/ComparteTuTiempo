@@ -60,12 +60,14 @@ export class BaseUserForm implements OnInit {
     password: ['', [
       Validators.required,
       Validators.minLength(8),
-      Validators.maxLength(12)
+      Validators.maxLength(12),
+      Validators.pattern('^(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).+$')
     ]],
     confirmPassword: ['', [
       Validators.required,
       Validators.minLength(8),
-      Validators.maxLength(12)
+      Validators.maxLength(12),
+      Validators.pattern('^(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z\\d]).+$')
     ]]
   }, { validators: this.passwordsMatchValidator });
 
