@@ -58,6 +58,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/users/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/admins/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/members/**").hasAnyAuthority(ADMIN, MEMBER)
+                .requestMatchers("/api/v1/solidarity-fund/**").hasAnyAuthority(ADMIN, MEMBER)
                 .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
