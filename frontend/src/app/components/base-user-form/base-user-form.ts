@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin/admin.service';
 import { SignupRequest } from '../../services/auth/payload/request/signup-request';
 import { SignupService } from '../../services/auth/signup.service';
+import { UserCreationService } from '../../services/user-creation-service';
 
 @Component({
   selector: 'app-base-user-form',
@@ -25,7 +26,7 @@ export class BaseUserForm implements OnInit {
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  service: any = null;
+  service: UserCreationService | null = null;
   navigateTo: string = '';
   buttonText: string = '';
 
@@ -102,24 +103,28 @@ export class BaseUserForm implements OnInit {
           password: this.password.value!
         };
 
-        this.service.create(signupRequest).subscribe({
-          next: () => {
-            this.successMsg = 'Cuenta creada correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
-            this.router.navigateByUrl(this.navigateTo, { state: { successMsg: this.successMsg } });
-            this.form.reset();
-          },
-          error: (error: any) => {
-            let msg = '';
-            if (typeof error === 'string') {
-              msg = error.replace('Error: ', '');
-            } else if (error && typeof error.message === 'string') {
-              msg = error.message.replace('Error: ', '');
-            } else {
-              msg = 'Error al crear la cuenta. Por favor, inténtalo de nuevo.';
+        if (this.service) {
+          this.service.create(signupRequest).subscribe({
+            next: () => {
+              this.successMsg = 'Cuenta creada correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
+              this.router.navigateByUrl(this.navigateTo, { state: { successMsg: this.successMsg } });
+              this.form.reset();
+            },
+            error: (error: any) => {
+              let msg = '';
+              if (typeof error === 'string') {
+                msg = error.replace('Error: ', '');
+              } else if (error && typeof error.message === 'string') {
+                msg = error.message.replace('Error: ', '');
+              } else {
+                msg = 'Error al crear la cuenta. Por favor, inténtalo de nuevo.';
+              }
+              this.errorMsg = msg;
             }
-            this.errorMsg = msg;
-          }
-        });
+          });
+        } else {
+          this.errorMsg = 'No se pudo crear la cuenta. Servicio no disponible.';
+        }
       } else {
         this.form.markAllAsTouched();
         this.errorMsg = 'Ha ocurrido un error. Por favor, inténtalo de nuevo.';
