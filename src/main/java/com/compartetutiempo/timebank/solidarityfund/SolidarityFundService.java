@@ -18,7 +18,7 @@ public class SolidarityFundService {
 
     @Transactional(readOnly = true)
     public SolidarityFund find() {
-        return solidarityFundRepository.find()
+        return solidarityFundRepository.findById(1)
                 .orElseThrow(() -> new ResourceNotFoundException("Solidarity Fund", "id", 1));
     }
 
