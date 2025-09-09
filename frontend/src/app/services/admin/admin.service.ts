@@ -6,11 +6,12 @@ import { environment } from '../../../environments/environment';
 import { LoginService } from '../auth/login.service';
 import { SignupRequest } from '../auth/payload/request/signup-request';
 import { MessageResponse } from '../auth/payload/response/message-response';
+import { UserCreationService } from '../user-creation-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminService {
+export class AdminService implements UserCreationService {
 
   private http = inject(HttpClient);
   private loginService = inject(LoginService);

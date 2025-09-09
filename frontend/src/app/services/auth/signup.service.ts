@@ -5,11 +5,12 @@ import { Observable, throwError } from 'rxjs';
 import { MessageResponse } from './payload/response/message-response';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { UserCreationService } from '../user-creation-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignupService {
+export class SignupService implements UserCreationService {
 
   private http = inject(HttpClient);
 
