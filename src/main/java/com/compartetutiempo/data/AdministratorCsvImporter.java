@@ -9,6 +9,9 @@ import com.compartetutiempo.timebank.admin.AdministratorRepository;
 import com.opencsv.exceptions.CsvValidationException;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.core.env.Environment;
@@ -24,16 +27,18 @@ public class AdministratorCsvImporter {
     private final AdministratorRepository administratorRepository;
     private final Environment env;
 
+    private static final Logger logger = LoggerFactory.getLogger(AdministratorCsvImporter.class);
+
     @Autowired
     public AdministratorCsvImporter(AdministratorRepository administratorRepository, Environment env) {
         this.administratorRepository = administratorRepository;
         this.env = env;
-        System.out.println("[IMPORT] Bean AdministratorCsvImporter creado");
+        logger.info("[IMPORT] Bean AdministratorCsvImporter creado");
     }
 
     @PostConstruct
     public void importAdministrators() throws IOException, CsvValidationException {
-        System.out.println("[IMPORT] Iniciando importación de administradores...");
+        logger.info("[IMPORT] Iniciando importación de administradores...");
         try {
             List<Administrator> admins = CsvImporterUtil.importCsvWithComma("/data/admins.csv", fields -> {
                 Administrator admin = new Administrator();
@@ -59,17 +64,17 @@ public class AdministratorCsvImporter {
                         administratorRepository.save(admin);
                         importados++;
                     } catch (Exception e) {
-                        System.out.println("[IMPORT][WARN] Administrador duplicado ignorado: " + admin.getUser().getUsername());
+                        logger.warn("[IMPORT][WARN] Administrador duplicado ignorado: " + admin.getUser().getUsername());
                     }
                 }
-                System.out.println("[IMPORT] Administradores importados: " + importados);
+                logger.info("[IMPORT] Administradores importados: " + importados);
             } else {
                 administratorRepository.saveAll(admins);
-                System.out.println("[IMPORT] Administradores importados: " + admins.size());
+                logger.info("[IMPORT] Administradores importados: " + admins.size());
             }
         } catch (Exception e) {
-            System.out.println("[IMPORT][ERROR] Error importando administradores: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("[IMPORT][ERROR] Error importando administradores: " + e.getMessage());
+            logger.debug("Stack Trace: ", e);
         }
     }
 }

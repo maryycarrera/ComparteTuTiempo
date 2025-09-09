@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.core.env.Environment;
 import com.compartetutiempo.util.ProfileUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +25,18 @@ public class MemberCsvImporter {
     private final MemberRepository memberRepository;
     private final Environment env;
 
+    private static final Logger logger = LoggerFactory.getLogger(MemberCsvImporter.class);
+
     @Autowired
     public MemberCsvImporter(MemberRepository memberRepository, Environment env) {
         this.memberRepository = memberRepository;
         this.env = env;
-        System.out.println("[IMPORT] Bean MemberCsvImporter creado");
+        logger.info("[IMPORT] Bean MemberCsvImporter creado");
     }
 
     @PostConstruct
     public void importMembers() throws CsvValidationException, IOException {
-        System.out.println("[IMPORT] Iniciando importación de miembros...");
+        logger.info("[IMPORT] Iniciando importación de miembros...");
         try {
             List<Member> members = CsvImporterUtil.importCsvWithComma("/data/members.csv", fields -> {
                 Member member = new Member();
@@ -67,17 +71,17 @@ public class MemberCsvImporter {
                         memberRepository.save(member);
                         importados++;
                     } catch (Exception e) {
-                        System.out.println("[IMPORT][WARN] Miembro duplicado ignorado: " + member.getUser().getUsername());
+                        logger.warn("[IMPORT][WARN] Miembro duplicado ignorado: " + member.getUser().getUsername());
                     }
                 }
-                System.out.println("[IMPORT] Miembros importados: " + importados);
+                logger.info("[IMPORT] Miembros importados: " + importados);
             } else {
                 memberRepository.saveAll(members);
-                System.out.println("[IMPORT] Miembros importados: " + members.size());
+                logger.info("[IMPORT] Miembros importados: " + members.size());
             }
         } catch (Exception e) {
-            System.out.println("[IMPORT][ERROR] Error importando miembros: " + e.getMessage());
-            e.printStackTrace();
+            logger.error("[IMPORT][ERROR] Error importando miembros: " + e.getMessage());
+            logger.debug("Stack Trace: ", e);
         }
     }
 }
