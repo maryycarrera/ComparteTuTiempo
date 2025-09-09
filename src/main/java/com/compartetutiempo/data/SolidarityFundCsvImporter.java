@@ -6,27 +6,22 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.compartetutiempo.timebank.solidarityfund.SolidarityFund;
 import com.compartetutiempo.timebank.solidarityfund.SolidarityFundRepository;
-import com.compartetutiempo.util.ProfileUtils;
-
 import jakarta.annotation.PostConstruct;
 
 @Component
 public class SolidarityFundCsvImporter {
 
     private final SolidarityFundRepository solidarityFundRepository;
-    private final Environment env;
 
     private static final Logger logger = LoggerFactory.getLogger(SolidarityFundCsvImporter.class);
 
     @Autowired
-    public SolidarityFundCsvImporter(SolidarityFundRepository solidarityFundRepository, Environment env) {
+    public SolidarityFundCsvImporter(SolidarityFundRepository solidarityFundRepository) {
         this.solidarityFundRepository = solidarityFundRepository;
-        this.env = env;
         logger.info("[IMPORT] Bean SolidarityFundCsvImporter creado");
     }
 
@@ -56,9 +51,7 @@ public class SolidarityFundCsvImporter {
             logger.info("[IMPORT] Fondo solidario importado correctamente.");
         } catch (Exception e) {
             logger.error("[IMPORT][ERROR] Error importando fondo solidario: " + e.getMessage());
-            if(!ProfileUtils.isProd(env)) {
-                logger.debug("Stack Trace: ", e);
-            }
+            logger.debug("Stack Trace: ", e);
         }
     }
 

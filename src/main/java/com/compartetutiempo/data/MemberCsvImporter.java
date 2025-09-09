@@ -81,9 +81,7 @@ public class MemberCsvImporter {
             }
         } catch (Exception e) {
             logger.error("[IMPORT][ERROR] Error importando miembros: " + e.getMessage());
-            if(!ProfileUtils.isProd(env)) {
-                logger.debug("Stack Trace: ", e);
-            }
+            logger.debug("Stack Trace: ", e);
         }
     }
 }

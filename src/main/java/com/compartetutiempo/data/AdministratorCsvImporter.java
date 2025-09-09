@@ -74,9 +74,7 @@ public class AdministratorCsvImporter {
             }
         } catch (Exception e) {
             logger.error("[IMPORT][ERROR] Error importando administradores: " + e.getMessage());
-            if(!ProfileUtils.isProd(env)) {
-                logger.debug("Stack Trace: ", e);
-            }
+            logger.debug("Stack Trace: ", e);
         }
     }
 }
