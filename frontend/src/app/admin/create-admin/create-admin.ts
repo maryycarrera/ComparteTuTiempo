@@ -76,7 +76,7 @@ export class CreateAdmin {
   get password() { return this.createForm.controls.password; }
   get confirmPassword() { return this.createForm.controls.confirmPassword; }
 
-  signup() {
+  create() {
       if (this.createForm.valid) {
         const signupRequest: SignupRequest = {
           name: this.name.value!,
