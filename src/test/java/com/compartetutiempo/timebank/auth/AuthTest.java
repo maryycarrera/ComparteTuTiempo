@@ -34,7 +34,7 @@ public class AuthTest {
         String loginJson = """
         {
             "username": "maryycarrera",
-            "password": "m13mbr0CTT"
+            "password": "m13mbr0CTT*"
         }
         """;
 
@@ -249,7 +249,7 @@ public class AuthTest {
         String loginJson = """
         {
             "username": "member1",
-            "password": "m13mbr0CTT"
+            "password": "m13mbr0CTT*"
         }
         """;
 
@@ -311,7 +311,7 @@ public class AuthTest {
         String loginJson = """
         {
             "username": "member1",
-            "password": "m13mbr0CTT"
+            "password": "m13mbr0CTT*"
         }
         """;
 
