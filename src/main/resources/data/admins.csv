@@ -1,5 +1,5 @@
 name,last_name,email,profile_picture,username,password
 "Administrador","del Sistema",admin1@example.com,profilepics/purple.png,admin1,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W
-"Sys","Adm",admin2@example.com,,admin2,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W
+"Sys","Adm",admin2@example.com,profilepics/gray.png,admin2,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W
 "Lorem ipsum dolor sit amet. consectetur adipiscing elit. Maecenas semper turpis arcu. non pulvinar e","ros facilisis vel. Maecenas aliquet tortor vel neque mollis. eget semper quam tincidunt. Suspendisse",admin3@example.com,profilepics/blue.png,admin3,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W
 "System","Administrador",admin4@example.com,profilepics/green.png,admin4,$2b$10$NhuzhL/RueHYr2COHvfM5.tEUlf6gTIXOeO4f99.AZPgeWksIVp1W
