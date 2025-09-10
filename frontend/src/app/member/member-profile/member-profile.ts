@@ -27,7 +27,7 @@ export class MemberProfile {
     biography: ['', [Validators.maxLength(500)]]
   });
 
-  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/gray.png';
+  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
 
   email: string = '';
   profilePicture: string = MemberProfile.DEFAULT_PROFILE_PICTURE;

@@ -28,7 +28,7 @@ export class AdminProfile {
     email: ['']
   });
 
-  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/gray.png';
+  static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
 
   profilePicture: string = AdminProfile.DEFAULT_PROFILE_PICTURE;
 
