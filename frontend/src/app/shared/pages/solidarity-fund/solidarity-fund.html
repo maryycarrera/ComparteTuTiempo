@@ -1,1 +1,5 @@
-<p>solidarity-fund works!</p>
+@if (userIsAdmin) {
+  <app-admin-solidarity-fund></app-admin-solidarity-fund>
+} @else {
+  <app-member-solidarity-fund></app-member-solidarity-fund>
+}
