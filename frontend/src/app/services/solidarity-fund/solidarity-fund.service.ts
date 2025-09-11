@@ -4,6 +4,7 @@ import { LoginService } from '../auth/login.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { SolidarityFundInterface } from './solidarity-fund.interface';
 import { environment } from '../../../environments/environment';
+import { MessageResponse } from '../auth/payload/response/message-response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,9 @@ export class SolidarityFundService {
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
-  getSolidarityFund(): Observable<SolidarityFundInterface> {
+  getSolidarityFund(): Observable<MessageResponse> {
     const token = this.loginService.userToken;
-    return this.http.get<SolidarityFundInterface>(environment.apiUrl + 'solidarity-fund', {
+    return this.http.get<MessageResponse>(environment.apiUrl + 'solidarity-fund', {
       headers: {
         Authorization: `Bearer ${token}`
       }
