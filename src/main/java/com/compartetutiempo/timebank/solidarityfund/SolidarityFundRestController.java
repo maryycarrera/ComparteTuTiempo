@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.auth.payload.response.MessageResponse;
+
 @RestController
 @RequestMapping("/api/v1/solidarity-fund")
 public class SolidarityFundRestController {
@@ -18,9 +20,9 @@ public class SolidarityFundRestController {
     }
 
     @GetMapping
-    public ResponseEntity<SolidarityFund> find() {
+    public ResponseEntity<MessageResponse<SolidarityFund>> find() {
         SolidarityFund solidarityFund = solidarityFundService.find();
-        return ResponseEntity.ok(solidarityFund);
+        return ResponseEntity.ok(new MessageResponse<SolidarityFund>("Fondo Solidario encontrado con éxito.", solidarityFund));
     }
 
 }
