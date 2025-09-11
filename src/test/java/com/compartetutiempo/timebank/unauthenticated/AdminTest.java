@@ -1,0 +1,27 @@
+package com.compartetutiempo.timebank.unauthenticated;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+public class AdminTest {
+
+    private static final String BASE_URL = "/api/v1/admins";
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void shouldFailGetAllAdminsWhenUnauthenticated() throws Exception {
+        mockMvc.perform(get(BASE_URL))
+               .andExpect(status().isUnauthorized());
+    }
+
+}

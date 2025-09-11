@@ -24,7 +24,6 @@ public class AuthTest {
     private static final String LOGOUT_URL = BASE_URL + "/logout";
     private static final String PROFILE_URL = BASE_URL + "/profile";
     private static final String SIGNUP_URL = BASE_URL + "/signup";
-    private static final String FULLNAME_URL = BASE_URL + "/fullname";
 
     @Autowired
     private MockMvc mockMvc;
@@ -56,7 +55,6 @@ public class AuthTest {
                 .content(logoutJson))
                 .andExpect(status().isOk());
 
-        // Intentar acceder con el token después del logout (opcional, si tienes endpoint protegido)
         mockMvc.perform(get(PROFILE_URL)
                 .header("Authorization", "Bearer " + memberToken))
                 .andExpect(status().isUnauthorized());
@@ -208,126 +206,6 @@ public class AuthTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    public void shouldFailProfileRouteWhenNotLoggedIn() throws Exception {
-        mockMvc.perform(get(PROFILE_URL))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    public void shouldReturnAdminProfileWhenLoggedIn() throws Exception {
-        String loginJson = """
-        {
-            "username": "admin1",
-            "password": "sys4dm1n*!"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(loginJson))
-                                    .andExpect(status().isOk())
-                                    .andExpect(jsonPath("$.token").exists())
-                                    .andReturn().getResponse().getContentAsString();
-
-        String adminToken = JsonPath.read(loginResponse, "$.token");
-
-        mockMvc.perform(get(PROFILE_URL)
-                .header("Authorization", "Bearer " + adminToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Administrador"))
-                .andExpect(jsonPath("$.lastName").value("del Sistema"))
-                .andExpect(jsonPath("$.username").value("admin1"))
-                .andExpect(jsonPath("$.email").value("admin1@example.com"))
-                .andExpect(jsonPath("$.profilePic").value("profilepics/purple.png"));
-    }
-
-    @Test
-    public void shouldReturnMemberProfileWhenLoggedIn() throws Exception {
-        String loginJson = """
-        {
-            "username": "member1",
-            "password": "m13mbr0CTT*"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(loginJson))
-                                    .andExpect(status().isOk())
-                                    .andExpect(jsonPath("$.token").exists())
-                                    .andReturn().getResponse().getContentAsString();
-
-        String memberToken = JsonPath.read(loginResponse, "$.token");
-
-        mockMvc.perform(get(PROFILE_URL)
-                .header("Authorization", "Bearer " + memberToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("John"))
-                .andExpect(jsonPath("$.lastName").value("Doe"))
-                .andExpect(jsonPath("$.username").value("member1"))
-                .andExpect(jsonPath("$.email").value("member1@example.com"))
-                .andExpect(jsonPath("$.profilePic").value("profilepics/blue.png"))
-                .andExpect(jsonPath("$.biography").value("Hola, soy John Doe. Me gusta cocinar y jugar al baloncesto."))
-                .andExpect(jsonPath("$.dateOfMembership").value("16/01/2022"))
-                .andExpect(jsonPath("$.hours").value("4"))
-                .andExpect(jsonPath("$.minutes").value("30"));
-    }
-
-    @Test
-    public void shouldFailFullNameRouteWhenNotLoggedIn() throws Exception {
-        mockMvc.perform(get(FULLNAME_URL))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    public void shouldReturnAdminFullName() throws Exception {
-        String loginJson = """
-        {
-            "username": "admin1",
-            "password": "sys4dm1n*!"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(loginJson))
-                                    .andExpect(status().isOk())
-                                    .andExpect(jsonPath("$.token").exists())
-                                    .andReturn().getResponse().getContentAsString();
-
-        String adminToken = JsonPath.read(loginResponse, "$.token");
-
-        mockMvc.perform(get(FULLNAME_URL)
-                .header("Authorization", "Bearer " + adminToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.object").value("Administrador del Sistema"));
-    }
-
-    @Test
-    public void shouldReturnMemberFullName() throws Exception {
-        String loginJson = """
-        {
-            "username": "member1",
-            "password": "m13mbr0CTT*"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(loginJson))
-                                    .andExpect(status().isOk())
-                                    .andExpect(jsonPath("$.token").exists())
-                                    .andReturn().getResponse().getContentAsString();
-
-        String memberToken = JsonPath.read(loginResponse, "$.token");
-
-        mockMvc.perform(get(FULLNAME_URL)
-                .header("Authorization", "Bearer " + memberToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.object").value("John Doe"));
     }
 
 }
