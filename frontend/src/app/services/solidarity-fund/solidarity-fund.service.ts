@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { LoginService } from '../auth/login.service';
 import { catchError, Observable, throwError } from 'rxjs';
-import { SolidarityFundInterface } from './solidarity-fund.interface';
 import { environment } from '../../../environments/environment';
 import { MessageResponse } from '../auth/payload/response/message-response';
 
