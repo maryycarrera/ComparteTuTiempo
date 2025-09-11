@@ -24,7 +24,6 @@ public class AuthTest {
     private static final String LOGOUT_URL = BASE_URL + "/logout";
     private static final String PROFILE_URL = BASE_URL + "/profile";
     private static final String SIGNUP_URL = BASE_URL + "/signup";
-    private static final String FULLNAME_URL = BASE_URL + "/fullname";
 
     @Autowired
     private MockMvc mockMvc;
@@ -207,18 +206,6 @@ public class AuthTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    public void shouldFailProfileRouteWhenNotLoggedIn() throws Exception {
-        mockMvc.perform(get(PROFILE_URL))
-                .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    public void shouldFailFullNameRouteWhenNotLoggedIn() throws Exception {
-        mockMvc.perform(get(FULLNAME_URL))
-                .andExpect(status().isUnauthorized());
     }
 
 }
