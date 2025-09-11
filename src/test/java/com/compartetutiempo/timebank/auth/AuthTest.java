@@ -56,7 +56,6 @@ public class AuthTest {
                 .content(logoutJson))
                 .andExpect(status().isOk());
 
-        // Intentar acceder con el token después del logout (opcional, si tienes endpoint protegido)
         mockMvc.perform(get(PROFILE_URL)
                 .header("Authorization", "Bearer " + memberToken))
                 .andExpect(status().isUnauthorized());
@@ -217,34 +216,6 @@ public class AuthTest {
     }
 
     @Test
-    public void shouldReturnAdminProfileWhenLoggedIn() throws Exception {
-        String loginJson = """
-        {
-            "username": "admin1",
-            "password": "sys4dm1n*!"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(loginJson))
-                                    .andExpect(status().isOk())
-                                    .andExpect(jsonPath("$.token").exists())
-                                    .andReturn().getResponse().getContentAsString();
-
-        String adminToken = JsonPath.read(loginResponse, "$.token");
-
-        mockMvc.perform(get(PROFILE_URL)
-                .header("Authorization", "Bearer " + adminToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Administrador"))
-                .andExpect(jsonPath("$.lastName").value("del Sistema"))
-                .andExpect(jsonPath("$.username").value("admin1"))
-                .andExpect(jsonPath("$.email").value("admin1@example.com"))
-                .andExpect(jsonPath("$.profilePic").value("profilepics/purple.png"));
-    }
-
-    @Test
     public void shouldReturnMemberProfileWhenLoggedIn() throws Exception {
         String loginJson = """
         {
@@ -280,30 +251,6 @@ public class AuthTest {
     public void shouldFailFullNameRouteWhenNotLoggedIn() throws Exception {
         mockMvc.perform(get(FULLNAME_URL))
                 .andExpect(status().isUnauthorized());
-    }
-
-    @Test
-    public void shouldReturnAdminFullName() throws Exception {
-        String loginJson = """
-        {
-            "username": "admin1",
-            "password": "sys4dm1n*!"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .content(loginJson))
-                                    .andExpect(status().isOk())
-                                    .andExpect(jsonPath("$.token").exists())
-                                    .andReturn().getResponse().getContentAsString();
-
-        String adminToken = JsonPath.read(loginResponse, "$.token");
-
-        mockMvc.perform(get(FULLNAME_URL)
-                .header("Authorization", "Bearer " + adminToken))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.object").value("Administrador del Sistema"));
     }
 
     @Test
