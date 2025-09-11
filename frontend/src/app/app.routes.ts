@@ -8,6 +8,7 @@ import { Profile } from './shared/pages/profile/profile';
 import { Signup } from './auth/signup/signup';
 import { AdminList } from './admin/admin-list/admin-list';
 import { CreateAdmin } from './admin/create-admin/create-admin';
+import { SolidarityFund } from './shared/pages/solidarity-fund/solidarity-fund';
 
 // START Generado con GitHub Copilot Chat Extension
 
@@ -57,5 +58,6 @@ export const routes: Routes = [
     { path: 'perfil', component: Profile, canActivate: [authGuard] },
     { path: 'administradores', component: AdminList, canActivate: [adminGuard] },
     { path: 'administradores/crear', component: CreateAdmin, canActivate: [adminGuard] },
+    { path: 'fondo-solidario', component: SolidarityFund, canActivate: [authGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];

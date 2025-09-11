@@ -143,3 +143,37 @@ form {
   margin: 10px auto;
   align-self: center;
 }
+
+.profile-card {
+	background: var(--color-lavanda);
+	border: 2px dashed var(--color-morado-medio);
+	border-radius: 2rem;
+	max-width: 700px;
+	margin: 2rem auto;
+	padding: 2rem 2rem 1.5rem 2rem;
+	box-shadow: 0 2px 8px var(--color-sombras);
+}
+
+.profile-time {
+	display: flex;
+	flex-direction: row;
+	gap: 2.5rem;
+	margin-bottom: 1.2rem;
+	justify-content: flex-start;
+}
+
+.profile-hours, .profile-minutes {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 80px;
+}
+.profile-hours-value, .profile-minutes-value {
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+.profile-hours-label, .profile-minutes-label {
+	font-size: 1.1rem;
+	color: var(--color-texto-importante);
+}
