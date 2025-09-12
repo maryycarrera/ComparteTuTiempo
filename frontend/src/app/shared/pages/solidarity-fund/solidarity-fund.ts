@@ -50,6 +50,4 @@ export class SolidarityFund implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  
-
 }
