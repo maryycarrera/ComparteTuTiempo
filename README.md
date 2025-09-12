@@ -61,10 +61,10 @@ Para configurar la base de datos **MariaDB/MySQL**:
 
 ### Backend (Spring Boot)
 
-2. **Instala las dependencias y ejecuta el backend:**
-    ```sh
-    .\mvnw spring-boot:run
-    ```
+Para instalar las dependencias y ejecutar el backend, en la misma o en otra terminal escribe:
+```sh
+.\mvnw spring-boot:run
+```
 
 El backend estará disponible en http://localhost:8080.
 
@@ -82,7 +82,7 @@ En otra terminal:
     npm start
     ```
 
-La aplicación estará disponible en http://localhost:4200.
+El frontend de la aplicación estará disponible en http://localhost:4200.
 
 ---
 
