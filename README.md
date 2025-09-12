@@ -96,13 +96,15 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+> Nota: si instalas Docker Desktop, Docker Compose ya vendrá instalado por defecto. Asegúrate de que la _engine_ esté ejecutándose antes de continuar.
 
+Una vez instalado Docker, puedes seguir estos pasos:
 1. Descarga el archivo `docker-compose.prod.yml` de este repositorio.
 2. Renómbralo a `docker-compose.yml` (opcional, para facilitar el uso de comandos estándar).
-3. Ejecuta el siguiente comando en la raíz del proyecto:
-   ```sh
-   docker compose up -d
-   ```
+3. Ejecuta el siguiente comando en la raíz del proyecto (la ubicación donde hayas guardado el archivo `docker-compose.yml`):
+    ```sh
+    docker compose up -d
+    ```
 
 Esto descargará automáticamente las imágenes necesarias:
 - Backend: `marycarrera/comparte-tu-tiempo-backend:latest`
@@ -127,7 +129,7 @@ docker compose down -v
 
 ## Credenciales de ComparteTuTiempo
 
-Las credenciales de los usuarios de ComparteTuTiempo son las siguientes:
+Las credenciales de los usuarios base de ComparteTuTiempo son las siguientes:
 
 | usuario           | contraseña  |
 | - | - |
@@ -159,7 +161,7 @@ node -e "console.log(require('bcryptjs').hashSync('tu_contraseña', 10))"
 
 ## Contribuciones
 
-Para comenzar a contribuir en este repositorio, se debe hacer un fork del mismo. Cualquier aportación debe hacerse por medio de Pull Requests.
+Para comenzar a contribuir en este repositorio, se debe hacer un _fork_ del mismo e instalar las herramientas necesarias como se indica en el [apartado correspondiente](#descargar-y-ejecutar-el-proyecto-para-desarrollo). Cualquier aportación debe hacerse por medio de Pull Requests.
 
 Gracias a nuestros contribuidores:
 
