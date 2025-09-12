@@ -35,27 +35,31 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 
 ## Descargar y ejecutar el proyecto para desarrollo
 
-Primero, haz un _fork_ de este repositorio y clónalo o descárgate el código fuente.
+> Nota: necesitas tener instalados Java, Node.js y MariaDB en las versiones indicadas al principio de este archivo README. También puedes utilizar versiones superiores de estas tecnologías, pero es recomendable usar las mismas con las que se ha desarrollado este proyecto.
+
+Primero, haz un _fork_ de este repositorio. Clona el _fork_ o descárgate el código fuente del mismo.
+
+### Base de Datos (MariaDB)
+
+Para configurar la base de datos **MariaDB/MySQL**:
+- Abre una terminal y accede a MariaDB como root:
+    ```sh
+    mysql -u root -p
+    ```
+- Crea la base de datos:
+    ```sql
+    CREATE DATABASE compartetutiempo;
+    ```
+- Crea el usuario y asigna permisos:
+    ```sql
+    CREATE USER 'compartetutiempo'@'localhost' IDENTIFIED BY 'compartetutiempo';
+    GRANT ALL PRIVILEGES ON compartetutiempo.* TO 'compartetutiempo'@'localhost';
+    FLUSH PRIVILEGES;
+    EXIT;
+    ```
+- Ajusta los valores en `src/main/resources/application.properties` si usas otros datos.
 
 ### Backend (Spring Boot)
-
-1. **Configura la base de datos MariaDB/MySQL:**
-     - Abre una terminal y accede a MariaDB como root:
-         ```sh
-         mysql -u root -p
-         ```
-     - Crea la base de datos:
-         ```sql
-         CREATE DATABASE compartetutiempo;
-         ```
-     - Crea el usuario y asigna permisos:
-         ```sql
-         CREATE USER 'compartetutiempo'@'localhost' IDENTIFIED BY 'compartetutiempo';
-         GRANT ALL PRIVILEGES ON compartetutiempo.* TO 'compartetutiempo'@'localhost';
-         FLUSH PRIVILEGES;
-         EXIT;
-         ```
-     - Ajusta los valores en `src/main/resources/application.properties` si usas otros datos.
 
 2. **Instala las dependencias y ejecuta el backend:**
     ```sh
