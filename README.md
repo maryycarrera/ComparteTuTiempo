@@ -20,8 +20,8 @@
 ## Índice
 
 - [Qué es ComparteTuTiempo](#qué-es-compartetutiempo)
-- [Ejecutar el proyecto](#ejecutar-el-proyecto)
-- [Utilizar la aplicación ComparteTuTiempo](#utilizar-la-aplicación-compartetutiempo)
+- [Descargar y ejecutar el proyecto para desarrollo](#descargar-y-ejecutar-el-proyecto-para-desarrollo)
+- [Utilizar la aplicación ComparteTuTiempo en producción](#utilizar-la-aplicación-compartetutiempo-en-producción)
 - [Credenciales de ComparteTuTiempo](#credenciales-de-compartetutiempo)
 - [Contribuciones](#contribuciones)
 
@@ -33,34 +33,39 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 
 ---
 
-## Ejecutar el proyecto
+## Descargar y ejecutar el proyecto para desarrollo
 
-Primero, haz un _fork_ de este repositorio y clónalo o descárgate el código fuente.
+> [!WARNING]
+> Necesitas tener instalados Java, Node.js y MariaDB en las versiones indicadas al principio de este archivo README. También puedes utilizar versiones superiores de estas tecnologías, pero es recomendable usar las mismas con las que se ha desarrollado este proyecto.
+
+Primero, haz un _fork_ de este repositorio. Clona el _fork_ o descárgate el código fuente del mismo.
+
+### Base de Datos (MariaDB)
+
+Para configurar la base de datos **MariaDB/MySQL**:
+- Abre una terminal y accede a MariaDB como root:
+    ```sh
+    mysql -u root -p
+    ```
+- Crea la base de datos:
+    ```sql
+    CREATE DATABASE compartetutiempo;
+    ```
+- Crea el usuario y asigna permisos:
+    ```sql
+    CREATE USER 'compartetutiempo'@'localhost' IDENTIFIED BY 'compartetutiempo';
+    GRANT ALL PRIVILEGES ON compartetutiempo.* TO 'compartetutiempo'@'localhost';
+    FLUSH PRIVILEGES;
+    EXIT;
+    ```
+- Ajusta los valores en `src/main/resources/application.properties` si usas otros datos.
 
 ### Backend (Spring Boot)
 
-1. **Configura la base de datos MariaDB/MySQL:**
-     - Abre una terminal y accede a MariaDB como root:
-         ```sh
-         mysql -u root -p
-         ```
-     - Crea la base de datos:
-         ```sql
-         CREATE DATABASE compartetutiempo;
-         ```
-     - Crea el usuario y asigna permisos:
-         ```sql
-         CREATE USER 'compartetutiempo'@'localhost' IDENTIFIED BY 'compartetutiempo';
-         GRANT ALL PRIVILEGES ON compartetutiempo.* TO 'compartetutiempo'@'localhost';
-         FLUSH PRIVILEGES;
-         EXIT;
-         ```
-     - Ajusta los valores en `src/main/resources/application.properties` si usas otros datos.
-
-2. **Instala las dependencias y ejecuta el backend:**
-    ```sh
-    .\mvnw spring-boot:run
-    ```
+Para instalar las dependencias y ejecutar el backend, en la misma o en otra terminal escribe:
+```sh
+.\mvnw spring-boot:run
+```
 
 El backend estará disponible en http://localhost:8080.
 
@@ -78,11 +83,11 @@ En otra terminal:
     npm start
     ```
 
-La aplicación estará disponible en http://localhost:4200.
+El frontend de la aplicación estará disponible en http://localhost:4200.
 
 ---
 
-## Utilizar la aplicación ComparteTuTiempo
+## Utilizar la aplicación ComparteTuTiempo en producción
 
 Puedes levantar toda la aplicación usando las imágenes públicas de Docker Hub y el archivo `docker-compose.prod.yml`.
 
@@ -92,13 +97,16 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+> [!NOTE]
+> Si instalas Docker Desktop, Docker Compose ya vendrá instalado por defecto. Asegúrate de que la _engine_ esté ejecutándose antes de continuar.
 
+Una vez instalado Docker, puedes seguir estos pasos:
 1. Descarga el archivo `docker-compose.prod.yml` de este repositorio.
 2. Renómbralo a `docker-compose.yml` (opcional, para facilitar el uso de comandos estándar).
-3. Ejecuta el siguiente comando en la raíz del proyecto:
-   ```sh
-   docker compose up -d
-   ```
+3. Ejecuta el siguiente comando en la raíz del proyecto (la ubicación donde hayas guardado el archivo `docker-compose.yml`):
+    ```sh
+    docker compose up -d
+    ```
 
 Esto descargará automáticamente las imágenes necesarias:
 - Backend: `marycarrera/comparte-tu-tiempo-backend:latest`
@@ -123,7 +131,7 @@ docker compose down -v
 
 ## Credenciales de ComparteTuTiempo
 
-Las credenciales de los usuarios de ComparteTuTiempo son las siguientes:
+Las credenciales de los usuarios base de ComparteTuTiempo son las siguientes:
 
 | usuario           | contraseña  |
 | - | - |
@@ -155,7 +163,7 @@ node -e "console.log(require('bcryptjs').hashSync('tu_contraseña', 10))"
 
 ## Contribuciones
 
-Para comenzar a contribuir en este repositorio, se debe hacer un fork del mismo. Cualquier aportación debe hacerse por medio de Pull Requests.
+Para comenzar a contribuir en este repositorio, se debe hacer un _fork_ del mismo e instalar las herramientas necesarias como se indica en el [apartado correspondiente](#descargar-y-ejecutar-el-proyecto-para-desarrollo). Cualquier aportación debe hacerse por medio de Pull Requests.
 
 Gracias a nuestros contribuidores:
 
