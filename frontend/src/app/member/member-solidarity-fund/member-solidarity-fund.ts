@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { SolidarityFundService } from '../../services/solidarity-fund/solidarity-fund.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-member-solidarity-fund',
@@ -9,25 +9,18 @@ import { SolidarityFundService } from '../../services/solidarity-fund/solidarity
 })
 export class MemberSolidarityFund {
 
-  errorMessage?: string;
-  hours?: string;
-  minutes?: string;
+  private router = inject(Router);
 
-  private solidarityFundService = inject(SolidarityFundService);
+  donations() {
+    this.router.navigateByUrl('/');
+  }
 
-  constructor() {
-    this.solidarityFundService.getSolidarityFund().subscribe({
-      next: (data) => {
-        this.hours = data.object.hours;
-        this.minutes = data.object.minutes;
-      },
-      error: (err) => {
-        this.errorMessage = err && err.message ? err.message : String(err);
-      },
-      complete: () => {
-        console.info('Datos del Fondo Solidario obtenidos.');
-      }
-    })
+  credits() {
+    this.router.navigateByUrl('/');
+  }
+
+  maximumCredit() {
+    this.router.navigateByUrl('/');
   }
 
 }

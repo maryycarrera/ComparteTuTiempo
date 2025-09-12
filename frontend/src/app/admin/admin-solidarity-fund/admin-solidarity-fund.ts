@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-solidarity-fund',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './admin-solidarity-fund.css'
 })
 export class AdminSolidarityFund {
+
+  private router = inject(Router);
+
+  edit() {
+    this.router.navigateByUrl('/');
+  }
 
 }

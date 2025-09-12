@@ -1,17 +1,7 @@
-<div class="main-title-container">
-    <p class="main-title">Fondo Solidario</p>
-</div>
-
-<div class="profile-card">
-    <p>Actualmente el Fondo Solidario cuenta con...</p>
-    <div class="profile-time d-flex justify-content-center align-items-center gap-5">
-        <div class="profile-hours text-center">
-            <div class="profile-hours-value">{{ hours }}</div>
-            <div class="profile-hours-label">Horas</div>
-        </div>
-        <div class="profile-minutes text-center">
-            <div class="profile-minutes-value">{{ minutes }}</div>
-            <div class="profile-minutes-label">Minutos</div>
-        </div>
+<div>
+    <div class="d-flex flex-column flex-md-row justify-content-center mt-4">
+        <button type="button" (click)="donations()" class="btn btn-primary mx-2 my-2">Donaciones</button>
+        <button type="button" (click)="credits()" class="btn btn-primary mx-2 my-2">Créditos</button>
+        <button type="button" (click)="maximumCredit()" class="btn btn-primary mx-2 my-2">Crédito Máximo</button>
     </div>
 </div>
