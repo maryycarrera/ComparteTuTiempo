@@ -35,7 +35,8 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 
 ## Descargar y ejecutar el proyecto para desarrollo
 
-> Nota: necesitas tener instalados Java, Node.js y MariaDB en las versiones indicadas al principio de este archivo README. También puedes utilizar versiones superiores de estas tecnologías, pero es recomendable usar las mismas con las que se ha desarrollado este proyecto.
+> [!WARNING]
+> Necesitas tener instalados Java, Node.js y MariaDB en las versiones indicadas al principio de este archivo README. También puedes utilizar versiones superiores de estas tecnologías, pero es recomendable usar las mismas con las que se ha desarrollado este proyecto.
 
 Primero, haz un _fork_ de este repositorio. Clona el _fork_ o descárgate el código fuente del mismo.
 
@@ -96,7 +97,8 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-> Nota: si instalas Docker Desktop, Docker Compose ya vendrá instalado por defecto. Asegúrate de que la _engine_ esté ejecutándose antes de continuar.
+> [!NOTE]
+> Si instalas Docker Desktop, Docker Compose ya vendrá instalado por defecto. Asegúrate de que la _engine_ esté ejecutándose antes de continuar.
 
 Una vez instalado Docker, puedes seguir estos pasos:
 1. Descarga el archivo `docker-compose.prod.yml` de este repositorio.
