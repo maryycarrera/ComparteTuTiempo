@@ -20,8 +20,8 @@
 ## Índice
 
 - [Qué es ComparteTuTiempo](#qué-es-compartetutiempo)
-- [Ejecutar el proyecto](#ejecutar-el-proyecto)
-- [Utilizar la aplicación ComparteTuTiempo](#utilizar-la-aplicación-compartetutiempo)
+- [Descargar y ejecutar el proyecto para desarrollo](#descargar-y-ejecutar-el-proyecto-para-desarrollo)
+- [Utilizar la aplicación ComparteTuTiempo en producción](#utilizar-la-aplicación-compartetutiempo-en-producción)
 - [Credenciales de ComparteTuTiempo](#credenciales-de-compartetutiempo)
 - [Contribuciones](#contribuciones)
 
@@ -33,7 +33,7 @@ ComparteTuTiempo es una aplicación web de Banco de Tiempo desarrollada como Tra
 
 ---
 
-## Ejecutar el proyecto
+## Descargar y ejecutar el proyecto para desarrollo
 
 Primero, haz un _fork_ de este repositorio y clónalo o descárgate el código fuente.
 
@@ -82,7 +82,7 @@ La aplicación estará disponible en http://localhost:4200.
 
 ---
 
-## Utilizar la aplicación ComparteTuTiempo
+## Utilizar la aplicación ComparteTuTiempo en producción
 
 Puedes levantar toda la aplicación usando las imágenes públicas de Docker Hub y el archivo `docker-compose.prod.yml`.
 
