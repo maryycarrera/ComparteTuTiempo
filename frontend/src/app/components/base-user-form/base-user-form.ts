@@ -2,7 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminService } from '../../services/admin/admin.service';
-import { SignupRequest } from '../../services/auth/payload/request/signup-request';
+import { SignupRequest } from '../../payload/request/signup-request';
 import { SignupService } from '../../services/auth/signup.service';
 import { UserCreationService } from '../../services/user-creation-service';
 

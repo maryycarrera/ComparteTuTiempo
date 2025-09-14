@@ -177,3 +177,10 @@ form {
 	font-size: 1.1rem;
 	color: var(--color-texto-importante);
 }
+
+/* START Generado con GitHub Copilot Chat Extension */
+.list-header {
+  background-color: var(--color-rosa-pastel);
+  border-radius: 1rem;
+}
+/* END Generado con GitHub Copilot Chat Extension */

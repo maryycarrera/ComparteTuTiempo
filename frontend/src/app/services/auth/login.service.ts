@@ -4,7 +4,7 @@ import { JwtResponse } from './payload/response/jwt-response';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { MessageResponse } from './payload/response/message-response';
+import { MessageResponse } from '../../payload/response/message-response';
 
 @Injectable({
   providedIn: 'root'
