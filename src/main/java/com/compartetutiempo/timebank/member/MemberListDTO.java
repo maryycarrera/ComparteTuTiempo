@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class MemberListDTO {
 
+    private Integer id;
     private String fullName;
     private String username;
     private String email;
@@ -14,6 +15,7 @@ public class MemberListDTO {
     private String timeBalance;
 
     public MemberListDTO(Member member) {
+        this.id = member.getId();
         this.fullName = member.getFullName();
         this.username = member.getUser().getUsername();
         this.email = member.getEmail();
