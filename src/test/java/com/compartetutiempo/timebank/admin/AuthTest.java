@@ -1,7 +1,6 @@
 package com.compartetutiempo.timebank.admin;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -10,17 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.jayway.jsonpath.JsonPath;
+import com.compartetutiempo.timebank.BaseTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthTest {
+public class AuthTest extends BaseTest {
 
     private static final String BASE_URL = "/api/v1/auth";
-    private static final String LOGIN_URL = BASE_URL + "/login";
     private static final String PROFILE_URL = BASE_URL + "/profile";
     private static final String FULLNAME_URL = BASE_URL + "/fullname";
 
@@ -31,23 +28,7 @@ public class AuthTest {
 
     @BeforeEach
     void authenticateAdmin() throws Exception {
-        adminToken = getAdminToken();
-    }
-
-    private String getAdminToken() throws Exception {
-        String loginJson = """
-        {
-            "username": "admin1",
-            "password": "sys4dm1n*!"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post(LOGIN_URL)
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(loginJson))
-                                        .andReturn().getResponse().getContentAsString();
-
-        return JsonPath.read(loginResponse, "$.token");
+        adminToken = getToken("admin1", "sys4dm1n*!");
     }
 
     @Test

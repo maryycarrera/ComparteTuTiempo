@@ -1,6 +1,5 @@
 package com.compartetutiempo.timebank.admin;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,11 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.jayway.jsonpath.JsonPath;
+import com.compartetutiempo.timebank.BaseTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SolidarityFundTest {
+public class SolidarityFundTest extends BaseTest {
 
     private static final String BASE_URL = "/api/v1/solidarity-fund";
 
@@ -28,23 +27,7 @@ public class SolidarityFundTest {
 
     @BeforeEach
     void authenticateAdmin() throws Exception {
-        adminToken = getAdminToken();
-    }
-
-    private String getAdminToken() throws Exception {
-        String loginJson = """
-        {
-            "username": "admin2",
-            "password": "sys4dm1n*!"
-        }
-        """;
-
-        String loginResponse = mockMvc.perform(post("/api/v1/auth/login")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(loginJson))
-                                        .andReturn().getResponse().getContentAsString();
-
-        return JsonPath.read(loginResponse, "$.token");
+        adminToken = getToken("admin2", "sys4dm1n*!");
     }
 
     @Test
