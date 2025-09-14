@@ -6,7 +6,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
 import { MemberListDTO } from './dto/member-list-dto';
-import { MemberListForMemberDTO } from './dto/member-list-for-member-dto';
+import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +16,9 @@ export class MemberService {
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
-  getAllMembers(): Observable<ListMessageResponse<MemberListDTO|MemberListForMemberDTO>> {
+  getAllMembers(): Observable<ListMessageResponse<MemberListDTO|MemberListForAdminDTO>> {
     const token = this.loginService.userToken;
-    return this.http.get<ListMessageResponse<MemberListDTO|MemberListForMemberDTO>>(environment.apiUrl + 'members', {
+    return this.http.get<ListMessageResponse<MemberListDTO|MemberListForAdminDTO>>(environment.apiUrl + 'members', {
       headers: {
         Authorization: `Bearer ${token}`
       }

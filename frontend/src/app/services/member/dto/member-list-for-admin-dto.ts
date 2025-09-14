@@ -1,5 +1,5 @@
 import { MemberListDTO } from "./member-list-dto";
 
-export interface MemberListForMemberDTO extends MemberListDTO {
+export interface MemberListForAdminDTO extends MemberListDTO {
     email: string;
 }
