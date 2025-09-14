@@ -1,24 +1,27 @@
-package com.compartetutiempo.timebank.member;
+/*
+ * Clase abstracta generada con GitHub Copilot Chat Extension
+ */
+package com.compartetutiempo.timebank.member.dto;
 
 import java.time.format.DateTimeFormatter;
+
+import com.compartetutiempo.timebank.member.Member;
 
 import lombok.Getter;
 
 @Getter
-public class MemberListDTO {
+public abstract class MemberListBaseDTO {
 
-    private Integer id;
-    private String fullName;
-    private String username;
-    private String email;
-    private String dateOfMembership;
-    private String timeBalance;
+    protected Integer id;
+    protected String fullName;
+    protected String username;
+    protected String dateOfMembership;
+    protected String timeBalance;
 
-    public MemberListDTO(Member member) {
+    public MemberListBaseDTO(Member member) {
         this.id = member.getId();
         this.fullName = member.getFullName();
         this.username = member.getUser().getUsername();
-        this.email = member.getEmail();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.dateOfMembership = member.getDateOfMembership().format(formatter);
