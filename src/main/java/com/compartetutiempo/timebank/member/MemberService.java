@@ -2,6 +2,8 @@ package com.compartetutiempo.timebank.member;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,13 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public List<MemberListDTO> findAll() {
-        return StreamSupport
-                .stream(memberRepository.findAll().spliterator(), false)
-                .sorted(Comparator.comparing(Member::getFullName, String.CASE_INSENSITIVE_ORDER))
-                .map(member -> new MemberListDTO(member))
-                .toList();
+    public List<MemberListForAdminDTO> findAllForAdmin() {
+        return findAll(member -> true, MemberListForAdminDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberListForMemberDTO> findAllForMember(String currentUsername) {
+        return findAll(member -> !member.getUser().getUsername().equals(currentUsername), MemberListForMemberDTO::new);
     }
 
     @Transactional(readOnly = true)
@@ -60,6 +63,15 @@ public class MemberService {
 
     public Boolean existsByEmail(String email) {
         return memberRepository.existsByEmail(email);
+    }
+
+    private <T> List<T> findAll(Predicate<Member> filter, Function<Member, T> mapper) {
+        return StreamSupport
+            .stream(memberRepository.findAll().spliterator(), false)
+            .filter(filter)
+            .sorted(Comparator.comparing(Member::getFullName, String.CASE_INSENSITIVE_ORDER))
+            .map(mapper)
+            .toList();
     }
 
 }

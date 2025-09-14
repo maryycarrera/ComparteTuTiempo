@@ -28,24 +28,24 @@ public class MemberRestController {
     }
 
     @GetMapping
-    public ResponseEntity<ListMessageResponse<MemberListDTO>> findAllMembers() {
+    public ResponseEntity<ListMessageResponse<?>> findAllMembers() {
         User currentUser = userService.findCurrentUser();
         Authority authority = currentUser.getAuthority();
 
-        List<MemberListDTO> members = memberService.findAll();
+        List<?> members = List.of();
 
         if (authority.equals(Authority.MEMBER)) {
-            members = members.stream()
-                    .filter(member -> !member.getUsername().equals(currentUser.getUsername()))
-                    .toList();
+            members = memberService.findAllForMember(currentUser.getUsername());
+        } else if (authority.equals(Authority.ADMIN)) {
+            members = memberService.findAllForAdmin();
         }
 
         if (members.isEmpty()) {
-            ListMessageResponse<MemberListDTO> response = new ListMessageResponse<MemberListDTO>("¡Vaya! Parece que no hay miembros registrados aún.");
+            ListMessageResponse<MemberListForAdminDTO> response = new ListMessageResponse<MemberListForAdminDTO>("¡Vaya! Parece que no hay miembros registrados aún.");
             return ResponseEntity.ok(response);
         }
 
-        ListMessageResponse<MemberListDTO> response = new ListMessageResponse<MemberListDTO>("Lista de miembros encontrada con éxito.", members);
+        ListMessageResponse<?> response = new ListMessageResponse<>("Lista de miembros encontrada con éxito.", members);
         return ResponseEntity.ok(response);
     }
 
