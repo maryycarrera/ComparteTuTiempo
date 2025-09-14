@@ -21,10 +21,9 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public List<Member> findAll() {
-        List<Member> members = StreamSupport
+        return StreamSupport
                 .stream(memberRepository.findAll().spliterator(), false)
                 .toList();
-        return members;
     }
 
     @Transactional(readOnly = true)
