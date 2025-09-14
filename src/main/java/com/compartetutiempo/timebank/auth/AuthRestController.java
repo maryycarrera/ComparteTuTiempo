@@ -30,7 +30,7 @@ import com.compartetutiempo.timebank.config.userdetails.UserDetailsServiceImpl;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.Member;
 import com.compartetutiempo.timebank.member.MemberService;
-import com.compartetutiempo.timebank.member.dto.MemberProfile;
+import com.compartetutiempo.timebank.member.dto.MemberProfileDTO;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.user.Authority;
@@ -142,7 +142,7 @@ public class AuthRestController {
             return ResponseEntity.ok().body(adminDTO);
         } else if (authority.equals(Authority.MEMBER)) {
             Member member = memberService.findMemberByUser(currentUser.getId());
-            MemberProfile memberProfile = new MemberProfile(member);
+            MemberProfileDTO memberProfile = new MemberProfileDTO(member);
             return ResponseEntity.ok().body(memberProfile);
         } else {
             throw new IllegalStateException("El usuario tiene un rol desconocido.");

@@ -1,15 +1,14 @@
 package com.compartetutiempo.timebank.member.dto;
 
-import lombok.Getter;
 import java.time.format.DateTimeFormatter;
 
 import com.compartetutiempo.timebank.member.Member;
 
-@Getter
-public class MemberProfile {
+import lombok.Getter;
 
-    private String name;
-    private String lastName;
+@Getter
+public abstract class BaseMemberDTO {
+
     private String username;
     private String email;
     private String profilePic;
@@ -18,9 +17,7 @@ public class MemberProfile {
     private String hours;
     private String minutes;
 
-    public MemberProfile(Member member) {
-        this.name = member.getName();
-        this.lastName = member.getLastName();
+    public BaseMemberDTO(Member member) {
         this.username = member.getUser().getUsername();
         this.email = member.getEmail();
         this.profilePic = member.getProfilePicture();
