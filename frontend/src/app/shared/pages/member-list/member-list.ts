@@ -37,6 +37,4 @@ export class MemberList implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-
-
 }
