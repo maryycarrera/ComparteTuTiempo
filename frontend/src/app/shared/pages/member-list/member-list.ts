@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MemberService } from '../../../services/member/member.service';
-import { MemberListDTO } from '../../../services/member/member-list-dto';
+import { MemberListDTO } from '../../../services/member/dto/member-list-dto';
 import { Subscription } from 'rxjs';
 
 @Component({

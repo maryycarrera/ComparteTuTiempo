@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { LoginService } from '../auth/login.service';
-import { MemberProfileDTO } from './member-profile-dto';
+import { MemberProfileDTO } from './dto/member-profile-dto';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
-import { MemberListDTO } from './member-list-dto';
+import { MemberListDTO } from './dto/member-list-dto';
 
 @Injectable({
   providedIn: 'root'
