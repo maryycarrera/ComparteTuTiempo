@@ -61,7 +61,6 @@ public class MemberTest extends BaseTest {
                 .andExpect(jsonPath("$.object.dateOfMembership").value("16/01/2022"))
                 .andExpect(jsonPath("$.object.hours").value("4"))
                 .andExpect(jsonPath("$.object.minutes").value("30"));
-
     }
 
 }
