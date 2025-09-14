@@ -1,6 +1,8 @@
-package com.compartetutiempo.timebank.member;
+package com.compartetutiempo.timebank.member.dto;
 
 import java.time.format.DateTimeFormatter;
+
+import com.compartetutiempo.timebank.member.Member;
 
 import lombok.Getter;
 

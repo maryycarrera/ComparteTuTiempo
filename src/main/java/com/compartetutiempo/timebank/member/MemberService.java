@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
+import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
+import com.compartetutiempo.timebank.member.dto.MemberListForMemberDTO;
 
 @Service
 public class MemberService {
