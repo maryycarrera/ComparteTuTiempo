@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.member.dto.MemberDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
 import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
 import com.compartetutiempo.timebank.user.Authority;
@@ -51,8 +52,8 @@ public class MemberRestController {
     }
 
     @GetMapping(value = "{memberId}")
-    public ResponseEntity<Member> findById(@PathVariable("memberId") Integer memberId) {
-        Member member = memberService.findMember(memberId);
+    public ResponseEntity<MemberDTO> findById(@PathVariable("memberId") Integer memberId) {
+        MemberDTO member = memberService.findMemberDTO(memberId);
         return ResponseEntity.ok(member);
     }
 
