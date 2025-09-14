@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import com.compartetutiempo.timebank.member.Member;
 
 @Getter
-public class MemberProfile {
+public class MemberProfileDTO {
 
     private String name;
     private String lastName;
@@ -18,7 +18,7 @@ public class MemberProfile {
     private String hours;
     private String minutes;
 
-    public MemberProfile(Member member) {
+    public MemberProfileDTO(Member member) {
         this.name = member.getName();
         this.lastName = member.getLastName();
         this.username = member.getUser().getUsername();
