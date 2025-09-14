@@ -20,9 +20,10 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public List<Member> findAll() {
+    public List<MemberListDTO> findAll() {
         return StreamSupport
                 .stream(memberRepository.findAll().spliterator(), false)
+                .map(member -> new MemberListDTO(member))
                 .toList();
     }
 
