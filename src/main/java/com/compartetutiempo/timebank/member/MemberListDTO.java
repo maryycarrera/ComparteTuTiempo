@@ -23,7 +23,21 @@ public class MemberListDTO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         this.dateOfMembership = member.getDateOfMembership().format(formatter);
 
-        this.timeBalance = member.getTimeBalance().toString();
+        int hours = member.getHours();
+        int minutes = member.getMinutes();
+
+        if (hours != 0) {
+            this.timeBalance = new StringBuilder()
+                .append(hours).append("h ")
+                .append(Math.abs(minutes)).append("min")
+                .toString();
+        } else {
+            this.timeBalance = new StringBuilder()
+                .append(minutes < 0 ? "-" : "")
+                .append("0h ")
+                .append(Math.abs(minutes)).append("min")
+                .toString();
+        }
     }
 
 }
