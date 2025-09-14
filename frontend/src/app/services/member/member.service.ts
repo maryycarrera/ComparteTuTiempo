@@ -1,11 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { LoginService } from '../auth/login.service';
-import { MemberProfileDTO } from './member-profile-dto';
+import { MemberProfileDTO } from './dto/member-profile-dto';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
-import { MemberListDTO } from './member-list-dto';
+import { MemberListDTO } from './dto/member-list-dto';
+import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,9 @@ export class MemberService {
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
 
-  getAllMembers(): Observable<ListMessageResponse<MemberListDTO>> {
+  getAllMembers(): Observable<ListMessageResponse<MemberListDTO|MemberListForAdminDTO>> {
     const token = this.loginService.userToken;
-    return this.http.get<ListMessageResponse<MemberListDTO>>(environment.apiUrl + 'members', {
+    return this.http.get<ListMessageResponse<MemberListDTO|MemberListForAdminDTO>>(environment.apiUrl + 'members', {
       headers: {
         Authorization: `Bearer ${token}`
       }

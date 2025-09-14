@@ -1,4 +1,4 @@
-import { AdminDTO } from "../admin/admin-dto";
+import { AdminDTO } from "../../admin/admin-dto";
 
 export interface MemberProfileDTO extends AdminDTO {
     biography: string;

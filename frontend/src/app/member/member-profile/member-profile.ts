@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberProfileDTO } from '../../services/member/member-profile-dto';
+import { MemberProfileDTO } from '../../services/member/dto/member-profile-dto';
 import { MemberService } from '../../services/member/member.service';
 import { ResourcesService } from '../../services/resources/resources.service';
 import { environment } from '../../../environments/environment';

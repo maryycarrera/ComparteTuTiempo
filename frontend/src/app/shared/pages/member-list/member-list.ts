@@ -1,7 +1,8 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MemberService } from '../../../services/member/member.service';
-import { MemberListDTO } from '../../../services/member/member-list-dto';
+import { MemberListDTO } from '../../../services/member/dto/member-list-dto';
 import { Subscription } from 'rxjs';
+import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-for-admin-dto';
 
 @Component({
   selector: 'app-member-list',
@@ -15,7 +16,7 @@ export class MemberList implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   errorMessage?: string;
-  members?: MemberListDTO[];
+  members?: (MemberListDTO|MemberListForAdminDTO)[];
 
   ngOnInit(): void {
     this.subscription.add(
