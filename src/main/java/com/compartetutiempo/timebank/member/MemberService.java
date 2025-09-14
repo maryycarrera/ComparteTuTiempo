@@ -1,5 +1,8 @@
 package com.compartetutiempo.timebank.member;
 
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,8 +20,11 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Iterable<Member> findAll() {
-        return memberRepository.findAll();
+    public List<Member> findAll() {
+        List<Member> members = StreamSupport
+                .stream(memberRepository.findAll().spliterator(), false)
+                .toList();
+        return members;
     }
 
     @Transactional(readOnly = true)
