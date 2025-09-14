@@ -55,7 +55,7 @@ public class MemberRestController {
     @GetMapping(value = "{memberId}")
     public ResponseEntity<MessageResponse<MemberDTO>> findById(@PathVariable("memberId") Integer memberId) {
         MemberDTO member = memberService.findMemberDTO(memberId);
-        return ResponseEntity.ok(new MessageResponse<MemberDTO>("Miembro encontrado con éxito.", member));
+        return ResponseEntity.ok(new MessageResponse<MemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
     }
 
 }
