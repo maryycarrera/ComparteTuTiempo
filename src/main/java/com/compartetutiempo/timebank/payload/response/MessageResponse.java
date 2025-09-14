@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.response;
+package com.compartetutiempo.timebank.payload.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.compartetutiempo.timebank.response.ListMessageResponse;
+import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
 
 @RestController
 @RequestMapping("/api/v1/members")

@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.response;
+package com.compartetutiempo.timebank.payload.response;
 
 import java.util.List;
 

@@ -32,7 +32,7 @@ import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.Member;
 import com.compartetutiempo.timebank.member.MemberProfile;
 import com.compartetutiempo.timebank.member.MemberService;
-import com.compartetutiempo.timebank.response.MessageResponse;
+import com.compartetutiempo.timebank.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserService;
