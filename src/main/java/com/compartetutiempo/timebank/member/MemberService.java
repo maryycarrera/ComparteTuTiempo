@@ -1,5 +1,6 @@
 package com.compartetutiempo.timebank.member;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -23,6 +24,7 @@ public class MemberService {
     public List<MemberListDTO> findAll() {
         return StreamSupport
                 .stream(memberRepository.findAll().spliterator(), false)
+                .sorted(Comparator.comparing(Member::getFullName, String.CASE_INSENSITIVE_ORDER))
                 .map(member -> new MemberListDTO(member))
                 .toList();
     }
