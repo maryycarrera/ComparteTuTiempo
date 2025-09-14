@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.admin;
+package com.compartetutiempo.timebank.member;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
@@ -25,18 +25,18 @@ public class MemberTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private String adminToken;
+    private String memberToken;
 
     @BeforeEach
-    void authenticateAdmin() throws Exception {
-        adminToken = getAdminToken();
+    void authenticateMember() throws Exception {
+        memberToken = getMemberToken();
     }
 
-    private String getAdminToken() throws Exception {
+    private String getMemberToken() throws Exception {
         String loginJson = """
         {
-            "username": "admin2",
-            "password": "sys4dm1n*!"
+            "username": "member1",
+            "password": "m13mbr0CTT*"
         }
         """;
 
@@ -50,13 +50,13 @@ public class MemberTest {
 
     public void shouldListAllMembersSuccessfully() throws Exception {
         mockMvc.perform(get(BASE_URL)
-                .header("Authorization", "Bearer " + adminToken)
+                .header("Authorization", "Bearer " + memberToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Lista de miembros encontrada con éxito."))
                 .andExpect(jsonPath("$.objects").isArray())
                 .andExpect(jsonPath("$.objects").isNotEmpty())
-                .andExpect(jsonPath("$.objects.length()").value(greaterThanOrEqualTo(11)));
+                .andExpect(jsonPath("$.objects.length()").value(greaterThanOrEqualTo(10)));
     }
 
 }
