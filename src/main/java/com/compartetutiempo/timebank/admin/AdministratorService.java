@@ -5,8 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.compartetutiempo.timebank.auth.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
+import com.compartetutiempo.timebank.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
 

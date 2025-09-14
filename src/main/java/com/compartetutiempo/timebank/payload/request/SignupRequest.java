@@ -1,4 +1,4 @@
-package com.compartetutiempo.timebank.auth.payload.request;
+package com.compartetutiempo.timebank.payload.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
