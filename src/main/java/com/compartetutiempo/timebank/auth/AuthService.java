@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.admin.Administrator;
 import com.compartetutiempo.timebank.admin.AdministratorRepository;
-import com.compartetutiempo.timebank.auth.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.member.Member;
 import com.compartetutiempo.timebank.member.MemberRepository;
+import com.compartetutiempo.timebank.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserRepository;

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.compartetutiempo.timebank.auth.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.MemberService;
-import com.compartetutiempo.timebank.response.MessageResponse;
+import com.compartetutiempo.timebank.payload.request.SignupRequest;
+import com.compartetutiempo.timebank.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.user.UserService;
 
 import jakarta.validation.Valid;
