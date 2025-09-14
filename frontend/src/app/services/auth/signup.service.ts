@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { SignupRequest } from './payload/request/signup-request';
+import { SignupRequest } from '../../payload/request/signup-request';
 import { Observable, throwError } from 'rxjs';
-import { MessageResponse } from './payload/response/message-response';
+import { MessageResponse } from '../../payload/response/message-response';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { UserCreationService } from '../user-creation-service';
