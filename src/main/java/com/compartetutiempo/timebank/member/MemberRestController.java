@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.response.ListMessageResponse;
+
 @RestController
 @RequestMapping("/api/v1/members")
 public class MemberRestController {
@@ -21,9 +23,14 @@ public class MemberRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Member>> findAllMembers() {
+    public ResponseEntity<ListMessageResponse<Member>> findAllMembers() {
         List<Member> members = memberService.findAll();
-        return ResponseEntity.ok(members);
+        if (members.isEmpty()) {
+            ListMessageResponse<Member> response = new ListMessageResponse<Member>("¡Vaya! Parece que no hay miembros registrados aún.");
+            return ResponseEntity.ok(response);
+        }
+        ListMessageResponse<Member> response = new ListMessageResponse<Member>("Lista de miembros encontrada con éxito.", members);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(value = "{memberId}")
