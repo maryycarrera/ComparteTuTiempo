@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.compartetutiempo.timebank.member.dto.MemberDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
 import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
+import com.compartetutiempo.timebank.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserService;
@@ -52,9 +53,9 @@ public class MemberRestController {
     }
 
     @GetMapping(value = "{memberId}")
-    public ResponseEntity<MemberDTO> findById(@PathVariable("memberId") Integer memberId) {
+    public ResponseEntity<MessageResponse<MemberDTO>> findById(@PathVariable("memberId") Integer memberId) {
         MemberDTO member = memberService.findMemberDTO(memberId);
-        return ResponseEntity.ok(member);
+        return ResponseEntity.ok(new MessageResponse<MemberDTO>("Miembro encontrado con éxito.", member));
     }
 
 }
