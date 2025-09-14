@@ -24,4 +24,12 @@ public class MemberTest {
                .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    public void shouldFailGetMemberByIdWhenUnauthenticated() throws Exception {
+        int memberId = 1;
+
+        mockMvc.perform(get(BASE_URL + "/" + memberId))
+               .andExpect(status().isUnauthorized());
+    }
+
 }
