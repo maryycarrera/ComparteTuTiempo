@@ -4,24 +4,28 @@
 
 <!-- START Generado con GitHub Copilot Chat Extension -->
 <div class="container mt-4">
-    <div class="row fw-bold mb-2 list-header">
-        <div class="col text-center">Nombre completo</div>
-        <div class="col text-center">Nombre de usuario</div>
-        <div class="col text-center">Correo electrónico</div>
-        <div class="col text-center">Fecha de alta</div>
-        <div class="col text-center">Tiempo</div>
-    </div>
-    @for (member of members; track member.id) {
-        <div class="row mb-2 align-items-center">
-            <div class="col text-center">{{ member.fullName }}</div>
-            <div class="col text-center">{{ member.username }}</div>
-            <div class="col text-center">{{ member.email }}</div>
-            <div class="col text-center">{{ member.dateOfMembership }}</div>
-            <div class="col text-center">{{ member.timeBalance }}</div>
-        </div>
-    }
-    @if (errorMessage) {
-      <div class="alert alert-info mt-3">{{ errorMessage }}</div>
-    }
+        @if (errorMessage) {
+            <div class="alert alert-info mb-4">{{ errorMessage }}</div>
+        }
+        @if (members && members.length > 0) {
+            <div>
+                <div class="row fw-bold mb-2 list-header">
+                    <div class="col text-center">Nombre completo</div>
+                    <div class="col text-center">Nombre de usuario</div>
+                    <div class="col text-center">Correo electrónico</div>
+                    <div class="col text-center">Fecha de alta</div>
+                    <div class="col text-center">Tiempo</div>
+                </div>
+                @for (member of members; track member.id) {
+                    <div class="row mb-2 align-items-center">
+                        <div class="col text-center">{{ member.fullName }}</div>
+                        <div class="col text-center">{{ member.username }}</div>
+                        <div class="col text-center">{{ member.email }}</div>
+                        <div class="col text-center">{{ member.dateOfMembership }}</div>
+                        <div class="col text-center">{{ member.timeBalance }}</div>
+                    </div>
+                }
+            </div>
+        }
 </div>
 <!-- END Generado con GitHub Copilot Chat Extension -->
