@@ -133,17 +133,18 @@ form {
   align-self: center;
 }
 
-.profile-pic img {
-	border-radius: 50%;
-	background: lightgray;
-	border: 2px solid var(--color-texto-destacado);
-}
-
 .success-message-container {
   width: 100%;
   max-width: 400px;
   margin: 10px auto;
   align-self: center;
+}
+
+/* START Generado con GitHub Copilot Chat Extension */
+.profile-pic img {
+	border-radius: 50%;
+	background: lightgray;
+	border: 2px solid var(--color-texto-destacado);
 }
 
 .profile-card {
@@ -180,7 +181,63 @@ form {
 	color: var(--color-texto-importante);
 }
 
-/* START Generado con GitHub Copilot Chat Extension */
+.profile-row {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 3rem;
+}
+
+.profile-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	min-width: 220px;
+}
+
+.profile-right {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	flex: 1;
+}
+
+.profile-main-data {
+	text-align: left;
+	margin-bottom: 1.2rem;
+}
+.profile-name {
+	font-size: 1.3rem;
+	font-weight: bold;
+	margin-bottom: 0.2rem;
+}
+.profile-email {
+	font-size: 1rem;
+	color: var(--color-texto-secundario);
+	margin-bottom: 0.2rem;
+}
+.profile-bio {
+	font-size: 1rem;
+	color: var(--color-texto-destacado);
+	margin-bottom: 0.2rem;
+}
+.profile-username {
+	text-align: center;
+	margin-top: 0.5rem;
+}
+.profile-username-value {
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 0.1rem;
+}
+.profile-date {
+	font-size: 1rem;
+	color: var(--color-texto-ayuda);
+}
+
 .list-header {
   background-color: var(--color-rosa-pastel);
   border-radius: 1rem;
