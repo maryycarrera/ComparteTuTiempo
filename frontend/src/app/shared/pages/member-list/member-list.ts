@@ -4,10 +4,11 @@ import { MemberListDTO } from '../../../services/member/dto/member-list-dto';
 import { Subscription } from 'rxjs';
 import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-for-admin-dto';
 import { Router } from '@angular/router';
+import { DetailsButton } from '../../../components/details-button/details-button';
 
 @Component({
   selector: 'app-member-list',
-  imports: [],
+  imports: [DetailsButton],
   templateUrl: './member-list.html',
   styleUrl: './member-list.css'
 })
