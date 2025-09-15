@@ -12,15 +12,15 @@ export class MemberSolidarityFund {
   private router = inject(Router);
 
   donations() {
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
   }
 
   credits() {
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
   }
 
   maximumCredit() {
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
   }
 
 }

@@ -12,7 +12,7 @@ export class AdminSolidarityFund {
   private router = inject(Router);
 
   edit() {
-    this.router.navigateByUrl('/');
+    // this.router.navigateByUrl('/');
   }
 
 }

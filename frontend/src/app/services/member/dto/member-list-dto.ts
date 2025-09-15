@@ -1,5 +1,5 @@
 export interface MemberListDTO {
-    id: number;
+    id: string;
     fullName: string;
     username: string;
     dateOfMembership: string;

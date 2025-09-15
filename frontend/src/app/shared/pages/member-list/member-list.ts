@@ -3,16 +3,19 @@ import { MemberService } from '../../../services/member/member.service';
 import { MemberListDTO } from '../../../services/member/dto/member-list-dto';
 import { Subscription } from 'rxjs';
 import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-for-admin-dto';
+import { Router } from '@angular/router';
+import { DetailsButton } from '../../../components/details-button/details-button';
 
 @Component({
   selector: 'app-member-list',
-  imports: [],
+  imports: [DetailsButton],
   templateUrl: './member-list.html',
   styleUrl: './member-list.css'
 })
 export class MemberList implements OnInit, OnDestroy {
 
   private memberService = inject(MemberService);
+  private router = inject(Router);
   private subscription: Subscription = new Subscription();
 
   errorMessage?: string;
@@ -36,6 +39,10 @@ export class MemberList implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  viewMemberDetails(memberId: string) {
+    this.router.navigate(['/miembros', memberId]);
   }
 
 }
