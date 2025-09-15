@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.member.dto.MemberDTO;
+import com.compartetutiempo.timebank.member.dto.MemberForMemberDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForMemberDTO;
 
@@ -57,6 +58,13 @@ public class MemberService {
     public MemberDTO findMemberDTO(Integer memberId) {
         return memberRepository.findById(memberId)
                 .map(MemberDTO::new)
+                .orElseThrow(() -> new ResourceNotFoundException("Member", "id", memberId));
+    }
+
+    @Transactional(readOnly = true)
+    public MemberForMemberDTO findMemberForMemberDTO(Integer memberId) {
+        return memberRepository.findById(memberId)
+                .map(MemberForMemberDTO::new)
                 .orElseThrow(() -> new ResourceNotFoundException("Member", "id", memberId));
     }
 

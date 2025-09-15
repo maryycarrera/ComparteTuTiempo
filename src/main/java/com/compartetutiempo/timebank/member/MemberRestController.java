@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.compartetutiempo.timebank.member.dto.MemberDTO;
+import com.compartetutiempo.timebank.member.dto.MemberForMemberDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
 import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
 import com.compartetutiempo.timebank.payload.response.MessageResponse;
@@ -53,7 +54,19 @@ public class MemberRestController {
     }
 
     @GetMapping(value = "{memberId}")
-    public ResponseEntity<MessageResponse<MemberDTO>> findById(@PathVariable("memberId") Integer memberId) {
+    public ResponseEntity<MessageResponse<?>> findById(@PathVariable("memberId") Integer memberId) {
+        User currentUser = userService.findCurrentUser();
+        Authority authority = currentUser.getAuthority();
+
+        if (authority.equals(Authority.MEMBER)) {
+            Member currentMember = memberService.findMemberByUser(currentUser.getUsername());
+            if (currentMember.getId().equals(memberId)) {
+                return ResponseEntity.ok(new MessageResponse<MemberDTO>("El miembro con ID " + memberId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+            }
+            MemberForMemberDTO member = memberService.findMemberForMemberDTO(memberId);
+            return ResponseEntity.ok(new MessageResponse<MemberForMemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
+        }
+
         MemberDTO member = memberService.findMemberDTO(memberId);
         return ResponseEntity.ok(new MessageResponse<MemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
     }
