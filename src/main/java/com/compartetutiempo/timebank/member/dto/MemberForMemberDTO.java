@@ -5,15 +5,13 @@ import com.compartetutiempo.timebank.member.Member;
 import lombok.Getter;
 
 @Getter
-public class MemberDTO extends BaseMemberDTO {
+public class MemberForMemberDTO extends BaseMemberDTO {
 
     private String fullName;
-    private String email;
 
-    public MemberDTO(Member member) {
+    public MemberForMemberDTO(Member member) {
         super(member);
         this.fullName = member.getFullName();
-        this.email = member.getEmail();
     }
 
 }

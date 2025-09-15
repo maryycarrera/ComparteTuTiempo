@@ -10,7 +10,6 @@ import lombok.Getter;
 public abstract class BaseMemberDTO {
 
     private String username;
-    private String email;
     private String profilePic;
     private String biography;
     private String dateOfMembership;
@@ -19,7 +18,6 @@ public abstract class BaseMemberDTO {
 
     public BaseMemberDTO(Member member) {
         this.username = member.getUser().getUsername();
-        this.email = member.getEmail();
         this.profilePic = member.getProfilePicture();
         this.biography = member.getBiography();
 
