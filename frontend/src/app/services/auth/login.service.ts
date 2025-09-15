@@ -43,6 +43,16 @@ export class LoginService {
     );
   }
 
+  isCurrentUserPersonId(personId: string): Observable<MessageResponse<Boolean>> {
+    return this.http.get<MessageResponse<Boolean>>(environment.apiUrl + 'auth/person-id-is-me/' + personId, {
+      headers: {
+        Authorization: `Bearer ${this.userToken}`
+      }
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'Algo salió mal; inténtalo de nuevo.';
     if (error.status === 400 && error.error) {
