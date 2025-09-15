@@ -1,3 +1,5 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 :root {
   --color-lila-claro: #d8b2ee;
   --color-lila-suave: #f3e6fa;
@@ -184,3 +186,7 @@ form {
   border-radius: 1rem;
 }
 /* END Generado con GitHub Copilot Chat Extension */
+
+.bi-eye-fill {
+  color: white;
+}
