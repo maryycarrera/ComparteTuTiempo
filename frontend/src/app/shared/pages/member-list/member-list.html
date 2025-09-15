@@ -17,6 +17,7 @@
                     }
                     <div class="col text-center">Fecha de alta</div>
                     <div class="col text-center">Tiempo</div>
+                    <div class="col text-center">Acciones</div>
                 </div>
                 @for (member of members; track member.id) {
                     <div class="row mb-2 align-items-center">
@@ -27,6 +28,11 @@
                         }
                         <div class="col text-center">{{ member.dateOfMembership }}</div>
                         <div class="col text-center">{{ member.timeBalance }}</div>
+                        <div class="col text-center">
+                            <button type="button" (click)="viewMemberDetails(member.id)" class="btn btn-info btn-sm" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 }
             </div>

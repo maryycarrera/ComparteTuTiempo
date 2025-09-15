@@ -3,6 +3,7 @@ import { MemberService } from '../../../services/member/member.service';
 import { MemberListDTO } from '../../../services/member/dto/member-list-dto';
 import { Subscription } from 'rxjs';
 import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-for-admin-dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-member-list',
@@ -13,6 +14,7 @@ import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-
 export class MemberList implements OnInit, OnDestroy {
 
   private memberService = inject(MemberService);
+  private router = inject(Router);
   private subscription: Subscription = new Subscription();
 
   errorMessage?: string;
@@ -36,6 +38,10 @@ export class MemberList implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  viewMemberDetails(memberId: string) {
+    this.router.navigate(['/members', memberId]);
   }
 
 }
