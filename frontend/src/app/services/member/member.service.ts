@@ -9,6 +9,7 @@ import { MemberListDTO } from './dto/member-list-dto';
 import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
 import { MemberDTO } from './dto/member-dto';
 import { MessageResponse } from '../../payload/response/message-response';
+import { MemberForMemberDTO } from './dto/member-for-member-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -29,9 +30,9 @@ export class MemberService {
     );
   }
 
-  getMemberById(id: string): Observable<MessageResponse<MemberDTO>> {
+  getMemberById(id: string): Observable<MessageResponse<MemberDTO|MemberForMemberDTO>> {
     const token = this.loginService.userToken;
-    return this.http.get<MessageResponse<MemberDTO>>(environment.apiUrl + `members/${id}`, {
+    return this.http.get<MessageResponse<MemberDTO|MemberForMemberDTO>>(environment.apiUrl + `members/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
