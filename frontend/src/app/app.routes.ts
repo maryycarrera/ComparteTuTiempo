@@ -1,5 +1,5 @@
 import { Routes, Router, CanActivateFn } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Login } from './auth/login/login';
 import { inject } from '@angular/core';
 import { LoginService } from './services/auth/login.service';
@@ -11,6 +11,7 @@ import { CreateAdmin } from './admin/create-admin/create-admin';
 import { SolidarityFund } from './shared/pages/solidarity-fund/solidarity-fund';
 import { MemberList } from './shared/pages/member-list/member-list';
 import { MemberInfo } from './shared/pages/member-info/member-info';
+import { of } from 'rxjs';
 
 // START Generado con GitHub Copilot Chat Extension
 const authGuard: CanActivateFn = (route, state) => {
@@ -56,24 +57,28 @@ const memberInfoGuard: CanActivateFn = (route, state) => {
 
     const loginService = inject(LoginService);
     const router = inject(Router);
-    const isAdmin = loginService.userIsAdmin;
+    const memberIdParam = route.paramMap.get('id');
 
-    if (!isAdmin) {
-        const memberIdParam = route.paramMap.get('id');
-        if (memberIdParam) {
-            return loginService.isCurrentUserPersonId(memberIdParam).pipe(
-                map((response) => {
-                    if (response.object === true) {
-                        return true;
-                    } else {
-                        return router.parseUrl('/inicio');
-                    }
-                })
-            );
-        }
-    }
-
-    return true;
+    return loginService.userIsAdmin.pipe(
+    map((isAdmin: boolean) => isAdmin),
+    switchMap((isAdmin: boolean) => {
+      if (isAdmin) {
+        return of(true);
+      }
+      if (memberIdParam) {
+        return loginService.isCurrentUserPersonId(memberIdParam).pipe(
+          map((response) => {
+            if (response.object === true) {
+              return router.parseUrl('/perfil');
+            } else {
+              return true;
+            }
+          })
+        );
+      }
+      return of(true);
+    })
+  );
 }
 // END Generado con GitHub Copilot Chat Extension
 
