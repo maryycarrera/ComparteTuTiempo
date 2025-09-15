@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
 import { MemberListDTO } from './dto/member-list-dto';
 import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
+import { MemberDTO } from './dto/member-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,17 @@ export class MemberService {
       }
     }).pipe(
       catchError(error => this.handleError(error, 'Error al obtener lista de miembros.'))
+    );
+  }
+
+  getMemberById(id: string): Observable<MemberDTO> {
+    const token = this.loginService.userToken;
+    return this.http.get<MemberDTO>(environment.apiUrl + `members/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      catchError(error => this.handleError(error, 'Error al obtener miembro por ID.'))
     );
   }
 
