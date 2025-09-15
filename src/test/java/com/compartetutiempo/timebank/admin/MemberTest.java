@@ -63,4 +63,15 @@ public class MemberTest extends BaseTest {
                 .andExpect(jsonPath("$.object.minutes").value("30"));
     }
 
+    @Test
+    public void shouldReturnNotFoundForNonExistentMember() throws Exception {
+        int nonExistentMemberId = 9999;
+
+        mockMvc.perform(get(BASE_URL + "/" + nonExistentMemberId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Member not found with id: '" + nonExistentMemberId + "'"));
+    }
+
 }
