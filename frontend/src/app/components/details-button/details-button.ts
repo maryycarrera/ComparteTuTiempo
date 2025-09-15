@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-details-button',
@@ -7,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './details-button.css'
 })
 export class DetailsButton {
+
+  @Output() clickDetails = new EventEmitter<void>();
+
+  onClick() {
+    this.clickDetails.emit();
+  }
 
 }
