@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ResourcesService } from '../../../services/resources/resources.service';
 import { environment } from '../../../../environments/environment';
+import { MemberForMemberDTO } from '../../../services/member/dto/member-for-member-dto';
 
 @Component({
   selector: 'app-member-info',
@@ -22,7 +23,7 @@ export class MemberInfo implements OnInit, OnDestroy {
   static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
 
   memberId!: string;
-  member?: MemberDTO;
+  member?: MemberDTO|MemberForMemberDTO;
   errorMessage?: string;
   profilePicture: string = MemberInfo.DEFAULT_PROFILE_PICTURE;
 
