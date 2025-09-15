@@ -64,4 +64,8 @@ export class MemberInfo implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  get memberEmail(): string | null {
+    return (this.member && 'email' in this.member) ? (this.member as any).email : null;
+  }
+
 }

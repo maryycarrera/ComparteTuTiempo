@@ -26,8 +26,8 @@
             </div>
             <div class="profile-main-data">
                 <p class="profile-name">{{ member?.fullName }}</p>
-                @if (member?.email) {
-                    <p class="profile-email"><b>{{ member.email }}</b></p>
+                @if (memberEmail) {
+                    <p class="profile-email"><b>{{ memberEmail }}</b></p>
                 }
                 <p class="profile-bio">{{ member?.biography }}</p>
             </div>
