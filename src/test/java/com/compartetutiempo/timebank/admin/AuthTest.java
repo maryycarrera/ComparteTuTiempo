@@ -20,6 +20,7 @@ public class AuthTest extends BaseTest {
     private static final String BASE_URL = "/api/v1/auth";
     private static final String PROFILE_URL = BASE_URL + "/profile";
     private static final String FULLNAME_URL = BASE_URL + "/fullname";
+    private static final String PERSON_ID_IS_ME_URL = BASE_URL + "/person-id-is-me";
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,6 +50,26 @@ public class AuthTest extends BaseTest {
                 .header("Authorization", "Bearer " + adminToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.object").value("Administrador del Sistema"));
+    }
+
+    @Test
+    public void shouldReturnTrueForPersonIdIsMeWhenItIsAdminId() throws Exception {
+        int adminId = 1;
+
+        mockMvc.perform(get(PERSON_ID_IS_ME_URL + "/" + adminId)
+                .header("Authorization", "Bearer " + adminToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.object").value(true));
+    }
+
+    @Test
+    public void shouldReturnFalseForPersonIdIsMeWhenItIsNotAdminId() throws Exception {
+        int nonAdminId = 999;
+
+        mockMvc.perform(get(PERSON_ID_IS_ME_URL + "/" + nonAdminId)
+                .header("Authorization", "Bearer " + adminToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.object").value(false));
     }
 
 }

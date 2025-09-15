@@ -16,6 +16,7 @@ public class AuthTest {
     private static final String BASE_URL = "/api/v1/auth";
     private static final String PROFILE_URL = BASE_URL + "/profile";
     private static final String FULLNAME_URL = BASE_URL + "/fullname";
+    private static final String PERSON_ID_IS_ME_URL = BASE_URL + "/person-id-is-me";
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,6 +30,12 @@ public class AuthTest {
     @Test
     public void shouldFailFullNameRouteWhenNotLoggedIn() throws Exception {
         mockMvc.perform(get(FULLNAME_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void shouldFailPersonIdIsMeRouteWhenNotLoggedIn() throws Exception {
+        mockMvc.perform(get(PERSON_ID_IS_ME_URL + "/1"))
                 .andExpect(status().isUnauthorized());
     }
 
