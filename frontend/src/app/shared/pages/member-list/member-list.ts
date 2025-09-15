@@ -41,7 +41,7 @@ export class MemberList implements OnInit, OnDestroy {
   }
 
   viewMemberDetails(memberId: string) {
-    this.router.navigate(['/members', memberId]);
+    this.router.navigate(['/miembros', memberId]);
   }
 
 }
