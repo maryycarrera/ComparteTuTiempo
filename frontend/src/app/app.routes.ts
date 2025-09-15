@@ -47,6 +47,34 @@ const guestGuard: CanActivateFn = (route, state) => {
         return true;
     }
 };
+
+const memberInfoGuard: CanActivateFn = (route, state) => {
+    const result = authGuard(route, state);
+    if (result !== true) {
+        return result;
+    }
+
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const isAdmin = loginService.userIsAdmin;
+
+    if (!isAdmin) {
+        const memberIdParam = route.paramMap.get('id');
+        if (memberIdParam) {
+            return loginService.isCurrentUserPersonId(memberIdParam).pipe(
+                map((response) => {
+                    if (response.object === true) {
+                        return true;
+                    } else {
+                        return router.parseUrl('/inicio');
+                    }
+                })
+            );
+        }
+    }
+
+    return true;
+}
 // END Generado con GitHub Copilot Chat Extension
 
 
@@ -60,6 +88,6 @@ export const routes: Routes = [
     { path: 'administradores/crear', component: CreateAdmin, canActivate: [adminGuard] },
     { path: 'fondo-solidario', component: SolidarityFund, canActivate: [authGuard] },
     { path: 'miembros', component: MemberList, canActivate: [authGuard] },
-    { path: 'miembros/:id', component: MemberInfo, canActivate: [authGuard] },
+    { path: 'miembros/:id', component: MemberInfo, canActivate: [memberInfoGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];
