@@ -61,7 +61,7 @@ public class MemberRestController {
         if (authority.equals(Authority.MEMBER)) {
             Member currentMember = memberService.findMemberByUser(currentUser.getUsername());
             if (currentMember.getId().equals(memberId)) {
-                return ResponseEntity.ok(new MessageResponse<MemberDTO>("El miembro con ID " + memberId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+                return ResponseEntity.ok(new MessageResponse<>("El miembro con ID " + memberId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
             }
             MemberForMemberDTO member = memberService.findMemberForMemberDTO(memberId);
             return ResponseEntity.ok(new MessageResponse<MemberForMemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
