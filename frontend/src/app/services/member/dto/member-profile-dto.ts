@@ -1,8 +1,6 @@
-import { AdminDTO } from "../../admin/admin-dto";
+import { BaseMemberDto } from "./base-member-dto";
 
-export interface MemberProfileDTO extends AdminDTO {
-    biography: string;
-    dateOfMembership: string;
-    hours: string;
-    minutes: string;
+export interface MemberProfileDTO extends BaseMemberDto {
+    name: string;
+    lastName: string;
 }
