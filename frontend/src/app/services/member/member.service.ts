@@ -8,6 +8,7 @@ import { ListMessageResponse } from '../../payload/response/list-message-respons
 import { MemberListDTO } from './dto/member-list-dto';
 import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
 import { MemberDTO } from './dto/member-dto';
+import { MessageResponse } from '../../payload/response/message-response';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,9 @@ export class MemberService {
     );
   }
 
-  getMemberById(id: string): Observable<MemberDTO> {
+  getMemberById(id: string): Observable<MessageResponse<MemberDTO>> {
     const token = this.loginService.userToken;
-    return this.http.get<MemberDTO>(environment.apiUrl + `members/${id}`, {
+    return this.http.get<MessageResponse<MemberDTO>>(environment.apiUrl + `members/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
