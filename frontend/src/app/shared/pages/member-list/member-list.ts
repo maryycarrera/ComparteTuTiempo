@@ -61,7 +61,7 @@ export class MemberList implements OnInit, OnDestroy {
       error: (error) => {
         this.errorMessage = error && error.message ? error.message : String(error);
       }
-    })
+    });
   }
 
   // START Generado con GitHub Copilot Chat Extension
