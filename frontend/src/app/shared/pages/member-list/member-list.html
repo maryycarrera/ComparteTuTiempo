@@ -1,14 +1,12 @@
 <!-- START Generado con GitHub Copilot Chat Extension -->
-<div class="main-title-container d-flex align-items-center justify-content-between mb-3">
-    <div class="d-flex align-items-center">
-        <p class="main-title mb-0 me-3">Miembros</p>
-        <form class="d-flex" (submit)="filterMembers(); $event.preventDefault()">
-            <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="searchText" name="searchText" />
-            <button type="submit" class="btn btn-outline-secondary ms-2" title="Buscar">
-                <i class="bi bi-search"></i>
-            </button>
-        </form>
-    </div>
+<div class="main-title-container d-flex align-items-center justify-content-center mb-3 position-relative">
+    <p class="main-title mb-0 text-center flex-grow-1">Miembros</p>
+    <form class="d-flex position-absolute end-0" style="max-width: 350px;" (submit)="filterMembers(); $event.preventDefault()">
+        <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="searchText" name="searchText" />
+        <button type="submit" class="btn btn-outline-secondary ms-2" title="Buscar">
+            <i class="bi bi-search"></i>
+        </button>
+    </form>
 </div>
 
 <div class="container mt-4">
