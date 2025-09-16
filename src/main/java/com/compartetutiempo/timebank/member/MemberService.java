@@ -92,4 +92,9 @@ public class MemberService {
             .toList();
     }
 
+    @Transactional
+    public void delete(Integer memberId) {
+        memberRepository.deleteById(memberId);
+    }
+
 }
