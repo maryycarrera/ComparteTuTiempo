@@ -1,7 +1,7 @@
 package com.compartetutiempo.timebank.member;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -82,6 +82,16 @@ public class MemberTest extends BaseTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("Member not found with id: '" + nonExistentMemberId + "'"));
+    }
+
+    @Test
+    public void shouldFailDeleteMemberWhenUserIsMember() throws Exception {
+        int memberId = 1;
+
+        mockMvc.perform(delete(BASE_URL + "/" + memberId)
+                .header("Authorization", "Bearer " + memberToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 
 }
