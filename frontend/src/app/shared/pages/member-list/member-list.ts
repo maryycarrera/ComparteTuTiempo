@@ -20,6 +20,7 @@ export class MemberList implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   errorMessage?: string;
+  successMessage?: string;
   members?: (MemberListDTO|MemberListForAdminDTO)[];
   searchText: string = '';
   filteredMembers?: (MemberListDTO|MemberListForAdminDTO)[];
@@ -51,9 +52,11 @@ export class MemberList implements OnInit, OnDestroy {
 
   deleteMember(memberId: string) {
     this.memberService.deleteMember(memberId).subscribe({
-      next: () => {
+      next: (msg) => {
         this.members = this.members?.filter(m => m.id !== memberId);
         this.filterMembers();
+        this.successMessage = typeof msg === 'string' ? msg : 'Miembro eliminado con éxito.';
+        setTimeout(() => this.successMessage = undefined, 3000); // Ocultar tras 3s
       },
       error: (error) => {
         this.errorMessage = error && error.message ? error.message : String(error);
