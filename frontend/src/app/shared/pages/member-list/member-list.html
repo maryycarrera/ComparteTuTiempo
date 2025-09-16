@@ -46,7 +46,7 @@
                     <div class="col text-center">{{ member.dateOfMembership }}</div>
                     <div class="col text-center">{{ member.timeBalance }}</div>
                     <div class="col text-center">
-                        <app-base-icon-button bttnType="details" (clicked)="viewMemberDetails(member.id)"></app-base-icon-button>
+                        <app-base-icon-button bttnType="details" (clicked)="viewMemberDetails(member.id)" class="me-1"></app-base-icon-button>
                         @if ('email' in member) {
                             <app-base-icon-button bttnType="delete" (clicked)="deleteMember(member.id)"></app-base-icon-button>
                         }
