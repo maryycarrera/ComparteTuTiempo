@@ -52,6 +52,18 @@ export class MemberService {
     );
   }
 
+  deleteMember(memberId: string): Observable<string> {
+    const token = this.loginService.userToken;
+    return this.http.delete<string>(environment.apiUrl + `members/${memberId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      responseType: 'text' as 'json'
+    }).pipe(
+      catchError(error => this.handleError(error, 'Error al eliminar miembro.'))
+    );
+  }
+
   private handleError(error: HttpErrorResponse, defaultMessage: string) {
     let errorMsg = defaultMessage;
     if (error.error && error.error.message) {

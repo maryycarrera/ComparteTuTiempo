@@ -24,6 +24,9 @@
     @if (errorMessage) {
         <div class="alert alert-info mb-4">{{ errorMessage }}</div>
     }
+    @if (successMessage) {
+        <div class="alert alert-success mb-4">{{ successMessage }}</div>
+    }
     @if (filteredMembers && filteredMembers.length > 0) {
         <div>
             <div class="row fw-bold mb-2 list-header">
@@ -46,7 +49,10 @@
                     <div class="col text-center">{{ member.dateOfMembership }}</div>
                     <div class="col text-center">{{ member.timeBalance }}</div>
                     <div class="col text-center">
-                        <app-details-button (clickDetails)="viewMemberDetails(member.id)"></app-details-button>
+                        <app-base-icon-button bttnType="details" (clicked)="viewMemberDetails(member.id)" class="me-1"></app-base-icon-button>
+                        @if ('email' in member) {
+                            <app-base-icon-button bttnType="delete" (clicked)="deleteMember(member.id)"></app-base-icon-button>
+                        }
                     </div>
                 </div>
             }

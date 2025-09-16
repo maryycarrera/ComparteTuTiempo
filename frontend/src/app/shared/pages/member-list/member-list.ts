@@ -4,12 +4,12 @@ import { MemberListDTO } from '../../../services/member/dto/member-list-dto';
 import { Subscription } from 'rxjs';
 import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-for-admin-dto';
 import { Router } from '@angular/router';
-import { DetailsButton } from '../../../components/details-button/details-button';
 import { FormsModule } from '@angular/forms';
+import { BaseIconButton } from '../../../components/base-icon-button/base-icon-button';
 
 @Component({
   selector: 'app-member-list',
-  imports: [DetailsButton, FormsModule],
+  imports: [BaseIconButton, FormsModule],
   templateUrl: './member-list.html',
   styleUrl: './member-list.css'
 })
@@ -20,6 +20,7 @@ export class MemberList implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   errorMessage?: string;
+  successMessage?: string;
   members?: (MemberListDTO|MemberListForAdminDTO)[];
   searchText: string = '';
   filteredMembers?: (MemberListDTO|MemberListForAdminDTO)[];
@@ -47,6 +48,20 @@ export class MemberList implements OnInit, OnDestroy {
 
   viewMemberDetails(memberId: string) {
     this.router.navigate(['/miembros', memberId]);
+  }
+
+  deleteMember(memberId: string) {
+    this.memberService.deleteMember(memberId).subscribe({
+      next: (msg) => {
+        this.members = this.members?.filter(m => m.id !== memberId);
+        this.filterMembers();
+        this.successMessage = typeof msg === 'string' ? msg : 'Miembro eliminado con éxito.';
+        setTimeout(() => this.successMessage = undefined, 3000); // Ocultar tras 3s
+      },
+      error: (error) => {
+        this.errorMessage = error && error.message ? error.message : String(error);
+      }
+    });
   }
 
   // START Generado con GitHub Copilot Chat Extension
