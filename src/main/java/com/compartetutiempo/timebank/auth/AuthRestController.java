@@ -164,18 +164,10 @@ public class AuthRestController {
 
         if (authority.equals(Authority.ADMIN)) {
             Administrator admin = administratorService.findAdministratorByUser(currentUser.getId());
-            if (admin.getId().equals(personId)) {
-                isMe = true;
-            } else {
-                isMe = false;
-            }
+            isMe = admin.getId().equals(personId);
         } else if (authority.equals(Authority.MEMBER)) {
             Member member = memberService.findMemberByUser(currentUser.getId());
-            if (member.getId().equals(personId)) {
-                isMe = true;
-            } else {
-                isMe = false;
-            }
+            isMe = member.getId().equals(personId);
         } else {
             throw new IllegalStateException("El usuario tiene un rol desconocido.");
         }
