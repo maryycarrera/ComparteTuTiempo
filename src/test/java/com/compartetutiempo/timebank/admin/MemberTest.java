@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.BaseTest;
 
@@ -76,6 +77,7 @@ public class MemberTest extends BaseTest {
     }
 
     @Test
+    @Transactional
     public void shouldDeleteMemberSuccessfully() throws Exception {
         int memberIdToDelete = 11;
 
