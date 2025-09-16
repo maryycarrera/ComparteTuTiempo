@@ -7,7 +7,7 @@
         </div>
         <div class="col-3 d-flex justify-content-end">
             <form class="d-flex" style="max-width: 350px;" (submit)="filterMembers(); $event.preventDefault()">
-                <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="searchText" name="searchText" />
+                <input type="text" class="form-control search-input" placeholder="Buscar" [(ngModel)]="searchText" name="searchText" />
                 <button type="submit" class="btn btn-outline-secondary ms-2" title="Buscar">
                     <i class="bi bi-search"></i>
                 </button>
