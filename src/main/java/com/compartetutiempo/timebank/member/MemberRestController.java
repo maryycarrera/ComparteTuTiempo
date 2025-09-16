@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +70,12 @@ public class MemberRestController {
 
         MemberDTO member = memberService.findMemberDTO(memberId);
         return ResponseEntity.ok(new MessageResponse<MemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
+    }
+
+    @DeleteMapping(value = "{memberId}")
+    public ResponseEntity<String> delete(@PathVariable("memberId") Integer memberId) {
+        memberService.delete(memberId);
+        return ResponseEntity.ok("Miembro con ID " + memberId + " eliminado con éxito.");
     }
 
 }

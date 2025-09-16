@@ -2,6 +2,7 @@ package com.compartetutiempo.timebank.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -57,6 +58,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/users/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/admins/**").hasAuthority(ADMIN)
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/members/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/members/**").hasAnyAuthority(ADMIN, MEMBER)
                 .requestMatchers("/api/v1/solidarity-fund/**").hasAnyAuthority(ADMIN, MEMBER)
                 .anyRequest().authenticated())
