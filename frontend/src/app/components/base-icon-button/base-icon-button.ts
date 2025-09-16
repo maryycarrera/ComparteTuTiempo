@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-base-icon-button',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './base-icon-button.html',
   styleUrl: './base-icon-button.css'
 })
@@ -17,7 +18,7 @@ export class BaseIconButton {
       case 'delete':
         return 'bi-trash-fill';
       case 'details':
-        return 'bi-info-circle-fill';
+        return 'bi-eye-fill';
       case 'button':
       default:
         return 'bi-question-circle-fill';
