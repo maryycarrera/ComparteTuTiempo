@@ -94,6 +94,9 @@ public class MemberService {
 
     @Transactional
     public void delete(Integer memberId) {
+        if (!memberRepository.existsById(memberId)) {
+            throw new ResourceNotFoundException("Member", "id", memberId);
+        }
         memberRepository.deleteById(memberId);
     }
 
