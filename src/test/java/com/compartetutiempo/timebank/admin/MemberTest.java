@@ -2,6 +2,7 @@ package com.compartetutiempo.timebank.admin;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.BaseTest;
 
@@ -68,6 +70,35 @@ public class MemberTest extends BaseTest {
         int nonExistentMemberId = 9999;
 
         mockMvc.perform(get(BASE_URL + "/" + nonExistentMemberId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Member not found with id: '" + nonExistentMemberId + "'"));
+    }
+
+    @Test
+    @Transactional
+    public void shouldDeleteMemberSuccessfully() throws Exception {
+        int memberIdToDelete = 11;
+
+        mockMvc.perform(delete(BASE_URL + "/" + memberIdToDelete)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Miembro con ID " + memberIdToDelete + " eliminado con éxito."));
+
+        mockMvc.perform(get(BASE_URL + "/" + memberIdToDelete)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Member not found with id: '" + memberIdToDelete + "'"));
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenDeletingNonExistentMember() throws Exception {
+        int nonExistentMemberId = 9999;
+
+        mockMvc.perform(delete(BASE_URL + "/" + nonExistentMemberId)
                 .header("Authorization", "Bearer " + adminToken)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
