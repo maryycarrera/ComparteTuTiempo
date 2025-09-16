@@ -60,7 +60,6 @@ const memberInfoGuard: CanActivateFn = (route, state) => {
     const memberIdParam = route.paramMap.get('id');
 
     return loginService.userIsAdmin.pipe(
-    map((isAdmin: boolean) => isAdmin),
     switchMap((isAdmin: boolean) => {
       if (isAdmin) {
         return of(true);
