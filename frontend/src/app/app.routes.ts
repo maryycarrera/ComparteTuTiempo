@@ -1,5 +1,5 @@
 import { Routes, Router, CanActivateFn } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Login } from './auth/login/login';
 import { inject } from '@angular/core';
 import { LoginService } from './services/auth/login.service';
@@ -11,6 +11,7 @@ import { CreateAdmin } from './admin/create-admin/create-admin';
 import { SolidarityFund } from './shared/pages/solidarity-fund/solidarity-fund';
 import { MemberList } from './shared/pages/member-list/member-list';
 import { MemberInfo } from './shared/pages/member-info/member-info';
+import { of } from 'rxjs';
 
 // START Generado con GitHub Copilot Chat Extension
 const authGuard: CanActivateFn = (route, state) => {
@@ -47,6 +48,37 @@ const guestGuard: CanActivateFn = (route, state) => {
         return true;
     }
 };
+
+const memberInfoGuard: CanActivateFn = (route, state) => {
+    const result = authGuard(route, state);
+    if (result !== true) {
+        return result;
+    }
+
+    const loginService = inject(LoginService);
+    const router = inject(Router);
+    const memberIdParam = route.paramMap.get('id');
+
+    return loginService.userIsAdmin.pipe(
+    switchMap((isAdmin: boolean) => {
+      if (isAdmin) {
+        return of(true);
+      }
+      if (memberIdParam) {
+        return loginService.isCurrentUserPersonId(memberIdParam).pipe(
+          map((response) => {
+            if (response.object === true) {
+              return router.parseUrl('/perfil');
+            } else {
+              return true;
+            }
+          })
+        );
+      }
+      return of(true);
+    })
+  );
+}
 // END Generado con GitHub Copilot Chat Extension
 
 
@@ -60,6 +92,6 @@ export const routes: Routes = [
     { path: 'administradores/crear', component: CreateAdmin, canActivate: [adminGuard] },
     { path: 'fondo-solidario', component: SolidarityFund, canActivate: [authGuard] },
     { path: 'miembros', component: MemberList, canActivate: [authGuard] },
-    { path: 'miembros/:id', component: MemberInfo, canActivate: [authGuard] },
+    { path: 'miembros/:id', component: MemberInfo, canActivate: [memberInfoGuard] },
     { path: '**', redirectTo: '/inicio' }
 ];

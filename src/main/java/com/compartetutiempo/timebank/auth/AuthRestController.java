@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -153,6 +154,25 @@ public class AuthRestController {
     public ResponseEntity<MessageResponse<String>> getFullName() {
         String fullName = authService.getFullName();
         return ResponseEntity.ok().body(new MessageResponse<String>("Nombre completo recuperado con éxito.", fullName));
+    }
+
+    @GetMapping("/person-id-is-me/{personId}")
+    public ResponseEntity<MessageResponse<Boolean>> isCurrentUserPersonId(@PathVariable("personId") Integer personId) {
+        User currentUser = userService.findCurrentUser();
+        Authority authority = currentUser.getAuthority();
+        Boolean isMe = false;
+
+        if (authority.equals(Authority.ADMIN)) {
+            Administrator admin = administratorService.findAdministratorByUser(currentUser.getId());
+            isMe = admin.getId().equals(personId);
+        } else if (authority.equals(Authority.MEMBER)) {
+            Member member = memberService.findMemberByUser(currentUser.getId());
+            isMe = member.getId().equals(personId);
+        } else {
+            throw new IllegalStateException("El usuario tiene un rol desconocido.");
+        }
+
+        return ResponseEntity.ok().body(new MessageResponse<Boolean>("Verificación de identidad realizada con éxito.", isMe));
     }
 
 }

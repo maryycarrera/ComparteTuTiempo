@@ -1,6 +1,5 @@
 import { BaseMemberDto } from "./base-member-dto";
 
-export interface MemberDTO extends BaseMemberDto {
+export interface MemberForMemberDTO extends BaseMemberDto {
     fullName: string;
-    email: string;
 }

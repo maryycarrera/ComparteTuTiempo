@@ -20,6 +20,7 @@ public class AuthTest extends BaseTest {
     private static final String BASE_URL = "/api/v1/auth";
     private static final String PROFILE_URL = BASE_URL + "/profile";
     private static final String FULLNAME_URL = BASE_URL + "/fullname";
+    private static final String PERSON_ID_IS_ME_URL = BASE_URL + "/person-id-is-me";
 
     @Autowired
     private MockMvc mockMvc;
@@ -53,6 +54,26 @@ public class AuthTest extends BaseTest {
                 .header("Authorization", "Bearer " + memberToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.object").value("John Doe"));
+    }
+
+    @Test
+    public void shouldReturnTrueWhenPersonIdIsCurrentUser() throws Exception {
+        int memberId = 1;
+
+        mockMvc.perform(get(PERSON_ID_IS_ME_URL + "/" + memberId)
+                .header("Authorization", "Bearer " + memberToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.object").value(true));
+    }
+
+    @Test
+    public void shouldReturnFalseWhenPersonIdIsNotCurrentUser() throws Exception {
+        int otherMemberId = 2;
+
+        mockMvc.perform(get(PERSON_ID_IS_ME_URL + "/" + otherMemberId)
+                .header("Authorization", "Bearer " + memberToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.object").value(false));
     }
 
 }

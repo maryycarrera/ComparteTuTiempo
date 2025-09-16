@@ -53,7 +53,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authRequest -> authRequest
                 .requestMatchers("/resources/**").permitAll()
                 .requestMatchers("/").permitAll()
-                .requestMatchers("/api/v1/auth/profile", "/api/v1/auth/fullname").authenticated()
+                .requestMatchers("/api/v1/auth/profile", "/api/v1/auth/fullname", "/api/v1/auth/person-id-is-me/**").authenticated()
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers("/api/v1/users/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/admins/**").hasAuthority(ADMIN)
