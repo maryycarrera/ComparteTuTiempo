@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { BaseIconButton } from '../base-icon-button/base-icon-button';
 
 @Component({
   selector: 'app-details-button',
-  imports: [],
+  imports: [BaseIconButton],
   templateUrl: './details-button.html',
   styleUrl: './details-button.css'
 })
