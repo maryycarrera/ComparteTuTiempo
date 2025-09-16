@@ -1,5 +1,6 @@
 package com.compartetutiempo.timebank.unauthenticated;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,6 +30,14 @@ public class MemberTest {
         int memberId = 1;
 
         mockMvc.perform(get(BASE_URL + "/" + memberId))
+               .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void shouldFailDeleteMemberWhenUnauthenticated() throws Exception {
+        int memberId = 1;
+
+        mockMvc.perform(delete(BASE_URL + "/" + memberId))
                .andExpect(status().isUnauthorized());
     }
 
