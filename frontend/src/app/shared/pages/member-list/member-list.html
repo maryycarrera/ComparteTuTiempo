@@ -1,25 +1,33 @@
-<div class="main-title-container">
-    <p class="main-title">Miembros</p>
+<!-- START Generado con GitHub Copilot Chat Extension -->
+<div class="main-title-container d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center">
+        <p class="main-title mb-0 me-3">Miembros</p>
+        <form class="d-flex" (submit)="filterMembers(); $event.preventDefault()">
+            <input type="text" class="form-control" placeholder="Buscar" [(ngModel)]="searchText" name="searchText" />
+            <button type="submit" class="btn btn-outline-secondary ms-2" title="Buscar">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
 </div>
 
-<!-- START Generado con GitHub Copilot Chat Extension -->
 <div class="container mt-4">
         @if (errorMessage) {
             <div class="alert alert-info mb-4">{{ errorMessage }}</div>
         }
-        @if (members && members.length > 0) {
+        @if (filteredMembers && filteredMembers.length > 0) {
             <div>
                 <div class="row fw-bold mb-2 list-header">
                     <div class="col text-center">Nombre completo</div>
                     <div class="col text-center">Nombre de usuario</div>
-                    @if ('email' in members[0]) {
+                    @if ('email' in filteredMembers[0]) {
                         <div class="col text-center">Correo electrónico</div>
                     }
                     <div class="col text-center">Fecha de alta</div>
                     <div class="col text-center">Tiempo</div>
                     <div class="col text-center">Acciones</div>
                 </div>
-                @for (member of members; track member.id) {
+                @for (member of filteredMembers; track member.id) {
                     <div class="row mb-2 align-items-center">
                         <div class="col text-center">{{ member.fullName }}</div>
                         <div class="col text-center">{{ member.username }}</div>
