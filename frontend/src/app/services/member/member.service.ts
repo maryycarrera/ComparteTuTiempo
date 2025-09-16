@@ -52,9 +52,9 @@ export class MemberService {
     );
   }
 
-  deleteMember(memberId: string): Observable<String> {
+  deleteMember(memberId: string): Observable<string> {
     const token = this.loginService.userToken;
-    return this.http.delete<String>(environment.apiUrl + `members/${memberId}`, {
+    return this.http.delete<string>(environment.apiUrl + `members/${memberId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       },
