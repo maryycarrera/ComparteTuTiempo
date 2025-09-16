@@ -8,6 +8,11 @@
         <div class="col-3 d-flex justify-content-end">
             <form class="d-flex" style="max-width: 350px;" (submit)="filterMembers(); $event.preventDefault()">
                 <input type="text" class="form-control search-input" placeholder="Buscar" [(ngModel)]="searchText" name="searchText" />
+                @if (searchText && searchText.length > 0) {
+                    <button type="button" class="btn btn-outline-secondary ms-2" title="Borrar búsqueda" (click)="searchText=''; filterMembers();">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                }
                 <button type="submit" class="btn btn-outline-secondary ms-2" title="Buscar">
                     <i class="bi bi-search"></i>
                 </button>
