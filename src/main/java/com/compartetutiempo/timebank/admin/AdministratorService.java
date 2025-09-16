@@ -1,10 +1,15 @@
 package com.compartetutiempo.timebank.admin;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.user.Authority;
@@ -27,6 +32,14 @@ public class AdministratorService {
     @Transactional(readOnly = true)
     public Iterable<Administrator> findAll() {
         return administratorRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AdminForListDTO> findAllForList() {
+        return StreamSupport.stream(administratorRepository.findAll().spliterator(), false)
+                .sorted(Comparator.comparing(Administrator::getFullName, String.CASE_INSENSITIVE_ORDER))
+                .map(AdminForListDTO::new)
+                .toList();
     }
 
     @Transactional(readOnly = true)
