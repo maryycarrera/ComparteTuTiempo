@@ -60,6 +60,11 @@ export class MemberList implements OnInit, OnDestroy {
       member.username.toLowerCase().includes(search)
     );
   }
+
+  onSearchSubmit(event: Event) {
+    event.preventDefault();
+    this.filterMembers();
+  }
   // END Generado con GitHub Copilot Chat Extension
 
 }
