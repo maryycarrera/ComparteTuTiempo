@@ -51,7 +51,7 @@ export class MemberList implements OnInit, OnDestroy {
 
   // START Generado con GitHub Copilot Chat Extension
   filterMembers() {
-    if (!this.searchText || !this.members) {
+    if (!this.searchText?.trim() || !this.members) {
       this.filteredMembers = this.members;
       return;
     }
