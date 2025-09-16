@@ -1,4 +1,6 @@
-package com.compartetutiempo.timebank.admin;
+package com.compartetutiempo.timebank.admin.dto;
+
+import com.compartetutiempo.timebank.admin.Administrator;
 
 import lombok.Getter;
 

@@ -1,8 +1,6 @@
 package com.compartetutiempo.timebank.admin;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.MemberService;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
+import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
 import com.compartetutiempo.timebank.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.user.UserService;
 
@@ -37,11 +37,9 @@ public class AdministratorRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Administrator>> findAllAdministrators() {
-        List<Administrator> administrators = StreamSupport
-                .stream(administratorService.findAll().spliterator(), false)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(administrators);
+    public ResponseEntity<ListMessageResponse<AdminForListDTO>> findAllAdministrators() {
+        List<AdminForListDTO> adminDTOs = administratorService.findAllForList();
+        return ResponseEntity.ok(new ListMessageResponse<>("Lista de administradores encontrada con éxito.", adminDTOs));
     }
 
     @GetMapping(value = "{adminId}")

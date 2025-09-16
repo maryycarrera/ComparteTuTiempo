@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.compartetutiempo.timebank.admin.AdminDTO;
 import com.compartetutiempo.timebank.admin.Administrator;
 import com.compartetutiempo.timebank.admin.AdministratorService;
+import com.compartetutiempo.timebank.admin.dto.AdminDTO;
 import com.compartetutiempo.timebank.auth.payload.request.LoginRequest;
 import com.compartetutiempo.timebank.auth.payload.response.JwtResponse;
 import com.compartetutiempo.timebank.config.jwt.JwtService;
