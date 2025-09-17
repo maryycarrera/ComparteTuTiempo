@@ -85,7 +85,6 @@ public class AuthService {
         }
     }
 
-    @Transactional(readOnly = true)
     private User findCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
