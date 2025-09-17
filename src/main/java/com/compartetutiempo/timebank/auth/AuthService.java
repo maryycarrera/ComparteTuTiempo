@@ -102,7 +102,7 @@ public class AuthService {
     public boolean isCurrentUserPersonId(Integer personId) {
         User currentUser = findCurrentUser();
         Authority authority = currentUser.getAuthority();
-        Boolean isMe = false;
+        boolean isMe = false;
 
         if (authority.equals(Authority.ADMIN)) {
             Administrator admin = administratorRepository.findAdministratorByUser(currentUser.getId())
