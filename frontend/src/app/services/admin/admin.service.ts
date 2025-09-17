@@ -32,6 +32,17 @@ export class AdminService implements UserCreationService {
     );
   }
 
+  getMemberById(id: string): Observable<MessageResponse<AdminDTO>> {
+    const token = this.loginService.userToken;
+    return this.http.get<MessageResponse<AdminDTO>>(environment.apiUrl + `admins/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener administrador por ID.'))
+    );
+  }
+
   create(data: SignupRequest): Observable<MessageResponse> {
     const token = this.loginService.userToken;
     return this.http.post<MessageResponse>(this.adminUrl, data, {
