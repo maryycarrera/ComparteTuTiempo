@@ -21,12 +21,14 @@
     </div>
 
 <div class="container mt-4">
-    @if (errorMessage) {
-        <div class="alert alert-info mb-4">{{ errorMessage }}</div>
-    }
-    @if (successMessage) {
-        <div class="alert alert-success mb-4">{{ successMessage }}</div>
-    }
+    <div class="success-message-container">
+        @if (errorMessage) {
+            <div class="alert alert-info mb-4">{{ errorMessage }}</div>
+        }
+        @if (successMessage) {
+            <div class="alert alert-success mb-4">{{ successMessage }}</div>
+        }
+    </div>
     @if (filteredMembers && filteredMembers.length > 0) {
         <div>
             <div class="row fw-bold mb-2 list-header">
