@@ -1,5 +1,6 @@
 package com.compartetutiempo.timebank.unauthenticated;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,6 +22,14 @@ public class AdminTest {
     @Test
     public void shouldFailGetAllAdminsWhenUnauthenticated() throws Exception {
         mockMvc.perform(get(BASE_URL))
+               .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void shouldFailDeleteAdminWhenUnauthenticated() throws Exception {
+        int adminId = 1;
+
+        mockMvc.perform(delete(BASE_URL + "/" + adminId))
                .andExpect(status().isUnauthorized());
     }
 
