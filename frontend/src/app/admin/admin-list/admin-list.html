@@ -12,7 +12,7 @@
     <div class="container mt-4">
         <div class="success-message-container">
             @if (errorMessage) {
-                <div class="alert alert-info mb-4">{{ errorMessage }}</div>
+                <div class="alert alert-danger mb-4">{{ errorMessage }}</div>
             }
             @if (successMessage) {
                 <div class="alert alert-success mb-4">{{ successMessage }}</div>
@@ -32,10 +32,10 @@
                         <div class="col text-center">{{ admin.username }}</div>
                         <div class="col text-center">{{ admin.email }}</div>
                         <div class="col text-center">
-                            if(!isCurrentUserThisAdminId(admin.id)) {
+                            @if(!isCurrentUserThisAdminId(admin.id)) {
                                 <app-base-icon-button bttnType="details" (clicked)="viewAdminDetails(admin.id)" class="me-1"></app-base-icon-button>
                                 <app-base-icon-button bttnType="delete" (clicked)="deleteAdmin(admin.id)"></app-base-icon-button>
-                            } else {
+                            } @else {
                                 <div>(Eres tú)</div>
                             }
                         </div>

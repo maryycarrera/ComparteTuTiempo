@@ -19,11 +19,11 @@ export class AdminList implements OnInit, OnDestroy {
   private adminService = inject(AdminService);
   private loginService = inject(LoginService);
   private subscription: Subscription = new Subscription();
+  private isCurrentUserMap: Map<string, boolean> = new Map();
 
   errorMessage?: string;
   successMessage?: string;
   admins?: AdminForListDTO[];
-
   timeout = 3000; // 3 segundos
 
   ngOnInit(): void {
@@ -38,6 +38,9 @@ export class AdminList implements OnInit, OnDestroy {
           this.admins = response.objects;
           if (!this.admins || this.admins.length === 0) {
             this.errorMessage = response.message;
+          }
+          if (this.admins) {
+            this.admins.forEach(admin => this.checkIfCurrentUser(admin.id));
           }
         },
         error: (error) => {
@@ -65,24 +68,29 @@ export class AdminList implements OnInit, OnDestroy {
         this.admins = this.admins?.filter(a => a.id !== adminId);
         this.successMessage = typeof msg === 'string' ? msg : 'Administrador eliminado con éxito.';
         setTimeout(() => this.successMessage = undefined, this.timeout);
+        this.isCurrentUserMap.delete(adminId); // limpiar cache
       },
       error: (error) => {
+        this.errorMessage = error && error.message ? error.message : String(error);
+      }
+    });
+  }
+
+  // Llama a la API solo si no está cacheado
+  private checkIfCurrentUser(adminId: string): void {
+    if (this.isCurrentUserMap.has(adminId)) return;
+    this.loginService.isCurrentUserPersonId(adminId).subscribe({
+      next: (response) => {
+        this.isCurrentUserMap.set(adminId, !!response.object);
+      },
+      error: (error) => {
+        this.isCurrentUserMap.set(adminId, false);
         this.errorMessage = error && error.message ? error.message : String(error);
       }
     });
   }
 
   isCurrentUserThisAdminId(adminId: string): boolean {
-    this.loginService.isCurrentUserPersonId(adminId).subscribe({
-      next: (response) => {
-        return response.object;
-      },
-      error: (error) => {
-        this.errorMessage = error && error.message ? error.message : String(error);
-        return false;
-      }
-    });
-    return false;
+    return this.isCurrentUserMap.get(adminId) || false;
   }
-
 }
