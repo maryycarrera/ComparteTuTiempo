@@ -1,6 +1,7 @@
 package com.compartetutiempo.timebank.admin;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.BaseTest;
 
@@ -215,6 +217,35 @@ public class AdminTest extends BaseTest {
                 .andExpect(jsonPath("$.objects").isArray())
                 .andExpect(jsonPath("$.objects").isNotEmpty())
                 .andExpect(jsonPath("$.objects.length()").value(greaterThanOrEqualTo(4)));
+    }
+
+    @Test
+    @Transactional
+    public void shouldDeleteAdminSuccessfully() throws Exception {
+        int adminIdToDelete = 4;
+
+        mockMvc.perform(delete(BASE_URL + "/" + adminIdToDelete)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("Administrador con ID " + adminIdToDelete + " eliminado con éxito."));
+
+        mockMvc.perform(get(BASE_URL + "/" + adminIdToDelete)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Administrator not found with id: '" + adminIdToDelete + "'"));
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenDeletingNonExistentAdmin() throws Exception {
+        int nonExistentAdminId = 9999;
+
+        mockMvc.perform(delete(BASE_URL + "/" + nonExistentAdminId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Administrator not found with id: '" + nonExistentAdminId + "'"));
     }
 
 }
