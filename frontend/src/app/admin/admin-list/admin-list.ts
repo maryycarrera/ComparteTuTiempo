@@ -21,11 +21,13 @@ export class AdminList implements OnInit, OnDestroy {
   errorMessage?: string;
   successMessage?: string;
   admins?: AdminForListDTO[];
+  timeout = 3000; // 3 segundos
 
   ngOnInit(): void {
     const navigation = window.history.state;
     if (navigation && navigation.successMsg) {
       this.successMessage = navigation.successMsg;
+      setTimeout(() => this.successMessage = undefined, this.timeout);
     }
     this.subscription.add(
       this.adminService.getAllAdmins().subscribe({
@@ -55,7 +57,16 @@ export class AdminList implements OnInit, OnDestroy {
   }
 
   deleteAdmin(adminId: string) {
-    // not implemented yet
+    this.adminService.deleteAdmin(adminId).subscribe({
+      next: (msg) => {
+        this.admins = this.admins?.filter(a => a.id !== adminId);
+        this.successMessage = typeof msg === 'string' ? msg : 'Administrador eliminado con éxito.';
+        setTimeout(() => this.successMessage = undefined, this.timeout);
+      },
+      error: (error) => {
+        this.errorMessage = error && error.message ? error.message : String(error);
+      }
+    });
   }
 
 }
