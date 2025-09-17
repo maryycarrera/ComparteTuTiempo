@@ -1,5 +1,7 @@
 package com.compartetutiempo.timebank.admin;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -201,6 +203,18 @@ public class AdminTest extends BaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(signupJson))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldGetAllAdminsSuccessfully() throws Exception {
+        mockMvc.perform(get(BASE_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Lista de administradores encontrada con éxito."))
+                .andExpect(jsonPath("$.objects").isArray())
+                .andExpect(jsonPath("$.objects").isNotEmpty())
+                .andExpect(jsonPath("$.objects.length()").value(greaterThanOrEqualTo(4)));
     }
 
 }
