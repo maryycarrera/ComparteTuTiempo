@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AdminDTO } from './admin-dto';
+import { AdminDTO } from './dto/admin-dto';
 import { environment } from '../../../environments/environment';
 import { LoginService } from '../auth/login.service';
 import { SignupRequest } from '../../payload/request/signup-request';
