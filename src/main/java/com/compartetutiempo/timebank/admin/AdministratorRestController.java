@@ -39,6 +39,12 @@ public class AdministratorRestController {
     @GetMapping
     public ResponseEntity<ListMessageResponse<AdminForListDTO>> findAllAdministrators() {
         List<AdminForListDTO> adminDTOs = administratorService.findAllForList();
+
+        if (adminDTOs.isEmpty()) {
+            ListMessageResponse<AdminForListDTO> response = new ListMessageResponse<AdminForListDTO>("¡Vaya! Parece que no hay administradores registrados aún.");
+            return ResponseEntity.ok(response);
+        }
+
         return ResponseEntity.ok(new ListMessageResponse<>("Lista de administradores encontrada con éxito.", adminDTOs));
     }
 
