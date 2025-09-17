@@ -238,6 +238,17 @@ public class AdminTest extends BaseTest {
     }
 
     @Test
+    public void shouldFailToDeleteSelfAdmin() throws Exception {
+        int selfAdminId = 2;
+
+        mockMvc.perform(delete(BASE_URL + "/" + selfAdminId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value("Un administrador no puede eliminarse a sí mismo."));
+    }
+
+    @Test
     public void shouldReturnNotFoundWhenDeletingNonExistentAdmin() throws Exception {
         int nonExistentAdminId = 9999;
 

@@ -54,4 +54,16 @@ export class AdminService implements UserCreationService {
     );
   }
 
+  deleteAdmin(adminId: string): Observable<string> {
+    const token = this.loginService.userToken;
+    return this.http.delete<string>(`${this.adminUrl}/${adminId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      responseType: 'text' as 'json'
+    }).pipe(
+      catchError(error => this.errorHandler.handleError(error, 'Error al eliminar administrador.'))
+    );
+  }
+
 }
