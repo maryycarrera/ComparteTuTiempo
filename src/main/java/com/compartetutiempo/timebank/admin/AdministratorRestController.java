@@ -3,6 +3,7 @@ package com.compartetutiempo.timebank.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +59,7 @@ public class AdministratorRestController {
         boolean isMe = authService.isCurrentUserPersonId(adminId);
 
         if (isMe) {
-            return ResponseEntity.ok(new MessageResponse<>("El administrador con ID " + adminId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse<>("El administrador con ID " + adminId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
         }
 
         AdminDTO adminDTO = administratorService.findAdministratorDTO(adminId);

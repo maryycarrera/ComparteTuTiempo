@@ -3,6 +3,7 @@ package com.compartetutiempo.timebank.member;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +63,7 @@ public class MemberRestController {
         if (authority.equals(Authority.MEMBER)) {
             Member currentMember = memberService.findMemberByUser(currentUser.getUsername());
             if (currentMember.getId().equals(memberId)) {
-                return ResponseEntity.ok(new MessageResponse<>("El miembro con ID " + memberId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(new MessageResponse<>("El miembro con ID " + memberId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
             }
             MemberForMemberDTO member = memberService.findMemberForMemberDTO(memberId);
             return ResponseEntity.ok(new MessageResponse<MemberForMemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
