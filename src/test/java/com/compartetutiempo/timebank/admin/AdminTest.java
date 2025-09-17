@@ -259,4 +259,42 @@ public class AdminTest extends BaseTest {
                 .andExpect(jsonPath("$.message").value("Administrator not found with id: '" + nonExistentAdminId + "'"));
     }
 
+    @Test
+    public void shouldFindAdminByIdSuccessfully() throws Exception {
+        int adminId = 1;
+
+        mockMvc.perform(get(BASE_URL + "/" + adminId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Administrador con ID " + adminId + " encontrado con éxito."))
+                .andExpect(jsonPath("$.object.name").value("Administrador"))
+                .andExpect(jsonPath("$.object.lastName").value("del Sistema"))
+                .andExpect(jsonPath("$.object.username").value("admin1"))
+                .andExpect(jsonPath("$.object.email").value("admin1@example.com"))
+                .andExpect(jsonPath("$.object.profilePic").value("profilepics/purple.png"));
+    }
+
+    @Test
+    public void shouldReturnNotFoundForNonExistentAdmin() throws Exception {
+        int nonExistentAdminId = 9999;
+
+        mockMvc.perform(get(BASE_URL + "/" + nonExistentAdminId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("Administrator not found with id: '" + nonExistentAdminId + "'"));
+    }
+
+    @Test
+    public void shouldReturnSameAdminMessage() throws Exception {
+        int adminId = 2;
+
+        mockMvc.perform(get(BASE_URL + "/" + adminId)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value("El administrador con ID " + adminId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+    }
+
 }
