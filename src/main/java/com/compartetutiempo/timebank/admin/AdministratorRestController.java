@@ -45,7 +45,7 @@ public class AdministratorRestController {
             return ResponseEntity.ok(response);
         }
 
-        return ResponseEntity.ok(new ListMessageResponse<>("Lista de administradores encontrada con éxito.", adminDTOs));
+        return ResponseEntity.ok(new ListMessageResponse<AdminForListDTO>("Lista de administradores encontrada con éxito.", adminDTOs));
     }
 
     @GetMapping(value = "{adminId}")
