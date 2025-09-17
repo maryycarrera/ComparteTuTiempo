@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.compartetutiempo.timebank.admin.dto.AdminDTO;
 import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
 import com.compartetutiempo.timebank.auth.AuthService;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
@@ -53,9 +54,15 @@ public class AdministratorRestController {
     }
 
     @GetMapping(value = "{adminId}")
-    public ResponseEntity<Administrator> findById(@PathVariable("adminId") Integer adminId) {
-        Administrator administrator = administratorService.findAdministrator(adminId);
-        return ResponseEntity.ok(administrator);
+    public ResponseEntity<MessageResponse<AdminDTO>> findById(@PathVariable("adminId") Integer adminId) {
+        boolean isMe = authService.isCurrentUserPersonId(adminId);
+
+        if (isMe) {
+            return ResponseEntity.ok(new MessageResponse<>("El administrador con ID " + adminId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+        }
+
+        AdminDTO adminDTO = administratorService.findAdministratorDTO(adminId);
+        return ResponseEntity.ok(new MessageResponse<AdminDTO>("Administrador con ID " + adminId + " encontrado con éxito.", adminDTO));
     }
 
     @PostMapping()
