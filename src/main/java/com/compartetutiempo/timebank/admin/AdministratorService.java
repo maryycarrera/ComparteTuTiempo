@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.compartetutiempo.timebank.admin.dto.AdminDTO;
 import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
@@ -57,6 +58,13 @@ public class AdministratorService {
     @Transactional(readOnly = true)
     public Administrator findAdministrator(Integer adminId) {
         return administratorRepository.findById(adminId)
+                .orElseThrow(() -> new ResourceNotFoundException("Administrator", "id", adminId));
+    }
+
+    @Transactional(readOnly = true)
+    public AdminDTO findAdministratorDTO(Integer adminId) {
+        return administratorRepository.findById(adminId)
+                .map(AdminDTO::new)
                 .orElseThrow(() -> new ResourceNotFoundException("Administrator", "id", adminId));
     }
 
