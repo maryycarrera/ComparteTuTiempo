@@ -9,6 +9,7 @@ import { MessageResponse } from '../../payload/response/message-response';
 import { UserCreationService } from '../user-creation-service';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
 import { AdminForListDTO } from './dto/admin-for-list-dto';
+import { ErrorHandler } from '../error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AdminService implements UserCreationService {
 
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
+  private errorHandler = new ErrorHandler();
   private adminUrl = environment.apiUrl + 'admins';
 
   getProfile(): Observable<AdminDTO> {
@@ -26,7 +28,7 @@ export class AdminService implements UserCreationService {
         Authorization: `Bearer ${token}`
       }
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al obtener perfil de usuario.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener perfil de usuario.'))
     );
   }
 
@@ -37,7 +39,7 @@ export class AdminService implements UserCreationService {
         Authorization: `Bearer ${token}`
       }
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al crear administrador.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al crear administrador.'))
     );
   }
 
@@ -48,18 +50,8 @@ export class AdminService implements UserCreationService {
         Authorization: `Bearer ${token}`
       }
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al obtener lista de administradores.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener lista de administradores.'))
     );
-  }
-
-  private handleError(error: HttpErrorResponse, defaultMessage: string) {
-    let errorMsg = defaultMessage;
-    if (error.error && error.error.message) {
-      errorMsg = error.error.message;
-    } else if (error.error) {
-      errorMsg = error.error;
-    }
-    return throwError(() => new Error(errorMsg));
   }
 
 }

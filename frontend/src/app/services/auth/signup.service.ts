@@ -6,6 +6,7 @@ import { MessageResponse } from '../../payload/response/message-response';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { UserCreationService } from '../user-creation-service';
+import { ErrorHandler } from '../error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { UserCreationService } from '../user-creation-service';
 export class SignupService implements UserCreationService {
 
   private http = inject(HttpClient);
+  private errorHandler = new ErrorHandler();
 
   create(request: SignupRequest): Observable<MessageResponse> {
     return this.signup(request);
@@ -20,17 +22,8 @@ export class SignupService implements UserCreationService {
 
   private signup(data: SignupRequest): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(environment.apiUrl + 'auth/signup', data).pipe(
-      catchError(this.handleError)
+      catchError(error => this.errorHandler.handleError(error, 'Error al registrar usuario.'))
     );
   }
 
-  private handleError(error: HttpErrorResponse) {
-    let errorMsg = 'Error al registrar usuario.';
-    if (error.error && error.error.message) {
-      errorMsg = error.error.message;
-    } else if (error.error) {
-      errorMsg = error.error;
-    }
-    return throwError(() => new Error(errorMsg));
-  }
 }

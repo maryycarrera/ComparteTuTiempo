@@ -5,6 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { MessageResponse } from '../../payload/response/message-response';
+import { ErrorHandler } from '../error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { MessageResponse } from '../../payload/response/message-response';
 export class LoginService {
 
   private http = inject(HttpClient);
+  private errorHandler = new ErrorHandler();
 
   currentIsUserLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<JwtResponse | null> = new BehaviorSubject<JwtResponse | null>(null);
@@ -29,7 +31,7 @@ export class LoginService {
         this.currentUserData.next(userData);
         this.currentIsUserLoggedIn.next(true);
       }),
-      catchError(this.handleError)
+      catchError(error => this.errorHandler.handleError(error, 'Error al iniciar sesión.'))
     );
   }
 
@@ -39,7 +41,7 @@ export class LoginService {
         Authorization: `Bearer ${this.userToken}`
       }
     }).pipe(
-      catchError(this.handleError)
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener nombre completo.'))
     );
   }
 
@@ -49,16 +51,8 @@ export class LoginService {
         Authorization: `Bearer ${this.userToken}`
       }
     }).pipe(
-      catchError(this.handleError)
+      catchError(error => this.errorHandler.handleError(error, 'Error al verificar ID de persona.'))
     );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    let errorMsg = 'Algo salió mal; inténtalo de nuevo.';
-    if (error.status === 400 && error.error) {
-      errorMsg = error.error;
-    }
-    return throwError(() => new Error(errorMsg));
   }
 
   get userData(): Observable<JwtResponse | null> {
