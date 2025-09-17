@@ -33,4 +33,12 @@ public class AdminTest {
                .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    public void shouldFailGetAdminWhenUnauthenticated() throws Exception {
+        int adminId = 1;
+
+        mockMvc.perform(get(BASE_URL + "/" + adminId))
+               .andExpect(status().isUnauthorized());
+    }
+
 }

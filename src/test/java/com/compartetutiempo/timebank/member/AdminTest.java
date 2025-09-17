@@ -47,4 +47,14 @@ public class AdminTest extends BaseTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    public void shouldFailGetAdminWhenUserIsMember() throws Exception {
+        int adminId = 1;
+
+        mockMvc.perform(get(BASE_URL + "/" + adminId)
+                .header("Authorization", "Bearer " + memberToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
 }
