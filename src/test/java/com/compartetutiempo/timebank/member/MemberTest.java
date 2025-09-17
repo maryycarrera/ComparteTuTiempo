@@ -69,7 +69,7 @@ public class MemberTest extends BaseTest {
         mockMvc.perform(get(BASE_URL + "/" + memberId)
                 .header("Authorization", "Bearer " + memberToken)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("El miembro con ID " + memberId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
     }
 
