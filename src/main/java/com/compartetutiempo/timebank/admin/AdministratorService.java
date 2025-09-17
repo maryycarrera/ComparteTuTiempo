@@ -88,4 +88,12 @@ public class AdministratorService {
         return administratorRepository.save(admin);
     }
 
+    @Transactional
+    public void delete(Integer adminId) {
+        if(!administratorRepository.existsById(adminId)) {
+            throw new ResourceNotFoundException("Administrator", "id", adminId);
+        }
+        administratorRepository.deleteById(adminId);
+    }
+
 }

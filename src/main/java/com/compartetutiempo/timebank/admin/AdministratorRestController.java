@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,6 +65,12 @@ public class AdministratorRestController {
         }
         Administrator createdAdmin = administratorService.create(request);
         return ResponseEntity.ok().body(new MessageResponse<Administrator>("Registro exitoso.", createdAdmin));
+    }
+
+    @DeleteMapping(value = "{adminId}")
+    public ResponseEntity<String> delete(@PathVariable("adminId") Integer adminId) {
+        administratorService.delete(adminId);
+        return ResponseEntity.ok("Administrador con ID " + adminId + " eliminado con éxito.");
     }
 
 }
