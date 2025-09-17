@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
+import com.compartetutiempo.timebank.auth.AuthService;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
 import com.compartetutiempo.timebank.member.MemberService;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
@@ -29,12 +30,14 @@ public class AdministratorRestController {
     private final AdministratorService administratorService;
     private final UserService userService;
     private final MemberService memberService;
+    private final AuthService authService;
 
     @Autowired
-    public AdministratorRestController(AdministratorService administratorService, UserService userService, MemberService memberService) {
+    public AdministratorRestController(AdministratorService administratorService, UserService userService, MemberService memberService, AuthService authService) {
         this.administratorService = administratorService;
         this.userService = userService;
         this.memberService = memberService;
+        this.authService = authService;
     }
 
     @GetMapping
@@ -69,6 +72,9 @@ public class AdministratorRestController {
 
     @DeleteMapping(value = "{adminId}")
     public ResponseEntity<String> delete(@PathVariable("adminId") Integer adminId) {
+        if (authService.isCurrentUserPersonId(adminId)) {
+            throw new IllegalArgumentException("Un administrador no puede eliminarse a sí mismo.");
+        }
         administratorService.delete(adminId);
         return ResponseEntity.ok("Administrador con ID " + adminId + " eliminado con éxito.");
     }
