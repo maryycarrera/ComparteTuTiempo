@@ -10,6 +10,7 @@ import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
 import { MemberDTO } from './dto/member-dto';
 import { MessageResponse } from '../../payload/response/message-response';
 import { MemberForMemberDTO } from './dto/member-for-member-dto';
+import { ErrorHandler } from '../error-handler';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class MemberService {
 
   private http = inject(HttpClient);
   private loginService = inject(LoginService);
+  private errorHandler = new ErrorHandler();
 
   getAllMembers(): Observable<ListMessageResponse<MemberListDTO|MemberListForAdminDTO>> {
     const token = this.loginService.userToken;
@@ -26,7 +28,7 @@ export class MemberService {
         Authorization: `Bearer ${token}`
       }
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al obtener lista de miembros.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener lista de miembros.'))
     );
   }
 
@@ -37,7 +39,7 @@ export class MemberService {
         Authorization: `Bearer ${token}`
       }
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al obtener miembro por ID.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener miembro por ID.'))
     );
   }
 
@@ -48,7 +50,7 @@ export class MemberService {
         Authorization: `Bearer ${token}`
       }
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al obtener perfil de usuario.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al obtener perfil de usuario.'))
     );
   }
 
@@ -60,18 +62,8 @@ export class MemberService {
       },
       responseType: 'text' as 'json'
     }).pipe(
-      catchError(error => this.handleError(error, 'Error al eliminar miembro.'))
+      catchError(error => this.errorHandler.handleError(error, 'Error al eliminar miembro.'))
     );
-  }
-
-  private handleError(error: HttpErrorResponse, defaultMessage: string) {
-    let errorMsg = defaultMessage;
-    if (error.error && error.error.message) {
-      errorMsg = error.error.message;
-    } else if (error.error) {
-      errorMsg = error.error;
-    }
-    return throwError(() => new Error(errorMsg));
   }
 
 }

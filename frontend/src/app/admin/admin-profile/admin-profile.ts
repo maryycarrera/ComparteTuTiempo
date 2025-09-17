@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AdminService } from '../../services/admin/admin.service';
-import { AdminDTO } from '../../services/admin/admin-dto';
+import { AdminDTO } from '../../services/admin/dto/admin-dto';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { ResourcesService } from '../../services/resources/resources.service';
