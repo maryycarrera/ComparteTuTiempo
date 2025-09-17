@@ -158,20 +158,7 @@ public class AuthRestController {
 
     @GetMapping("/person-id-is-me/{personId}")
     public ResponseEntity<MessageResponse<Boolean>> isCurrentUserPersonId(@PathVariable("personId") Integer personId) {
-        User currentUser = userService.findCurrentUser();
-        Authority authority = currentUser.getAuthority();
-        Boolean isMe = false;
-
-        if (authority.equals(Authority.ADMIN)) {
-            Administrator admin = administratorService.findAdministratorByUser(currentUser.getId());
-            isMe = admin.getId().equals(personId);
-        } else if (authority.equals(Authority.MEMBER)) {
-            Member member = memberService.findMemberByUser(currentUser.getId());
-            isMe = member.getId().equals(personId);
-        } else {
-            throw new IllegalStateException("El usuario tiene un rol desconocido.");
-        }
-
+        Boolean isMe = authService.isCurrentUserPersonId(personId);
         return ResponseEntity.ok().body(new MessageResponse<Boolean>("Verificación de identidad realizada con éxito.", isMe));
     }
 

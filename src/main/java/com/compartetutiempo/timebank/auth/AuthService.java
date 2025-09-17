@@ -85,5 +85,39 @@ public class AuthService {
         }
     }
 
+    @Transactional(readOnly = true)
+    private User findCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getName())) {
+            throw new AuthenticationCredentialsNotFoundException("No hay usuario autenticado actualmente.");
+        }
+
+        String username = auth.getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isCurrentUserPersonId(Integer personId) {
+        User currentUser = findCurrentUser();
+        Authority authority = currentUser.getAuthority();
+        Boolean isMe = false;
+
+        if (authority.equals(Authority.ADMIN)) {
+            Administrator admin = administratorRepository.findAdministratorByUser(currentUser.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Administrator", "userId", currentUser.getId()));
+            isMe = admin.getId().equals(personId);
+        } else if (authority.equals(Authority.MEMBER)) {
+            Member member = memberRepository.findMemberByUser(currentUser.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Member", "userId", currentUser.getId()));
+            isMe = member.getId().equals(personId);
+        } else {
+            throw new IllegalStateException("El usuario tiene un rol desconocido.");
+        }
+
+        return isMe;
+    }
+
 }
 
