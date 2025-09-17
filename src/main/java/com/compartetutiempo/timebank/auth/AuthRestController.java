@@ -158,8 +158,9 @@ public class AuthRestController {
 
     @GetMapping("/person-id-is-me/{personId}")
     public ResponseEntity<MessageResponse<Boolean>> isCurrentUserPersonId(@PathVariable("personId") Integer personId) {
-        Boolean isMe = authService.isCurrentUserPersonId(personId);
-        return ResponseEntity.ok().body(new MessageResponse<Boolean>("Verificación de identidad realizada con éxito.", isMe));
+        return ResponseEntity.ok().body(
+                new MessageResponse<Boolean>("Verificación de identidad realizada con éxito.", authService.isCurrentUserPersonId(personId))
+            );
     }
 
 }
