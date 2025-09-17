@@ -7,6 +7,8 @@ import { LoginService } from '../auth/login.service';
 import { SignupRequest } from '../../payload/request/signup-request';
 import { MessageResponse } from '../../payload/response/message-response';
 import { UserCreationService } from '../user-creation-service';
+import { ListMessageResponse } from '../../payload/response/list-message-response';
+import { AdminForListDTO } from './dto/admin-for-list-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +38,17 @@ export class AdminService implements UserCreationService {
       }
     }).pipe(
       catchError(error => this.handleError(error, 'Error al crear administrador.'))
+    );
+  }
+
+  getAllAdmins(): Observable<ListMessageResponse<AdminForListDTO>> {
+    const token = this.loginService.userToken;
+    return this.http.get<ListMessageResponse<AdminForListDTO>>(this.adminUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      catchError(error => this.handleError(error, 'Error al obtener lista de administradores.'))
     );
   }
 
