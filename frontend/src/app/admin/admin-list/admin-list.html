@@ -32,8 +32,12 @@
                         <div class="col text-center">{{ admin.username }}</div>
                         <div class="col text-center">{{ admin.email }}</div>
                         <div class="col text-center">
-                            <app-base-icon-button bttnType="details" (clicked)="viewAdminDetails(admin.id)" class="me-1"></app-base-icon-button>
-                            <app-base-icon-button bttnType="delete" (clicked)="deleteAdmin(admin.id)"></app-base-icon-button>
+                            if(!isCurrentUserThisAdminId(admin.id)) {
+                                <app-base-icon-button bttnType="details" (clicked)="viewAdminDetails(admin.id)" class="me-1"></app-base-icon-button>
+                                <app-base-icon-button bttnType="delete" (clicked)="deleteAdmin(admin.id)"></app-base-icon-button>
+                            } else {
+                                <div>(Eres tú)</div>
+                            }
                         </div>
                     </div>
                 }

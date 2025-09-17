@@ -5,6 +5,7 @@ import { AdminService } from '../../services/admin/admin.service';
 import { Subscription } from 'rxjs';
 import { AdminForListDTO } from '../../services/admin/dto/admin-for-list-dto';
 import { BaseIconButton } from '../../components/base-icon-button/base-icon-button';
+import { LoginService } from '../../services/auth/login.service';
 
 @Component({
   selector: 'app-admin-list',
@@ -16,11 +17,13 @@ export class AdminList implements OnInit, OnDestroy {
 
   private router = inject(Router);
   private adminService = inject(AdminService);
+  private loginService = inject(LoginService);
   private subscription: Subscription = new Subscription();
 
   errorMessage?: string;
   successMessage?: string;
   admins?: AdminForListDTO[];
+
   timeout = 3000; // 3 segundos
 
   ngOnInit(): void {
@@ -67,6 +70,19 @@ export class AdminList implements OnInit, OnDestroy {
         this.errorMessage = error && error.message ? error.message : String(error);
       }
     });
+  }
+
+  isCurrentUserThisAdminId(adminId: string): boolean {
+    this.loginService.isCurrentUserPersonId(adminId).subscribe({
+      next: (response) => {
+        return response.object;
+      },
+      error: (error) => {
+        this.errorMessage = error && error.message ? error.message : String(error);
+        return false;
+      }
+    });
+    return false;
   }
 
 }
