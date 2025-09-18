@@ -59,7 +59,7 @@ export class AdminList implements OnInit, OnDestroy {
   }
 
   viewAdminDetails(adminId: string) {
-    // not implemented yet
+    this.router.navigate(['/administradores', adminId]);
   }
 
   deleteAdmin(adminId: string) {
