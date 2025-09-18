@@ -82,28 +82,36 @@ const memberInfoGuard: CanActivateFn = (route, state) => {
 };
 
 const adminInfoGuard: CanActivateFn = (route, state) => {
-  const result = adminGuard(route, state);
-  if (result !== true) {
-      return result;
-  }
-
   const loginService = inject(LoginService);
   const router = inject(Router);
   const adminIdParam = route.paramMap.get('id');
 
-  if (adminIdParam) {
-    return loginService.isCurrentUserPersonId(adminIdParam).pipe(
-      map((response) => {
-        if (response.object === true) {
-          return router.parseUrl('/perfil');
-        } else {
-          return true;
-        }
-      })
-    );
-  }
-  return of(true);
-}
+  return loginService.userIsAdmin.pipe(
+    map(isAdmin => {
+      if (!isAdmin) {
+        return router.parseUrl('/inicio');
+      }
+      return true;
+    }),
+    switchMap(result => {
+      if (result !== true) {
+        return of(result);
+      }
+      if (adminIdParam) {
+        return loginService.isCurrentUserPersonId(adminIdParam).pipe(
+          map((response) => {
+            if (response.object === true) {
+              return router.parseUrl('/perfil');
+            } else {
+              return true;
+            }
+          })
+        );
+      }
+      return of(true);
+    })
+  );
+};
 // END Generado con GitHub Copilot Chat Extension
 
 
