@@ -56,6 +56,11 @@ public class ExceptionHandlerController {
         return buildResponseEntity(HttpStatus.CONFLICT, exception, request);
     }
 
+    @ExceptionHandler(InvalidProfilePictureException.class)
+    public ResponseEntity<ErrorMessage> invalidProfilePictureExceptionHandler(InvalidProfilePictureException exception, WebRequest request) {
+        return buildResponseEntity(HttpStatus.BAD_REQUEST, exception, request);
+    }
+
     private ResponseEntity<ErrorMessage> buildResponseEntity(HttpStatus status, Exception exception, WebRequest request) {
         return buildResponseEntity(status, exception.getMessage(), request);
     }

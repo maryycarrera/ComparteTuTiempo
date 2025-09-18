@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.compartetutiempo.timebank.admin.dto.AdminDTO;
+import com.compartetutiempo.timebank.admin.dto.AdminEditDTO;
 import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
 import com.compartetutiempo.timebank.auth.AuthService;
 import com.compartetutiempo.timebank.exceptions.AttributeDuplicatedException;
@@ -21,6 +24,7 @@ import com.compartetutiempo.timebank.member.MemberService;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
 import com.compartetutiempo.timebank.payload.response.MessageResponse;
+import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserService;
 
 import jakarta.validation.Valid;
@@ -64,6 +68,20 @@ public class AdministratorRestController {
 
         AdminDTO adminDTO = administratorService.findAdministratorDTO(adminId);
         return ResponseEntity.ok(new MessageResponse<AdminDTO>("Administrador con ID " + adminId + " encontrado con éxito.", adminDTO));
+    }
+
+    @PutMapping()
+    public ResponseEntity<MessageResponse<AdminDTO>> update(@Valid @RequestBody AdminEditDTO adminEditDTO) {
+        User currentUser = userService.findCurrentUser();
+        AdminDTO updatedAdmin = administratorService.updateByUsername(currentUser.getUsername(), adminEditDTO);
+        return ResponseEntity.ok(new MessageResponse<>("Administrador actualizado con éxito.", updatedAdmin));
+    }
+
+    @PutMapping("/profile-picture")
+    public ResponseEntity<MessageResponse<AdminDTO>> updateProfilePicture(@RequestParam String color) {
+        User currentUser = userService.findCurrentUser();
+        AdminDTO updatedAdmin = administratorService.updateProfilePicture(currentUser.getUsername(), color);
+        return ResponseEntity.ok(new MessageResponse<>("Foto de perfil actualizada con éxito.", updatedAdmin));
     }
 
     @PostMapping()
