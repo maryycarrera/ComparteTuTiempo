@@ -32,7 +32,7 @@ export class AdminService implements UserCreationService {
     );
   }
 
-  getMemberById(id: string): Observable<MessageResponse<AdminDTO>> {
+  getAdminById(id: string): Observable<MessageResponse<AdminDTO>> {
     const token = this.loginService.userToken;
     return this.http.get<MessageResponse<AdminDTO>>(environment.apiUrl + `admins/${id}`, {
       headers: {
