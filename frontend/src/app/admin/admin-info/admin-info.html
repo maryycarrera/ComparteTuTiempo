@@ -14,22 +14,24 @@
             <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
         </div>
         <div class="profile-data">
-            <div class="mb-3 admin-info-field">
-                <label class="form-label">Nombre de usuario</label>
-                <p class="form-control">{{ admin.username }}</p>
-            </div>
-            <div class="mb-3 admin-info-field">
-                <label class="form-label">Nombre</label>
-                <p class="form-control">{{ admin.name }}</p>
-            </div>
-            <div class="mb-3 admin-info-field">
-                <label class="form-label">Apellido/s</label>
-                <p class="form-control">{{ admin.lastName }}</p>
-            </div>
-            <div class="mb-3 admin-info-field">
-                <label class="form-label">Correo electrónico</label>
-                <p class="form-control">{{ admin.email }}</p>
-            </div>
+            <form [formGroup]="infoForm">
+                <div class="mb-3 admin-info-field">
+                    <label for="username" class="form-label">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="username" formControlName="username">
+                </div>
+                <div class="mb-3 admin-info-field">
+                    <label for="name" class="form-label">Nombre</label>
+                    <textarea class="form-control" id="name" formControlName="name" rows="2"></textarea>
+                </div>
+                <div class="mb-3 admin-info-field">
+                    <label for="lastName" class="form-label">Apellido/s</label>
+                    <textarea class="form-control" id="lastName" formControlName="lastName" rows="2"></textarea>
+                </div>
+                <div class="mb-3 admin-info-field">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" formControlName="email">
+                </div>
+            </form>
         </div>
     </div>
 }

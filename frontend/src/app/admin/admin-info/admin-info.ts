@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminDTO } from '../../services/admin/dto/admin-dto';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-info',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './admin-info.html',
   styleUrl: './admin-info.css'
 })
@@ -17,6 +18,7 @@ export class AdminInfo implements OnInit, OnDestroy {
   private adminService = inject(AdminService);
   private resourcesService = inject(ResourcesService);
   private activatedRoute = inject(ActivatedRoute);
+  private fb = inject(FormBuilder);
   private subscription: Subscription = new Subscription();
   
   static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
@@ -27,6 +29,13 @@ export class AdminInfo implements OnInit, OnDestroy {
   errorMessage?: string;
   profilePicture: string = AdminInfo.DEFAULT_PROFILE_PICTURE;
 
+  infoForm = this.fb.group({
+    username: [''],
+    name: [''],
+    lastName: [''],
+    email: ['']
+  });
+
   ngOnInit(): void {
     this.subscription.add(
       this.activatedRoute.params.subscribe(params => {
@@ -35,6 +44,13 @@ export class AdminInfo implements OnInit, OnDestroy {
           next: (response) => {
             this.admin = response.object;
             this.fullName = this.admin?.name + ' ' + this.admin?.lastName;
+            this.infoForm.patchValue({
+              username: this.admin?.username,
+              name: this.admin?.name,
+              lastName: this.admin?.lastName,
+              email: this.admin?.email
+            });
+            this.infoForm.disable();
 
             let picUrl = this.profilePicture;
             if (response.object?.profilePic && response.object.profilePic !== '') {
