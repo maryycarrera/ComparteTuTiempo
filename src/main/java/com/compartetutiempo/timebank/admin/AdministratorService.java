@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.compartetutiempo.timebank.admin.dto.AdminDTO;
+import com.compartetutiempo.timebank.admin.dto.AdminEditDTO;
 import com.compartetutiempo.timebank.admin.dto.AdminForListDTO;
+import com.compartetutiempo.timebank.exceptions.InvalidProfilePictureException;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.payload.request.SignupRequest;
 import com.compartetutiempo.timebank.user.Authority;
@@ -102,6 +104,35 @@ public class AdministratorService {
             throw new ResourceNotFoundException("Administrator", "id", adminId);
         }
         administratorRepository.deleteById(adminId);
+    }
+
+    @Transactional
+    public AdminDTO updateByUsername(String username, @Valid AdminEditDTO adminDTO) {
+        Administrator admin = findAdministratorByUser(username);
+
+        admin.setName(adminDTO.getName());
+        admin.setLastName(adminDTO.getLastName());
+
+        return new AdminDTO(administratorRepository.save(admin));
+    }
+
+    @Transactional
+    public AdminDTO updateProfilePicture(String username, String color) {
+        color = color.toLowerCase().trim();
+
+        if (color == null || color.isBlank()) {
+            throw new InvalidProfilePictureException("El color de la imagen de perfil no puede estar vacío.");
+        }
+
+        List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
+        if (color.equals("black") || !validColors.contains(color)) {
+            throw new InvalidProfilePictureException(color, "updateProfilePicture");
+        }
+
+        String profilePicture = "profilepics/" + color + ".png";
+        Administrator admin = findAdministratorByUser(username);
+        admin.setProfilePicture(profilePicture);
+        return new AdminDTO(administratorRepository.save(admin));
     }
 
 }
