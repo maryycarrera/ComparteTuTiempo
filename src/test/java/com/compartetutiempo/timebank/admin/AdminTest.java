@@ -24,6 +24,7 @@ import com.compartetutiempo.timebank.BaseTest;
 public class AdminTest extends BaseTest {
 
     private static final String BASE_URL = "/api/v1/admins";
+    private static final String PROFILE_PIC_URL = BASE_URL + "/profile-picture";
 
     @Autowired
     private MockMvc mockMvc;
@@ -380,7 +381,7 @@ public class AdminTest extends BaseTest {
     public void shouldUpdateProfilePictureSuccessfully() throws Exception {
         String newColor = "blue";
 
-        mockMvc.perform(put(BASE_URL + "/profile-picture")
+        mockMvc.perform(put(PROFILE_PIC_URL)
                 .header("Authorization", "Bearer " + adminToken)
                 .param("color", newColor)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -397,7 +398,7 @@ public class AdminTest extends BaseTest {
     public void shouldFailToUpdateProfilePictureWithInvalidColor() throws Exception {
         String invalidColor = "black";
 
-        mockMvc.perform(put(BASE_URL + "/profile-picture")
+        mockMvc.perform(put(PROFILE_PIC_URL)
                 .header("Authorization", "Bearer " + adminToken)
                 .param("color", invalidColor)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -405,7 +406,7 @@ public class AdminTest extends BaseTest {
                 .andExpect(jsonPath("$.message").value("The color 'black' is not a valid profile picture color for action: 'updateProfilePicture'"));
 
         invalidColor = "turquoise";
-        mockMvc.perform(put(BASE_URL + "/profile-picture")
+        mockMvc.perform(put(PROFILE_PIC_URL)
                 .header("Authorization", "Bearer " + adminToken)
                 .param("color", invalidColor)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -417,7 +418,7 @@ public class AdminTest extends BaseTest {
     public void shouldFailToUpdateProfilePictureWithEmptyColor() throws Exception {
         String emptyColor = "   ";
 
-        mockMvc.perform(put(BASE_URL + "/profile-picture")
+        mockMvc.perform(put(PROFILE_PIC_URL)
                 .header("Authorization", "Bearer " + adminToken)
                 .param("color", emptyColor)
                 .contentType(MediaType.APPLICATION_JSON))
