@@ -10,7 +10,7 @@ import lombok.Getter;
 public class InvalidProfilePictureException extends RuntimeException {
 
     public InvalidProfilePictureException(String color, String action) {
-        super(String.format("The color %s is not a valid profile picture color for action: '%s'", color, action));
+        super(String.format("The color '%s' is not a valid profile picture color for action: '%s'", color, action));
     }
 
     public InvalidProfilePictureException() {
