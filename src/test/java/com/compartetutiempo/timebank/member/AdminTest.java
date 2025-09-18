@@ -2,6 +2,7 @@ package com.compartetutiempo.timebank.member;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,7 @@ import com.compartetutiempo.timebank.BaseTest;
 public class AdminTest extends BaseTest {
 
     private static final String BASE_URL = "/api/v1/admins";
+    private static final String PROFILE_PIC_URL = BASE_URL + "/profile-picture";
 
     @Autowired
     private MockMvc mockMvc;
@@ -53,6 +55,33 @@ public class AdminTest extends BaseTest {
 
         mockMvc.perform(get(BASE_URL + "/" + adminId)
                 .header("Authorization", "Bearer " + memberToken)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void shouldFailUpdateProfileFromAdminEndpointWhenUserIsMember() throws Exception {
+        String updateJson = """
+        {
+            "name": "Perfil",
+            "lastName": "Actualizado"
+        }
+        """;
+
+        mockMvc.perform(put(BASE_URL)
+                .header("Authorization", "Bearer " + memberToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateJson))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void shouldFailUpdateProfilePictureFromAdminEndpointWhenUserIsMember() throws Exception {
+        String newColor = "blue";
+
+        mockMvc.perform(put(PROFILE_PIC_URL)
+                .header("Authorization", "Bearer " + memberToken)
+                .param("color", newColor)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
