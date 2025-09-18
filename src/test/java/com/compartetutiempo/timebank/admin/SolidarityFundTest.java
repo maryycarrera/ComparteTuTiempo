@@ -27,7 +27,7 @@ public class SolidarityFundTest extends BaseTest {
 
     @BeforeEach
     void authenticateAdmin() throws Exception {
-        adminToken = getToken("admin2", "sys4dm1n*!");
+        adminToken = getToken("admin2", "Sys4dm1n*!");
     }
 
     @Test

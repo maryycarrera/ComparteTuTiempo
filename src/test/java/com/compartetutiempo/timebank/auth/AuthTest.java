@@ -65,7 +65,7 @@ public class AuthTest {
         String loginJson = """
         {
             "username": "admin1",
-            "password": "sys4dm1n*!"
+            "password": "Sys4dm1n*!"
         }
         """;
 
@@ -136,7 +136,7 @@ public class AuthTest {
             "lastName": "Pérez",
             "username": "juanperez1",
             "email": "juan.perez1@example.com",
-            "password": "seguro123&"
+            "password": "Seguro123&"
         }
         """;
 
@@ -160,7 +160,7 @@ public class AuthTest {
             "lastName": "Swift",
             "username": "member1",
             "email": "taylor.swift13@example.com",
-            "password": "il0vecats89!"
+            "password": "il0vecaTS89!"
         }
         """;
 
@@ -179,7 +179,7 @@ public class AuthTest {
             "lastName": "Swift",
             "username": "taylorswift13",
             "email": "admin1@example.com",
-            "password": "il0vecats89!"
+            "password": "il0vecaTS89!"
         }
         """;
 
@@ -198,7 +198,97 @@ public class AuthTest {
             "lastName": "",
             "username": "a",
             "email": "invalid-email",
-            "password": "123"
+            "password": "123 "
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksSymbol() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0vecaTS89"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksNumber() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "ilovecaTS!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksLowercase() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "IL0VECATS89!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksUppercase() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0vecats89!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordHasWhiteSpace() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0ve caTS89!"
         }
         """;
 

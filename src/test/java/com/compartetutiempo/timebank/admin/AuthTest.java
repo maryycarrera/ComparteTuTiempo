@@ -29,7 +29,7 @@ public class AuthTest extends BaseTest {
 
     @BeforeEach
     void authenticateAdmin() throws Exception {
-        adminToken = getToken("admin1", "sys4dm1n*!");
+        adminToken = getToken("admin1", "Sys4dm1n*!");
     }
 
     @Test

@@ -136,10 +136,10 @@ Las credenciales de los usuarios base de ComparteTuTiempo son las siguientes:
 | usuario           | contraseña  |
 | - | - |
 | **Administrador** |
-| admin1            | sys4dm1n*!  |
-| admin2            | sys4dm1n*!  |
-| admin3            | sys4dm1n*!  |
-| admin4            | sys4dm1n*!  |
+| admin1            | Sys4dm1n*!  |
+| admin2            | Sys4dm1n*!  |
+| admin3            | Sys4dm1n*!  |
+| admin4            | Sys4dm1n*!  |
 | **Miembro**       |
 | member1           | m13mbr0CTT* |
 | member2           | m13mbr0CTT* |
