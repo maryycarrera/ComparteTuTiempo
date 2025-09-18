@@ -208,4 +208,94 @@ public class AuthTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksSymbol() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0vecaTS89"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksNumber() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "ilovecaTS!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksLowercase() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "IL0VECATS89!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordLacksUppercase() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0vecats89!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailRegistrationWhenPasswordHasWhiteSpace() throws Exception {
+        String signupJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0ve caTS89!"
+        }
+        """;
+
+        mockMvc.perform(post(SIGNUP_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(signupJson))
+                .andExpect(status().isBadRequest());
+    }
+
 }
