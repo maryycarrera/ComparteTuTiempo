@@ -20,7 +20,8 @@ export class AdminInfo implements OnInit, OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private subscription: Subscription = new Subscription();
-  
+  private objectUrl?: string;
+
   static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
 
   adminId!: string;
@@ -62,7 +63,8 @@ export class AdminInfo implements OnInit, OnDestroy {
 
             this.resourcesService.getProfilePicture(picUrl).subscribe({
               next: (blob) => {
-                this.profilePicture = URL.createObjectURL(blob);
+                this.objectUrl = URL.createObjectURL(blob);
+                this.profilePicture = this.objectUrl;
               },
               error: (err) => {
                 this.errorMessage = err && err.message ? err.message : String(err);
@@ -79,6 +81,9 @@ export class AdminInfo implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    if (this.objectUrl) {
+      URL.revokeObjectURL(this.objectUrl);
+    }
   }
 
 }
