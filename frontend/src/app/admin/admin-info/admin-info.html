@@ -1,1 +1,33 @@
-<p>admin-info works!</p>
+<div class="main-title-container">
+    <p class="main-title">{{ fullName }}</p>
+</div>
+
+<div class="success-message-container">
+    @if (errorMessage && errorMessage.length != 0) {
+        <p class="alert alert-danger">{{ errorMessage }}</p>
+    }
+</div>
+
+<div class="profile-container">
+    <div class="profile-pic">
+        <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
+    </div>
+    <div class="profile-data">
+        <div class="mb-3">
+            <label class="form-label">Nombre de usuario</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Apellido/s</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control">
+        </div>
+    </div>
+</div>
