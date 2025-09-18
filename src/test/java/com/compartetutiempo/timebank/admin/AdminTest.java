@@ -42,7 +42,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Pérez",
             "username": "juanperez2",
             "email": "juan.perez2@example.com",
-            "password": "seguro123&"
+            "password": "Seguro123&"
         }
         """;
         mockMvc.perform(post(BASE_URL)
@@ -62,7 +62,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Swift",
             "username": "admin1",
             "email": "taylor.swift13@example.com",
-            "password": "il0vecats89!"
+            "password": "il0vecaTS89!"
         }
         """;
         mockMvc.perform(post(BASE_URL)
@@ -81,7 +81,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Swift",
             "username": "taylorswift13",
             "email": "member1@example.com",
-            "password": "il0vecats89!"
+            "password": "il0vecaTS89!"
         }
         """;
 
@@ -101,7 +101,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Swift",
             "username": "taylorswift13",
             "email": "taylor.swift.13@example.com",
-            "password": "il0vecats89"
+            "password": "il0vecaTS89"
         }
         """;
 
@@ -120,7 +120,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Swift",
             "username": "taylorswift13",
             "email": "taylor.swift.13@example.com",
-            "password": "ilovecats!"
+            "password": "ilovecaTS!"
         }
         """;
 
@@ -151,6 +151,44 @@ public class AdminTest extends BaseTest {
     }
 
     @Test
+    public void shouldFailToCreateAdminWhenPasswordLacksUppercase() throws Exception {
+        String createJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0vecats89!"
+        }
+        """;
+
+        mockMvc.perform(post(BASE_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(createJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void shouldFailToCreateAdminWhenPasswordHasWhiteSpace() throws Exception {
+        String createJson = """
+        {
+            "name": "Taylor",
+            "lastName": "Swift",
+            "username": "taylorswift13",
+            "email": "taylor.swift.13@example.com",
+            "password": "il0ve caTS89!"
+        }
+        """;
+
+        mockMvc.perform(post(BASE_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(createJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void shouldFailToCreateAdminWhenUsernameHasUppercase() throws Exception {
         String createJson = """
         {
@@ -158,7 +196,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Swift",
             "username": "TaylorSwift13",
             "email": "taylor.swift.13@example.com",
-            "password": "il0vecats89!"
+            "password": "il0vecaTS89!"
         }
         """;
 
@@ -177,7 +215,7 @@ public class AdminTest extends BaseTest {
             "lastName": "Swift",
             "username": "taylorswift-13!",
             "email": "taylor.swift.13@example.com",
-            "password": "il0vecats89!"
+            "password": "il0vecaTS89!"
         }
         """;
 
