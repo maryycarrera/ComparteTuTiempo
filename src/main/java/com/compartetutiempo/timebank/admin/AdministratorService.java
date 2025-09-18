@@ -124,8 +124,9 @@ public class AdministratorService {
 
         color = color.toLowerCase().trim();
 
+        List<String> invalidColors = List.of("black");
         List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
-        if (color.equals("black") || !validColors.contains(color)) {
+        if (invalidColors.contains(color) || !validColors.contains(color)) {
             throw new InvalidProfilePictureException(color, "updateProfilePicture");
         }
 
