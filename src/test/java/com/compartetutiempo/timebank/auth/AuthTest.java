@@ -65,7 +65,7 @@ public class AuthTest {
         String loginJson = """
         {
             "username": "admin1",
-            "password": "sys4dm1n*!"
+            "password": "Sys4dm1n*!"
         }
         """;
 
