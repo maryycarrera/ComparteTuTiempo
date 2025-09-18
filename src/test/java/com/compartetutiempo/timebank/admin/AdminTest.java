@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -333,6 +334,95 @@ public class AdminTest extends BaseTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.message").value("El administrador con ID " + adminId + " eres tú. Debes usar el endpoint /api/v1/auth/profile para ver tu perfil."));
+    }
+
+    @Test
+    @Transactional
+    public void shouldUpdateAdminSuccessfully() throws Exception {
+        String updateJson = """
+        {
+            "name": "Administrador",
+            "lastName": "Actualizado"
+        }
+        """;
+
+        mockMvc.perform(put(BASE_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Administrador actualizado con éxito."))
+                .andExpect(jsonPath("$.object.name").value("Administrador"))
+                .andExpect(jsonPath("$.object.lastName").value("Actualizado"))
+                .andExpect(jsonPath("$.object.username").value("admin2"))
+                .andExpect(jsonPath("$.object.email").value("admin2@example.com"))
+                .andExpect(jsonPath("$.object.profilePic").value("profilepics/gray.png"));
+    }
+
+    @Test
+    public void shouldFailToUpdateAdminWhenDataIsInvalid() throws Exception {
+        String updateJson = """
+        {
+            "name": "",
+            "lastName": "ho"
+        }
+        """;
+
+        mockMvc.perform(put(BASE_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void shouldUpdateProfilePictureSuccessfully() throws Exception {
+        String newColor = "blue";
+
+        mockMvc.perform(put(BASE_URL + "/profile-picture")
+                .header("Authorization", "Bearer " + adminToken)
+                .param("color", newColor)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Foto de perfil actualizada con éxito."))
+                .andExpect(jsonPath("$.object.name").value("Sys"))
+                .andExpect(jsonPath("$.object.lastName").value("Adm"))
+                .andExpect(jsonPath("$.object.username").value("admin2"))
+                .andExpect(jsonPath("$.object.email").value("admin2@example.com"))
+                .andExpect(jsonPath("$.object.profilePic").value("profilepics/blue.png"));
+    }
+
+    @Test
+    public void shouldFailToUpdateProfilePictureWithInvalidColor() throws Exception {
+        String invalidColor = "black";
+
+        mockMvc.perform(put(BASE_URL + "/profile-picture")
+                .header("Authorization", "Bearer " + adminToken)
+                .param("color", invalidColor)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("The color 'black' is not a valid profile picture color for action: 'updateProfilePicture'"));
+
+        invalidColor = "turquoise";
+        mockMvc.perform(put(BASE_URL + "/profile-picture")
+                .header("Authorization", "Bearer " + adminToken)
+                .param("color", invalidColor)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("The color 'turquoise' is not a valid profile picture color for action: 'updateProfilePicture'"));
+    }
+
+    @Test
+    public void shouldFailToUpdateProfilePictureWithEmptyColor() throws Exception {
+        String emptyColor = "   ";
+
+        mockMvc.perform(put(BASE_URL + "/profile-picture")
+                .header("Authorization", "Bearer " + adminToken)
+                .param("color", emptyColor)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("El color de la imagen de perfil no puede estar vacío."));
     }
 
 }
