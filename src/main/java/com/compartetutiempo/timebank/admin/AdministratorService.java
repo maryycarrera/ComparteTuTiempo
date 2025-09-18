@@ -125,7 +125,9 @@ public class AdministratorService {
         }
 
         List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
-        if (color.equals("black") || !validColors.contains(color)) {
+        // Exclude certain colors for profile pictures, e.g., "black" is not allowed for visibility reasons.
+        List<String> invalidColors = List.of("black");
+        if (invalidColors.contains(color) || !validColors.contains(color)) {
             throw new InvalidProfilePictureException(color, "updateProfilePicture");
         }
 
