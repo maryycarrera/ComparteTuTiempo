@@ -118,11 +118,11 @@ public class AdministratorService {
 
     @Transactional
     public AdminDTO updateProfilePicture(String username, String color) {
-        color = color.toLowerCase().trim();
-
         if (color == null || color.isBlank()) {
             throw new InvalidProfilePictureException("El color de la imagen de perfil no puede estar vacío.");
         }
+
+        color = color.toLowerCase().trim();
 
         List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
         if (color.equals("black") || !validColors.contains(color)) {
