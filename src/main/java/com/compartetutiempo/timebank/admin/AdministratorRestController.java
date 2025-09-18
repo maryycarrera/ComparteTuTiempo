@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.compartetutiempo.timebank.admin.dto.AdminDTO;
@@ -77,9 +78,9 @@ public class AdministratorRestController {
     }
 
     @PutMapping("/profile-picture")
-    public ResponseEntity<MessageResponse<AdminDTO>> updateProfilePicture(@RequestBody String profilePicture) {
+    public ResponseEntity<MessageResponse<AdminDTO>> updateProfilePicture(@RequestParam String color) {
         User currentUser = userService.findCurrentUser();
-        AdminDTO updatedAdmin = administratorService.updateProfilePicture(currentUser.getUsername(), profilePicture);
+        AdminDTO updatedAdmin = administratorService.updateProfilePicture(currentUser.getUsername(), color);
         return ResponseEntity.ok(new MessageResponse<>("Foto de perfil actualizada con éxito.", updatedAdmin));
     }
 
