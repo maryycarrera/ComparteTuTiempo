@@ -97,18 +97,6 @@ app-footer {
   color: var(--color-morado-oscuro);
 }
 
-.btn-cancel {
-  background-color: var(--color-rojo-incorrecto);
-  border-color: var(--color-rojo-incorrecto);
-  color: white;
-}
-
-.btn-cancel:hover {
-  background-color: darkred;
-  border-color: darkred;
-  color: white;
-}
-
 .card, .bg-secondary {
   background-color: var(--color-lila-pastel);
 }
