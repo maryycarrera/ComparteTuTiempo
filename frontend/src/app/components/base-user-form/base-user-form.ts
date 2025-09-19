@@ -34,7 +34,7 @@ export class BaseUserForm implements OnInit {
     this.service = this.isSignup ? this.signupService : this.adminService;
     this.navigateTo = this.isSignup ? '/iniciar-sesion' : '/administradores';
     this.buttonText = this.isSignup ? 'Registrarse' : 'Guardar';
-    this.successMsg = this.isSignup ? 'Cuenta creada ': 'Administrador creado ';
+    this.successMsg = this.isSignup ? 'Cuenta creada ' : 'Administrador creado ';
   }
 
   form = this.fb.group({
