@@ -17,6 +17,8 @@ export class AdminProfile {
 
   currentAdmin?: AdminDTO;
   errorMessage?: string;
+  successMessage?: string;
+  timeout = 3000; // 3 segundos
   editMode: boolean = false;
   isEditingPicture: boolean = false;
 
@@ -142,6 +144,8 @@ export class AdminProfile {
           this.profileForm.disable();
           this.profileForm.markAsUntouched();
           this.errorMessage = undefined;
+          this.successMessage = response.message ? response.message : 'Perfil actualizado con éxito.';
+          setTimeout(() => this.successMessage = undefined, this.timeout);
         },
         error: (err) => {
           this.setError(err);
@@ -153,6 +157,7 @@ export class AdminProfile {
   cancelProfilePictureEdit() {
     this.isEditingPicture = false;
     this.selectedColor = '';
+    this.errorMessage = undefined;
   }
 
   saveProfilePicture() {
@@ -161,6 +166,8 @@ export class AdminProfile {
     this.adminService.editProfilePicture(this.selectedColor).subscribe({
       next: (response) => {
         this.getProfilePicture(selectedColorUrl);
+        this.successMessage = response.message ? response.message : 'Foto de perfil actualizada con éxito.';
+        setTimeout(() => this.successMessage = undefined, this.timeout);
       },
       error: (err) => {
         this.setError(err);
