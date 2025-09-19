@@ -31,6 +31,15 @@
         </form>
     </div>
 </div>
-<div>
-  <app-logout></app-logout>
+
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-3 mb-2">
+    @if (editMode) {
+        <button type="button" (click)="cancel()" class="btn btn-cancel">Cancelar</button>
+        <button type="button" (click)="save()" class="btn btn-success">Guardar cambios</button>
+    } @else {
+        <app-logout></app-logout>
+        <div class="d-flex justify-content-center">
+            <button type="button" (click)="edit()" class="btn btn-primary">Editar perfil</button>
+        </div>
+    }
 </div>

@@ -43,9 +43,7 @@ export class AdminProfile {
           lastName: adminData.lastName,
           email: adminData.email
         });
-        if (!this.editMode) {
-          this.profileForm.disable();
-        }
+        this.profileForm.disable();
         let picUrl = this.profilePicture;
         if (adminData.profilePic && adminData.profilePic !== '') {
           picUrl = adminData.profilePic;
@@ -69,6 +67,46 @@ export class AdminProfile {
         console.info('Datos del perfil cargados correctamente');
       },
     })
+  }
+
+  edit() {
+    this.editMode = true;
+    this.profileForm.enable();
+  }
+
+  cancel() {
+    this.editMode = false;
+    this.profileForm.patchValue({
+      username: this.currentAdmin?.username,
+      name: this.currentAdmin?.name,
+      lastName: this.currentAdmin?.lastName,
+      email: this.currentAdmin?.email
+    });
+    this.profileForm.disable();
+    this.errorMessage = undefined;
+  }
+
+  save() {
+    // if (this.profileForm.valid && this.currentAdmin) {
+    //   const updatedAdmin: AdminDTO = {
+    //     id: this.currentAdmin.id,
+    //     username: this.currentAdmin.username,
+    //     name: this.profileForm.value.name!,
+    //     lastName: this.profileForm.value.lastName!,
+    //     email: this.currentAdmin.email,
+    //     profilePic: this.currentAdmin.profilePic
+    //   };
+    //   this.adminService.updateProfile(updatedAdmin).subscribe({
+    //     next: () => {
+    //       this.editMode = false;
+    //       this.profileForm.disable();
+    //       console.info('Perfil actualizado correctamente');
+    //     },
+    //     error: (err) => {
+    //       this.errorMessage = err && err.message ? err.message : String(err);
+    //     }
+    //   });
+    // }
   }
 
 }
