@@ -35,10 +35,40 @@
             <div class="mb-3 admin-info-field">
                 <label for="name" class="form-label">Nombre</label>
                 <textarea class="form-control" id="name" formControlName="name" rows="2"></textarea>
+
+                @if (name.invalid && (name.dirty || name.touched)) {
+                    <div class="text-danger">
+                        @if (name.hasError('required')) {
+                            <div>
+                                El Nombre es obligatorio.
+                            </div>
+                        }
+                        @if (name.hasError('minlength') || name.hasError('maxlength')) {
+                            <div>
+                                El Nombre debe tener entre 3 y 100 caracteres.
+                            </div>
+                        }
+                    </div>
+                }
             </div>
             <div class="mb-3 admin-info-field">
                 <label for="lastName" class="form-label">Apellido/s</label>
                 <textarea class="form-control" id="lastName" formControlName="lastName" rows="2"></textarea>
+
+                @if (lastName.invalid && (lastName.dirty || lastName.touched)) {
+                    <div class="text-danger">
+                        @if (lastName.hasError('required')) {
+                            <div>
+                                El Apellido/s es obligatorio.
+                            </div>
+                        }
+                        @if (lastName.hasError('minlength') || lastName.hasError('maxlength')) {
+                            <div>
+                                El Apellido/s debe tener entre 3 y 100 caracteres.
+                            </div>
+                        }
+                    </div>
+                }
             </div>
             <div class="mb-3 admin-info-field">
                 <label for="email" class="form-label">Correo electrónico</label>

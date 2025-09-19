@@ -85,6 +85,14 @@ export class AdminProfile {
     })
   }
 
+  // Getters para el template
+  get name() {
+    return this.profileForm.get('name')!;
+  }
+  get lastName() {
+    return this.profileForm.get('lastName')!;
+  }
+
   private getProfilePicture(picUrl: string) {
     this.resourcesService.getProfilePicture(picUrl).subscribe({
       next: (blob) => {
