@@ -71,7 +71,10 @@ export class AdminProfile {
 
   edit() {
     this.editMode = true;
-    this.profileForm.enable();
+    this.profileForm.get('name')?.enable();
+    this.profileForm.get('lastName')?.enable();
+    this.profileForm.get('username')?.disable();
+    this.profileForm.get('email')?.disable();
   }
 
   cancel() {
