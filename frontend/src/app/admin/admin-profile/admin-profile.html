@@ -35,7 +35,7 @@
 <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-3 mb-2">
     @if (editMode) {
         <button type="button" (click)="cancel()" class="btn btn-danger">Cancelar</button>
-        <button type="button" (click)="save()" class="btn btn-success">Guardar cambios</button>
+        <button type="button" (click)="save()" class="btn btn-success" [disabled]="profileForm.invalid">Guardar cambios</button>
     } @else {
         <app-logout></app-logout>
         <div class="d-flex justify-content-center">

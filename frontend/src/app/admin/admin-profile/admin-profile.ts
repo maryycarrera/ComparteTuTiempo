@@ -5,6 +5,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { ResourcesService } from '../../services/resources/resources.service';
 import { Logout } from '../../auth/logout/logout';
+import { AdminEditDTO } from '../../services/admin/dto/admin-edit-dto';
 
 @Component({
   selector: 'app-admin-profile',
@@ -86,30 +87,26 @@ export class AdminProfile {
       email: this.currentAdmin?.email
     });
     this.profileForm.disable();
+    this.profileForm.markAsUntouched();
     this.errorMessage = undefined;
   }
 
   save() {
-    // if (this.profileForm.valid && this.currentAdmin) {
-    //   const updatedAdmin: AdminDTO = {
-    //     id: this.currentAdmin.id,
-    //     username: this.currentAdmin.username,
-    //     name: this.profileForm.value.name!,
-    //     lastName: this.profileForm.value.lastName!,
-    //     email: this.currentAdmin.email,
-    //     profilePic: this.currentAdmin.profilePic
-    //   };
-    //   this.adminService.updateProfile(updatedAdmin).subscribe({
-    //     next: () => {
-    //       this.editMode = false;
-    //       this.profileForm.disable();
-    //       console.info('Perfil actualizado correctamente');
-    //     },
-    //     error: (err) => {
-    //       this.errorMessage = err && err.message ? err.message : String(err);
-    //     }
-    //   });
-    // }
+    if (this.profileForm.valid && this.currentAdmin) {
+      const updatedAdmin: AdminEditDTO = {
+        name: this.profileForm.get('name')?.value!,
+        lastName: this.profileForm.get('lastName')?.value!
+      }
+      this.adminService.editProfile(updatedAdmin).subscribe({
+        next: (response) => {
+          this.currentAdmin = response.object;
+          this.editMode = false;
+          this.profileForm.disable();
+          this.profileForm.markAsUntouched();
+          this.errorMessage = undefined;
+        }
+      })
+    }
   }
 
 }
