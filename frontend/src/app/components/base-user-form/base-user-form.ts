@@ -109,7 +109,7 @@ export class BaseUserForm implements OnInit {
           next: (createdUser: any) => {
             this.successMsg = this.successMsg + ' correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
             if (!this.isSignup) {
-              const id = createdUser && createdUser.id ? createdUser.id : (createdUser && createdUser.object && createdUser.object.id ? createdUser.object.id : null);
+              const id = createdUser && createdUser.id ? createdUser.id : null;
               if (id) {
                 this.navigateTo = `/administradores/${id}`;
               }
