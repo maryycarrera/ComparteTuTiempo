@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { AdminDTO } from './dto/admin-dto';
 import { environment } from '../../../environments/environment';
 import { LoginService } from '../auth/login.service';
@@ -10,6 +10,7 @@ import { UserCreationService } from '../user-creation-service';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
 import { AdminForListDTO } from './dto/admin-for-list-dto';
 import { ErrorHandler } from '../error-handler';
+import { AdminEditDTO } from '../../payload/request/admin-edit-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class AdminService implements UserCreationService {
 
   getAdminById(id: string): Observable<MessageResponse<AdminDTO>> {
     const token = this.loginService.userToken;
-    return this.http.get<MessageResponse<AdminDTO>>(environment.apiUrl + `admins/${id}`, {
+    return this.http.get<MessageResponse<AdminDTO>>(this.adminUrl + `/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -74,6 +75,29 @@ export class AdminService implements UserCreationService {
       responseType: 'text' as 'json'
     }).pipe(
       catchError(error => this.errorHandler.handleError(error, 'Error al eliminar administrador.'))
+    );
+  }
+
+  editProfile(data: AdminEditDTO): Observable<MessageResponse<AdminDTO>> {
+    const token = this.loginService.userToken;
+    return this.http.put<MessageResponse<AdminDTO>>(this.adminUrl, data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      catchError(error => this.errorHandler.handleError(error, 'Error al editar perfil de administrador.'))
+    );
+  }
+
+  editProfilePicture(color: string): Observable<MessageResponse<AdminDTO>> {
+    const token = this.loginService.userToken;
+    return this.http.put<MessageResponse<AdminDTO>>(this.adminUrl + '/profile-picture', null, {
+      params: { color },
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).pipe(
+      catchError(error => this.errorHandler.handleError(error, 'Error al editar imagen de perfil de administrador.'))
     );
   }
 
