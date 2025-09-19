@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin/admin.service';
 import { ResourcesService } from '../../services/resources/resources.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminDTO } from '../../services/admin/dto/admin-dto';
@@ -19,6 +19,7 @@ export class AdminInfo implements OnInit, OnDestroy {
   private resourcesService = inject(ResourcesService);
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
   private subscription: Subscription = new Subscription();
   private objectUrl?: string;
 
@@ -41,9 +42,10 @@ export class AdminInfo implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    const navigation = window.history.state;
-    if (navigation && navigation.successMsg) {
-      this.successMessage = navigation.successMsg;
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras?.state;
+    if (state && state['successMsg']) {
+      this.successMessage = state['successMsg'];
       setTimeout(() => this.successMessage = undefined, this.timeout);
     }
     this.subscription.add(

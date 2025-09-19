@@ -27,9 +27,10 @@ export class AdminList implements OnInit, OnDestroy {
   timeout = 3000; // 3 segundos
 
   ngOnInit(): void {
-    const navigation = window.history.state;
-    if (navigation && navigation.successMsg) {
-      this.successMessage = navigation.successMsg;
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras?.state;
+    if (state && state['successMsg']) {
+      this.successMessage = state['successMsg'];
       setTimeout(() => this.successMessage = undefined, this.timeout);
     }
     this.subscription.add(
