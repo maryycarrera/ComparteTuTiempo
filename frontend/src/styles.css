@@ -86,19 +86,27 @@ app-footer {
 }
 
 .btn-secondary {
-	background: var(--main-title-color, #888);
-	color: #fff;
-	border: none;
-	border-radius: 2rem;
-	padding: 0.8rem 2.5rem;
-	font-size: 1.1rem;
-	font-weight: 500;
-	cursor: pointer;
-	transition: background 0.2s;
+  background-color: var(--color-lila-pastel);
+  border-color: var(--color-lila-pastel);
+  color: var(--color-morado-intenso);
 }
 
 .btn-secondary:hover {
-	background: var(--main-title-color, #555);
+  background-color: var(--color-lila-claro);
+  border-color: var(--color-lila-claro);
+  color: var(--color-morado-oscuro);
+}
+
+.btn-cancel {
+  background-color: var(--color-rojo-incorrecto);
+  border-color: var(--color-rojo-incorrecto);
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: darkred;
+  border-color: darkred;
+  color: white;
 }
 
 .card, .bg-secondary {
