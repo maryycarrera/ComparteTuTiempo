@@ -94,40 +94,46 @@ export class BaseUserForm implements OnInit {
   get confirmPassword() { return this.form.controls.confirmPassword; }
 
   create() {
-      if (this.form.valid) {
-        const signupRequest: SignupRequest = {
-          name: this.name.value!,
-          lastName: this.lastName.value!,
-          username: this.username.value!,
-          email: this.email.value!,
-          password: this.password.value!
-        };
+    if (this.form.valid) {
+      const signupRequest: SignupRequest = {
+        name: this.name.value!,
+        lastName: this.lastName.value!,
+        username: this.username.value!,
+        email: this.email.value!,
+        password: this.password.value!
+      };
 
-        if (this.service) {
-          this.service.create(signupRequest).subscribe({
-            next: () => {
-              this.successMsg = 'Cuenta creada correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
-              this.router.navigateByUrl(this.navigateTo, { state: { successMsg: this.successMsg } });
-              this.form.reset();
-            },
-            error: (error: any) => {
-              let msg = '';
-              if (typeof error === 'string') {
-                msg = error.replace('Error: ', '');
-              } else if (error && typeof error.message === 'string') {
-                msg = error.message.replace('Error: ', '');
-              } else {
-                msg = 'Error al crear la cuenta. Por favor, inténtalo de nuevo.';
+      if (this.service) {
+        this.service.create(signupRequest).subscribe({
+          next: (createdUser: any) => {
+            this.successMsg = 'Cuenta creada correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
+            if (!this.isSignup) {
+              const id = createdUser && createdUser.id ? createdUser.id : (createdUser && createdUser.object && createdUser.object.id ? createdUser.object.id : null);
+              if (id) {
+                this.navigateTo = `/administradores/${id}`;
               }
-              this.errorMsg = msg;
             }
-          });
-        } else {
-          this.errorMsg = 'No se pudo crear la cuenta. Servicio no disponible.';
-        }
+            this.router.navigateByUrl(this.navigateTo, { state: { successMsg: this.successMsg } });
+            this.form.reset();
+          },
+          error: (error: any) => {
+            let msg = '';
+            if (typeof error === 'string') {
+              msg = error.replace('Error: ', '');
+            } else if (error && typeof error.message === 'string') {
+              msg = error.message.replace('Error: ', '');
+            } else {
+              msg = 'Error al crear la cuenta. Por favor, inténtalo de nuevo.';
+            }
+            this.errorMsg = msg;
+          }
+        });
       } else {
-        this.form.markAllAsTouched();
-        this.errorMsg = 'Ha ocurrido un error. Por favor, inténtalo de nuevo.';
+        this.errorMsg = 'No se pudo crear la cuenta. Servicio no disponible.';
       }
+    } else {
+      this.form.markAllAsTouched();
+      this.errorMsg = 'Ha ocurrido un error. Por favor, inténtalo de nuevo.';
     }
+  }
 }
