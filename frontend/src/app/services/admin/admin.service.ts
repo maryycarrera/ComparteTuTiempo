@@ -10,7 +10,7 @@ import { UserCreationService } from '../user-creation-service';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
 import { AdminForListDTO } from './dto/admin-for-list-dto';
 import { ErrorHandler } from '../error-handler';
-import { AdminEditDTO } from '../../payload/request/admin-edit-dto';
+import { AdminEditDTO } from './dto/admin-edit-dto';
 
 @Injectable({
   providedIn: 'root'
