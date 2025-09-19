@@ -15,9 +15,10 @@ export class Login {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private loginService = inject(LoginService);
+  timeout = 3000; // 3 segundos
 
   loginError: string = '';
-  loginSuccess: string = '';
+  loginSuccess?: string;
 
   showPassword: boolean = false;
 
@@ -36,9 +37,11 @@ export class Login {
     });
 
   constructor() {
-    const navigation = window.history.state;
-    if (navigation && navigation.successMsg) {
-      this.loginSuccess = navigation.successMsg;
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras?.state;
+    if (state && state['successMsg']) {
+      this.loginSuccess = state['successMsg'];
+      setTimeout(() => this.loginSuccess = undefined, this.timeout);
     }
   }
 
