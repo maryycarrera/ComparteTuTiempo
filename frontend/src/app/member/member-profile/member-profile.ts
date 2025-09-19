@@ -4,10 +4,11 @@ import { MemberProfileDTO } from '../../services/member/dto/member-profile-dto';
 import { MemberService } from '../../services/member/member.service';
 import { ResourcesService } from '../../services/resources/resources.service';
 import { environment } from '../../../environments/environment';
+import { Logout } from '../../auth/logout/logout';
 
 @Component({
   selector: 'app-member-profile',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Logout],
   templateUrl: './member-profile.html',
   styleUrl: './member-profile.css'
 })

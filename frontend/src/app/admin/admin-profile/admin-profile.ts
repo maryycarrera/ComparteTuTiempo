@@ -4,10 +4,11 @@ import { AdminDTO } from '../../services/admin/dto/admin-dto';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { ResourcesService } from '../../services/resources/resources.service';
+import { Logout } from '../../auth/logout/logout';
 
 @Component({
   selector: 'app-admin-profile',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Logout],
   templateUrl: './admin-profile.html',
   styleUrl: './admin-profile.css'
 })
