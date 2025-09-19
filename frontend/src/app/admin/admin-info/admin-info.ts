@@ -28,6 +28,9 @@ export class AdminInfo implements OnInit, OnDestroy {
   admin?: AdminDTO;
   fullName?: string;
   errorMessage?: string;
+  successMessage?: string;
+  timeout = 3000; // 3 segundos
+
   profilePicture: string = AdminInfo.DEFAULT_PROFILE_PICTURE;
 
   infoForm = this.fb.group({
@@ -38,6 +41,11 @@ export class AdminInfo implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
+    const navigation = window.history.state;
+    if (navigation && navigation.successMsg) {
+      this.successMessage = navigation.successMsg;
+      setTimeout(() => this.successMessage = undefined, this.timeout);
+    }
     this.subscription.add(
       this.activatedRoute.params.subscribe(params => {
         this.adminId = params['id'];
