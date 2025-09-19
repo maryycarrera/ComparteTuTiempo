@@ -18,7 +18,7 @@ export class Login {
   timeout = 3000; // 3 segundos
 
   loginError: string = '';
-  loginSuccess?: string = '';
+  loginSuccess?: string;
 
   showPassword: boolean = false;
 
