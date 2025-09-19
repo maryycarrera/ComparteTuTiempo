@@ -74,7 +74,7 @@ public class AdministratorRestController {
     public ResponseEntity<MessageResponse<AdminDTO>> update(@Valid @RequestBody AdminEditDTO adminEditDTO) {
         User currentUser = userService.findCurrentUser();
         AdminDTO updatedAdmin = administratorService.updateByUsername(currentUser.getUsername(), adminEditDTO);
-        return ResponseEntity.ok(new MessageResponse<>("Administrador actualizado con éxito.", updatedAdmin));
+        return ResponseEntity.ok(new MessageResponse<>("Perfil actualizado con éxito.", updatedAdmin));
     }
 
     @PutMapping("/profile-picture")

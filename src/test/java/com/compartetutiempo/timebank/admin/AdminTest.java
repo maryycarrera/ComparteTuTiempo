@@ -352,7 +352,7 @@ public class AdminTest extends BaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(updateJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Administrador actualizado con éxito."))
+                .andExpect(jsonPath("$.message").value("Perfil actualizado con éxito."))
                 .andExpect(jsonPath("$.object.name").value("Administrador"))
                 .andExpect(jsonPath("$.object.lastName").value("Actualizado"))
                 .andExpect(jsonPath("$.object.username").value("admin2"))
