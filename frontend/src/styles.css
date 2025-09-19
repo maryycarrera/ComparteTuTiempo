@@ -74,10 +74,11 @@ app-footer {
 
 .btn-primary:disabled,
 .btn-primary[disabled] {
-  background-color: gray !important;
-  border-color: gray !important;
+  background-color: var(--color-morado-medio) !important;
+  border-color: var(--color-morado-medio) !important;
   color: white !important;
   cursor: not-allowed !important;
+  opacity: 0.5;
 }
 
 .btn-primary:hover {
