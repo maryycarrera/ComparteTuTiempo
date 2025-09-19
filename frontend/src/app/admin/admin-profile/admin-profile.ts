@@ -167,7 +167,10 @@ export class AdminProfile {
   }
 
   saveProfilePicture() {
-    if (!this.selectedColor) return;
+    if (!this.selectedColor) {
+      this.errorMessage = 'Debe seleccionar un color para la foto de perfil.';
+      return;
+    }
     let selectedColorUrl = environment.hostUrl + 'profilepics/' + this.selectedColor + '.png';
     this.adminService.editProfilePicture(this.selectedColor).subscribe({
       next: (response) => {
