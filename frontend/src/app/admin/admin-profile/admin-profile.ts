@@ -133,9 +133,15 @@ export class AdminProfile {
 
   save() {
     if (this.profileForm.valid && this.currentAdmin) {
+      const nameControl = this.profileForm.get('name');
+      const lastNameControl = this.profileForm.get('lastName');
+      if (!nameControl || !lastNameControl || nameControl.value == null || lastNameControl.value == null) {
+        this.setError('Por favor, complete todos los campos requeridos.');
+        return;
+      }
       const updatedAdmin: AdminEditDTO = {
-        name: this.profileForm.get('name')?.value!,
-        lastName: this.profileForm.get('lastName')?.value!
+        name: nameControl.value,
+        lastName: lastNameControl.value
       }
       this.adminService.editProfile(updatedAdmin).subscribe({
         next: (response) => {
