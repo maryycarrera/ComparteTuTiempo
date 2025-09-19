@@ -34,6 +34,7 @@ export class BaseUserForm implements OnInit {
     this.service = this.isSignup ? this.signupService : this.adminService;
     this.navigateTo = this.isSignup ? '/iniciar-sesion' : '/administradores';
     this.buttonText = this.isSignup ? 'Registrarse' : 'Guardar';
+    this.successMsg = this.isSignup ? 'Cuenta creada ': 'Administrador creado ';
   }
 
   form = this.fb.group({
@@ -106,7 +107,7 @@ export class BaseUserForm implements OnInit {
       if (this.service) {
         this.service.create(signupRequest).subscribe({
           next: (createdUser: any) => {
-            this.successMsg = 'Cuenta creada correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
+            this.successMsg = this.successMsg + ' correctamente.' + (this.isSignup ? ' Inicia sesión para comenzar a utilizar el Banco de Tiempo.' : '');
             if (!this.isSignup) {
               const id = createdUser && createdUser.id ? createdUser.id : (createdUser && createdUser.object && createdUser.object.id ? createdUser.object.id : null);
               if (id) {
