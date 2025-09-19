@@ -10,6 +10,7 @@
   --color-rosa-pastel: #f8c6d8;
   --color-rosa-oscuro: #d14f83;
   --color-crema: #eed1c6;
+  --color-crema-oscuro: #e0b899;
   --color-lavanda: #e6e6fa;
 
   --color-verde-correcto: #42A948;
@@ -96,6 +97,18 @@ app-footer {
   background-color: var(--color-lila-claro);
   border-color: var(--color-lila-claro);
   color: var(--color-morado-oscuro);
+}
+
+.btn-tertiary {
+  background-color: var(--color-crema);
+  border-color: var(--color-crema);
+  color: var(--color-morado-oscuro);
+}
+
+.btn-tertiary:hover {
+  background-color: var(--color-crema-oscuro);
+  border-color: var(--color-crema-oscuro);
+  color: black;
 }
 
 .card, .bg-secondary {

@@ -7,8 +7,9 @@
 }
 
 <div class="profile-container">
-    <div class="profile-pic">
+    <div class="profile-pic d-flex flex-column align-items-center">
         <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
+        <button type="button" class="btn btn-tertiary btn-sm mt-3" (click)="onChangeProfilePicture()">Cambiar foto de perfil</button>
     </div>
     <div class="profile-data">
         <form [formGroup]="profileForm">

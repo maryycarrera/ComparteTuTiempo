@@ -109,4 +109,8 @@ export class AdminProfile {
     }
   }
 
+  onChangeProfilePicture() {
+    
+  }
+
 }
