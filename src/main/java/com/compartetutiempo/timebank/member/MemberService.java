@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,9 @@ import jakarta.validation.Valid;
 
 @Service
 public class MemberService {
+
+    @Value("#{'${profile.picture.valid-colors}'.split(',')}")
+    private List<String> validColors;
 
     private final MemberRepository memberRepository;
 
@@ -124,9 +128,7 @@ public class MemberService {
 
         color = color.toLowerCase().trim();
 
-        List<String> invalidColors = List.of("black");
-        List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
-        if (invalidColors.contains(color) || !validColors.contains(color)) {
+        if (!validColors.contains(color)) {
             throw new InvalidProfilePictureException(color, "updateProfilePicture");
         }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ import jakarta.validation.Valid;
 
 @Service
 public class AdministratorService {
+
+    @Value("#{'${profile.picture.valid-colors}'.split(',')}")
+    private List<String> validColors;
 
     private final AdministratorRepository administratorRepository;
     private final PasswordEncoder passwordEncoder;
@@ -124,9 +128,7 @@ public class AdministratorService {
 
         color = color.toLowerCase().trim();
 
-        List<String> invalidColors = List.of("black");
-        List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
-        if (invalidColors.contains(color) || !validColors.contains(color)) {
+        if (!validColors.contains(color)) {
             throw new InvalidProfilePictureException(color, "updateProfilePicture");
         }
 
