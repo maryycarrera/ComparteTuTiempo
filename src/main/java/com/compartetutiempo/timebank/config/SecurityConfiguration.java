@@ -59,6 +59,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/api/v1/users/**").hasAuthority(ADMIN)
                 .requestMatchers("/api/v1/admins/**").hasAuthority(ADMIN)
                 .requestMatchers(HttpMethod.DELETE, "/api/v1/members/**").hasAuthority(ADMIN)
+                .requestMatchers(HttpMethod.PUT, "/api/v1/members/**").hasAuthority(MEMBER)
                 .requestMatchers("/api/v1/members/**").hasAnyAuthority(ADMIN, MEMBER)
                 .requestMatchers("/api/v1/solidarity-fund/**").hasAnyAuthority(ADMIN, MEMBER)
                 .anyRequest().authenticated())
