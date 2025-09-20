@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,6 +24,7 @@ import com.compartetutiempo.timebank.BaseTest;
 public class MemberTest extends BaseTest {
 
     private static final String BASE_URL = "/api/v1/members";
+    private static final String PROFILE_PIC_URL = BASE_URL + "/profile-picture";
 
     @Autowired
     private MockMvc mockMvc;
@@ -103,6 +105,34 @@ public class MemberTest extends BaseTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("Member not found with id: '" + nonExistentMemberId + "'"));
+    }
+
+    @Test
+    public void shouldFailUpdateProfileFromMemberEndpointWhenUserIsAdmin() throws Exception {
+        String updateJson = """
+        {
+            "name": "Perfil",
+            "lastName": "Actualizado",
+            "biography": "Biografía actualizada desde el endpoint de miembro."
+        }
+        """;
+
+        mockMvc.perform(put(BASE_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updateJson))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void shouldFailUpdateProfilePictureFromMemberEndpointWhenUserIsAdmin() throws Exception {
+        String newColor = "blue";
+
+        mockMvc.perform(put(PROFILE_PIC_URL)
+                .header("Authorization", "Bearer " + adminToken)
+                .param("color", newColor)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 
 }
