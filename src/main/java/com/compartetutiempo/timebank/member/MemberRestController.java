@@ -8,17 +8,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.compartetutiempo.timebank.member.dto.MemberDTO;
+import com.compartetutiempo.timebank.member.dto.MemberEditDTO;
 import com.compartetutiempo.timebank.member.dto.MemberForMemberDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
+import com.compartetutiempo.timebank.member.dto.MemberProfileDTO;
 import com.compartetutiempo.timebank.payload.response.ListMessageResponse;
 import com.compartetutiempo.timebank.payload.response.MessageResponse;
 import com.compartetutiempo.timebank.user.Authority;
 import com.compartetutiempo.timebank.user.User;
 import com.compartetutiempo.timebank.user.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/members")
@@ -71,6 +78,20 @@ public class MemberRestController {
 
         MemberDTO member = memberService.findMemberDTO(memberId);
         return ResponseEntity.ok(new MessageResponse<MemberDTO>("Miembro con ID " + memberId + " encontrado con éxito.", member));
+    }
+
+    @PutMapping()
+    public ResponseEntity<MessageResponse<MemberProfileDTO>> update(@Valid @RequestBody MemberEditDTO memberEditDTO) {
+        User currentUser = userService.findCurrentUser();
+        MemberProfileDTO updatedMember = memberService.updateByUsername(currentUser.getUsername(), memberEditDTO);
+        return ResponseEntity.ok(new MessageResponse<>("Perfil actualizado con éxito.", updatedMember));
+    }
+
+    @PutMapping("/profile-picture")
+    public ResponseEntity<MessageResponse<MemberProfileDTO>> updateProfilePicture(@RequestParam String color) {
+        User currentUser = userService.findCurrentUser();
+        MemberProfileDTO updatedMember = memberService.updateProfilePicture(currentUser.getUsername(), color);
+        return ResponseEntity.ok(new MessageResponse<>("Foto de perfil actualizada con éxito.", updatedMember));
     }
 
     @DeleteMapping(value = "{memberId}")
