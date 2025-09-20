@@ -10,11 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.compartetutiempo.timebank.exceptions.InvalidProfilePictureException;
 import com.compartetutiempo.timebank.exceptions.ResourceNotFoundException;
 import com.compartetutiempo.timebank.member.dto.MemberDTO;
+import com.compartetutiempo.timebank.member.dto.MemberEditDTO;
 import com.compartetutiempo.timebank.member.dto.MemberForMemberDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForAdminDTO;
 import com.compartetutiempo.timebank.member.dto.MemberListForMemberDTO;
+import com.compartetutiempo.timebank.member.dto.MemberProfileDTO;
+
+import jakarta.validation.Valid;
 
 @Service
 public class MemberService {
@@ -98,6 +103,37 @@ public class MemberService {
             throw new ResourceNotFoundException("Member", "id", memberId);
         }
         memberRepository.deleteById(memberId);
+    }
+
+    @Transactional
+    public MemberProfileDTO updateByUsername(String username, @Valid MemberEditDTO memberDTO) {
+        Member member = findMemberByUser(username);
+
+        member.setName(memberDTO.getName());
+        member.setLastName(memberDTO.getLastName());
+        member.setBiography(memberDTO.getBiography());
+
+        return new MemberProfileDTO(memberRepository.save(member));
+    }
+
+    @Transactional
+    public MemberProfileDTO updateProfilePicture(String username, String color) {
+        if (color == null || color.isBlank()) {
+            throw new InvalidProfilePictureException("El color de la imagen de perfil no puede estar vacío.");
+        }
+
+        color = color.toLowerCase().trim();
+
+        List<String> invalidColors = List.of("black");
+        List<String> validColors = List.of("blue", "gray", "green", "orange", "pink", "purple", "red", "yellow");
+        if (invalidColors.contains(color) || !validColors.contains(color)) {
+            throw new InvalidProfilePictureException(color, "updateProfilePicture");
+        }
+
+        String profilePicture = "profilepics/" + color + ".png";
+        Member member = findMemberByUser(username);
+        member.setProfilePicture(profilePicture);
+        return new MemberProfileDTO(memberRepository.save(member));
     }
 
 }
