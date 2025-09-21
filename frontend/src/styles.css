@@ -260,4 +260,14 @@ form {
     max-width: 700px;
     width: 100%;
 }
+
+/* Ocultar visualizador de contraseñas */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-input-decoration,
+input[type="password"]::-webkit-input-clear-button,
+input[type="password"]::-webkit-input-password-reveal-button {
+  display: none !important;
+}
 /* END Generado con GitHub Copilot Chat Extension */
