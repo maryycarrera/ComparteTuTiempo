@@ -6,7 +6,7 @@ import { ResourcesService } from '../../services/resources/resources.service';
 import { environment } from '../../../environments/environment';
 import { Logout } from '../../auth/logout/logout';
 import { MemberEditDTO } from '../../services/member/dto/member-edit-dto';
-import { ErrorHandler } from '../../services/error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 
 @Component({
   selector: 'app-member-profile',

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { AdminForListDTO } from '../../services/admin/dto/admin-for-list-dto';
 import { BaseIconButton } from '../../components/base-icon-button/base-icon-button';
 import { LoginService } from '../../services/auth/login.service';
-import { ErrorHandler } from '../../services/error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 
 @Component({
   selector: 'app-admin-list',

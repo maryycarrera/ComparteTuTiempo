@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { ResourcesService } from '../../../services/resources/resources.service';
 import { environment } from '../../../../environments/environment';
 import { MemberForMemberDTO } from '../../../services/member/dto/member-for-member-dto';
-import { ErrorHandler } from '../../../services/error-handler';
+import { ErrorHandler } from '../../../util/error-handler';
 
 @Component({
   selector: 'app-member-info',

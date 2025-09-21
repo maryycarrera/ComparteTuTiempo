@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, BehaviorSubject, tap, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { MessageResponse } from '../../payload/response/message-response';
-import { ErrorHandler } from '../error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 
 @Injectable({
   providedIn: 'root'

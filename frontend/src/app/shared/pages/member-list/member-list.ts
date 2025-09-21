@@ -6,7 +6,7 @@ import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BaseIconButton } from '../../../components/base-icon-button/base-icon-button';
-import { ErrorHandler } from '../../../services/error-handler';
+import { ErrorHandler } from '../../../util/error-handler';
 
 @Component({
   selector: 'app-member-list',

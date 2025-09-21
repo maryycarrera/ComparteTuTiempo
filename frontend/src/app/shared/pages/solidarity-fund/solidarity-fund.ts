@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { MemberSolidarityFund } from '../../../member/member-solidarity-fund/member-solidarity-fund';
 import { AdminSolidarityFund } from '../../../admin/admin-solidarity-fund/admin-solidarity-fund';
 import { SolidarityFundService } from '../../../services/solidarity-fund/solidarity-fund.service';
-import { ErrorHandler } from '../../../services/error-handler';
+import { ErrorHandler } from '../../../util/error-handler';
 
 @Component({
   selector: 'app-solidarity-fund',

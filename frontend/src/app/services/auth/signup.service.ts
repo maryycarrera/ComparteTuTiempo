@@ -6,7 +6,7 @@ import { MessageResponse } from '../../payload/response/message-response';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { UserCreationService } from '../user-creation-service';
-import { ErrorHandler } from '../error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 
 @Injectable({
   providedIn: 'root'

@@ -10,7 +10,7 @@ import { MemberListForAdminDTO } from './dto/member-list-for-admin-dto';
 import { MemberDTO } from './dto/member-dto';
 import { MessageResponse } from '../../payload/response/message-response';
 import { MemberForMemberDTO } from './dto/member-for-member-dto';
-import { ErrorHandler } from '../error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 import { MemberEditDTO } from './dto/member-edit-dto';
 
 @Injectable({

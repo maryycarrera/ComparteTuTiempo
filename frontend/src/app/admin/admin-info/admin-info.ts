@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminDTO } from '../../services/admin/dto/admin-dto';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ErrorHandler } from '../../services/error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 
 @Component({
   selector: 'app-admin-info',
