@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { MemberSolidarityFund } from '../../../member/member-solidarity-fund/member-solidarity-fund';
 import { AdminSolidarityFund } from '../../../admin/admin-solidarity-fund/admin-solidarity-fund';
 import { SolidarityFundService } from '../../../services/solidarity-fund/solidarity-fund.service';
+import { ErrorHandler } from '../../../services/error-handler';
 
 @Component({
   selector: 'app-solidarity-fund',
@@ -16,6 +17,7 @@ export class SolidarityFund implements OnInit, OnDestroy {
   private loginService = inject(LoginService);
   private solidarityFundService = inject(SolidarityFundService);
   private subscription: Subscription = new Subscription();
+  private errorHandler = new ErrorHandler();
 
   errorMessage?: string;
   hours?: string;
@@ -30,7 +32,7 @@ export class SolidarityFund implements OnInit, OnDestroy {
           this.minutes = data.object.minutes;
         },
         error: (err) => {
-          this.errorMessage = err && err.message ? err.message : String(err);
+          this.errorMessage = this.errorHandler.extractMessage(err);
         },
         complete: () => {
           console.info('Datos del Fondo Solidario obtenidos.');

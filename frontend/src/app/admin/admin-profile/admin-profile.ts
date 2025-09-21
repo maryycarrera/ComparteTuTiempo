@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { ResourcesService } from '../../services/resources/resources.service';
 import { Logout } from '../../auth/logout/logout';
 import { AdminEditDTO } from '../../services/admin/dto/admin-edit-dto';
+import { ErrorHandler } from '../../services/error-handler';
 
 @Component({
   selector: 'app-admin-profile',
@@ -25,6 +26,7 @@ export class AdminProfile {
   private adminService = inject(AdminService);
   private resourcesService = inject(ResourcesService);
   private fb = inject(FormBuilder);
+  private errorHandler = new ErrorHandler();
 
   profileForm = this.fb.group({
     username: [''],
@@ -107,7 +109,7 @@ export class AdminProfile {
   }
 
   private setError(err: any) {
-    this.errorMessage = err && err.message ? err.message : String(err);
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
   edit() {

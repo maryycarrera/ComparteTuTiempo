@@ -6,6 +6,7 @@ import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BaseIconButton } from '../../../components/base-icon-button/base-icon-button';
+import { ErrorHandler } from '../../../services/error-handler';
 
 @Component({
   selector: 'app-member-list',
@@ -18,6 +19,7 @@ export class MemberList implements OnInit, OnDestroy {
   private memberService = inject(MemberService);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
+  private errorHandler = new ErrorHandler();
 
   errorMessage?: string;
   successMessage?: string;
@@ -36,7 +38,7 @@ export class MemberList implements OnInit, OnDestroy {
           }
         },
         error: (error) => {
-          this.errorMessage = error && error.message ? error.message : String(error);
+          this.setError(error);
         }
       })
     );
@@ -59,9 +61,13 @@ export class MemberList implements OnInit, OnDestroy {
         setTimeout(() => this.successMessage = undefined, 3000); // Ocultar tras 3s
       },
       error: (error) => {
-        this.errorMessage = error && error.message ? error.message : String(error);
+        this.setError(error);
       }
     });
+  }
+
+  private setError(err: any) {
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
   // START Generado con GitHub Copilot Chat Extension

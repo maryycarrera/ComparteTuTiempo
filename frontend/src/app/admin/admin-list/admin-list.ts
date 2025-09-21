@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AdminForListDTO } from '../../services/admin/dto/admin-for-list-dto';
 import { BaseIconButton } from '../../components/base-icon-button/base-icon-button';
 import { LoginService } from '../../services/auth/login.service';
+import { ErrorHandler } from '../../services/error-handler';
 
 @Component({
   selector: 'app-admin-list',
@@ -20,6 +21,7 @@ export class AdminList implements OnInit, OnDestroy {
   private loginService = inject(LoginService);
   private subscription: Subscription = new Subscription();
   private isCurrentUserMap: Map<string, boolean> = new Map();
+  private errorHandler = new ErrorHandler();
 
   errorMessage?: string;
   successMessage?: string;
@@ -45,7 +47,7 @@ export class AdminList implements OnInit, OnDestroy {
           }
         },
         error: (error) => {
-          this.errorMessage = error && error.message ? error.message : String(error);
+          this.setError(error);
         }
       })
     );
@@ -72,7 +74,7 @@ export class AdminList implements OnInit, OnDestroy {
         this.isCurrentUserMap.delete(adminId); // limpiar cache
       },
       error: (error) => {
-        this.errorMessage = error && error.message ? error.message : String(error);
+        this.setError(error);
       }
     });
   }
@@ -86,7 +88,7 @@ export class AdminList implements OnInit, OnDestroy {
       },
       error: (error) => {
         this.isCurrentUserMap.set(adminId, false);
-        this.errorMessage = error && error.message ? error.message : String(error);
+        this.setError(error);
       }
     });
   }
@@ -94,4 +96,9 @@ export class AdminList implements OnInit, OnDestroy {
   isCurrentUserThisAdminId(adminId: string): boolean {
     return this.isCurrentUserMap.get(adminId) || false;
   }
+
+  private setError(err: any) {
+    this.errorMessage = this.errorHandler.extractMessage(err);
+  }
+
 }

@@ -6,6 +6,7 @@ import { ResourcesService } from '../../services/resources/resources.service';
 import { environment } from '../../../environments/environment';
 import { Logout } from '../../auth/logout/logout';
 import { MemberEditDTO } from '../../services/member/dto/member-edit-dto';
+import { ErrorHandler } from '../../services/error-handler';
 
 @Component({
   selector: 'app-member-profile',
@@ -25,6 +26,7 @@ export class MemberProfile {
   private memberService = inject(MemberService);
   private resourcesService = inject(ResourcesService);
   private fb = inject(FormBuilder);
+  private errorHandler = new ErrorHandler();
 
   profileForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
@@ -117,7 +119,7 @@ export class MemberProfile {
   }
 
   private setError(err: any) {
-    this.errorMessage = err && err.message ? err.message : String(err);
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
   edit() {
