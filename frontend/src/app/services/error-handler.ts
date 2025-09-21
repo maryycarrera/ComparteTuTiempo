@@ -12,7 +12,7 @@ export class ErrorHandler {
         return throwError(() => new Error(errorMsg));
     }
 
-    public static extractMessage(err: any, defaultMessage: string = 'Ha ocurrido un error.') {
+    public extractMessage(err: any, defaultMessage: string = 'Ha ocurrido un error.') {
         if (err && err.message) {
             return err.message;
         }
