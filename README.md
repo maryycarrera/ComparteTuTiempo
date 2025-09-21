@@ -14,7 +14,7 @@
 ![Estado de CI](https://img.shields.io/github/actions/workflow/status/maryycarrera/ComparteTuTiempo/commits.yml?branch=main)
 ![Release](https://img.shields.io/github/v/release/maryycarrera/ComparteTuTiempo)
 [![Quality Gate Status (Backend)](https://sonarcloud.io/api/project_badges/measure?project=maryycarrera_ComparteTuTiempo&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maryycarrera_ComparteTuTiempo)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=maryycarrera_ComparteTuTiempo-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maryycarrera_ComparteTuTiempo-frontend)
+[![Quality Gate Status (Frontend)](https://sonarcloud.io/api/project_badges/measure?project=maryycarrera_ComparteTuTiempo-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maryycarrera_ComparteTuTiempo-frontend)
 
 ![Forks](https://img.shields.io/github/forks/maryycarrera/ComparteTuTiempo?style=social)
 ![Stars](https://img.shields.io/github/stars/maryycarrera/ComparteTuTiempo?style=social)
