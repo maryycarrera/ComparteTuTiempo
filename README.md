@@ -13,6 +13,8 @@
 ![Tamaño del repo](https://img.shields.io/github/repo-size/maryycarrera/ComparteTuTiempo)
 ![Estado de CI](https://img.shields.io/github/actions/workflow/status/maryycarrera/ComparteTuTiempo/commits.yml?branch=main)
 ![Release](https://img.shields.io/github/v/release/maryycarrera/ComparteTuTiempo)
+[![Quality Gate Status (Backend)](https://sonarcloud.io/api/project_badges/measure?project=maryycarrera_ComparteTuTiempo&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maryycarrera_ComparteTuTiempo)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=maryycarrera_ComparteTuTiempo-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=maryycarrera_ComparteTuTiempo-frontend)
 
 ![Forks](https://img.shields.io/github/forks/maryycarrera/ComparteTuTiempo?style=social)
 ![Stars](https://img.shields.io/github/stars/maryycarrera/ComparteTuTiempo?style=social)
@@ -23,6 +25,7 @@
 - [Descargar y ejecutar el proyecto para desarrollo](#descargar-y-ejecutar-el-proyecto-para-desarrollo)
 - [Utilizar la aplicación ComparteTuTiempo en producción](#utilizar-la-aplicación-compartetutiempo-en-producción)
 - [Credenciales de ComparteTuTiempo](#credenciales-de-compartetutiempo)
+- [Análisis de calidad](#análisis-de-calidad)
 - [Contribuciones](#contribuciones)
 
 ---
@@ -158,6 +161,15 @@ Contraseñas encriptadas utilizando Node.js:
 cd frontend
 node -e "console.log(require('bcryptjs').hashSync('tu_contraseña', 10))"
 ```
+
+---
+
+## Análisis de calidad
+
+Se ha realizado un análisis de calidad del código desarrollado con SonarQube. Para ello, se han analizado por separado el _backend_ y el _frontend_ del proyecto. Los resultados se pueden observar en los siguientes enlaces:
+
+- [Análisis de calidad del _backend_](https://sonarcloud.io/project/overview?id=maryycarrera_ComparteTuTiempo)
+- [Análisis de calidad del _frontend_](https://sonarcloud.io/project/overview?id=maryycarrera_ComparteTuTiempo-frontend)
 
 ---
 
