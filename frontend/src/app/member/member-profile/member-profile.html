@@ -3,13 +3,37 @@
     <p class="main-title">Mi Perfil</p>
 </div>
 
+<div class="success-message-container">
+@if (errorMessage) {
+    <div class="alert alert-danger mb-4">{{ errorMessage }}</div>
+}
+@if (successMessage) {
+    <div class="alert alert-success mb-4">{{ successMessage }}</div>
+}
+</div>
 
 <div class="profile-card">
     <div class="profile-row">
         <div class="profile-left">
-            <div class="profile-pic">
-                <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
-            </div>
+            @if (!isEditingPicture) {
+                <div class="profile-pic d-flex flex-column align-items-center">
+                    <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
+                    <button type="button" class="btn btn-tertiary btn-sm mt-3" (click)="isEditingPicture = true">Cambiar foto de perfil</button>
+                </div>
+            } @else {
+                <div class="profile-pic d-flex flex-column align-items-center">
+                    <select class="form-select mt-3 mb-2 w-auto" [(ngModel)]="selectedColor">
+                        <option value="" disabled selected>Selecciona un color</option>
+                        @for (color of colorOptions; track color.value) {
+                        <option [value]="color.value">{{ color.label }}</option>
+                        }
+                    </select>
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-danger btn-sm" (click)="cancelProfilePictureEdit()">Cancelar</button>
+                        <button type="button" class="btn btn-success btn-sm" (click)="saveProfilePicture()" [disabled]="!selectedColor">Guardar</button>
+                    </div>
+                </div>
+            }
             <div class="profile-username">
                 <p class="profile-username-value">{{ currentMember?.username }}</p>
                 <p class="profile-date">Te uniste el {{ dateOfMembership }}</p>
@@ -34,6 +58,17 @@
         </div>
     </div>
 </div>
-<div>
-  <app-logout></app-logout>
-</div>
+
+@if (!isEditingPicture) {
+    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3 mt-3 mb-2">
+        @if (editMode) {
+            <button type="button" (click)="cancel()" class="btn btn-danger">Cancelar</button>
+            <button type="button" (click)="save()" class="btn btn-success" [disabled]="profileForm.invalid">Guardar cambios</button>
+        } @else {
+            <app-logout></app-logout>
+            <div class="d-flex justify-content-center">
+                <button type="button" (click)="edit()" class="btn btn-primary">Editar perfil</button>
+            </div>
+        }
+    </div>
+}
