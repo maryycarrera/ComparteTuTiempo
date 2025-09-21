@@ -9,7 +9,7 @@ import { MessageResponse } from '../../payload/response/message-response';
 import { UserCreationService } from '../user-creation-service';
 import { ListMessageResponse } from '../../payload/response/list-message-response';
 import { AdminForListDTO } from './dto/admin-for-list-dto';
-import { ErrorHandler } from '../error-handler';
+import { ErrorHandler } from '../../util/error-handler';
 import { AdminEditDTO } from './dto/admin-edit-dto';
 
 @Injectable({

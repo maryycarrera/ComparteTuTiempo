@@ -6,10 +6,12 @@ import { Subscription } from 'rxjs';
 import { ResourcesService } from '../../../services/resources/resources.service';
 import { environment } from '../../../../environments/environment';
 import { MemberForMemberDTO } from '../../../services/member/dto/member-for-member-dto';
+import { ErrorHandler } from '../../../util/error-handler';
+import { MessagesContainer } from '../../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-member-info',
-  imports: [],
+  imports: [MessagesContainer],
   templateUrl: './member-info.html',
   styleUrl: './member-info.css'
 })
@@ -19,6 +21,7 @@ export class MemberInfo implements OnInit, OnDestroy {
   private resourcesService = inject(ResourcesService);
   private activatedRoute = inject(ActivatedRoute);
   private subscription: Subscription = new Subscription();
+  private errorHandler = new ErrorHandler();
 
   static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
 
@@ -48,12 +51,12 @@ export class MemberInfo implements OnInit, OnDestroy {
                 this.profilePicture = URL.createObjectURL(blob);
               },
               error: (err) => {
-                this.errorMessage = err && err.message ? err.message : String(err);
+                this.setError(err);
               }
             });
           },
           error: (error) => {
-            this.errorMessage = error && error.message ? error.message : String(error);
+            this.setError(error);
           }
         });
       })
@@ -70,6 +73,10 @@ export class MemberInfo implements OnInit, OnDestroy {
 
   get memberEmail(): string | null {
     return this.hasEmail(this.member) ? this.member.email : null;
+  }
+
+  private setError(err: any) {
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
 }

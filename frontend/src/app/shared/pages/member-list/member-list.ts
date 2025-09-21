@@ -6,10 +6,13 @@ import { MemberListForAdminDTO } from '../../../services/member/dto/member-list-
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BaseIconButton } from '../../../components/base-icon-button/base-icon-button';
+import { ErrorHandler } from '../../../util/error-handler';
+import { environment } from '../../../../environments/environment';
+import { MessagesContainer } from '../../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-member-list',
-  imports: [BaseIconButton, FormsModule],
+  imports: [BaseIconButton, FormsModule, MessagesContainer],
   templateUrl: './member-list.html',
   styleUrl: './member-list.css'
 })
@@ -18,12 +21,14 @@ export class MemberList implements OnInit, OnDestroy {
   private memberService = inject(MemberService);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
+  private errorHandler = new ErrorHandler();
 
   errorMessage?: string;
   successMessage?: string;
   members?: (MemberListDTO|MemberListForAdminDTO)[];
   searchText: string = '';
   filteredMembers?: (MemberListDTO|MemberListForAdminDTO)[];
+  timeout = environment.msgTimeout;
 
   ngOnInit(): void {
     this.subscription.add(
@@ -36,7 +41,7 @@ export class MemberList implements OnInit, OnDestroy {
           }
         },
         error: (error) => {
-          this.errorMessage = error && error.message ? error.message : String(error);
+          this.setError(error);
         }
       })
     );
@@ -56,12 +61,16 @@ export class MemberList implements OnInit, OnDestroy {
         this.members = this.members?.filter(m => m.id !== memberId);
         this.filterMembers();
         this.successMessage = typeof msg === 'string' ? msg : 'Miembro eliminado con éxito.';
-        setTimeout(() => this.successMessage = undefined, 3000); // Ocultar tras 3s
+        setTimeout(() => this.successMessage = undefined, this.timeout);
       },
       error: (error) => {
-        this.errorMessage = error && error.message ? error.message : String(error);
+        this.setError(error);
       }
     });
+  }
+
+  private setError(err: any) {
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
   // START Generado con GitHub Copilot Chat Extension

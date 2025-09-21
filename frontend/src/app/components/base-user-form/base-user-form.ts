@@ -5,10 +5,11 @@ import { AdminService } from '../../services/admin/admin.service';
 import { SignupRequest } from '../../payload/request/signup-request';
 import { SignupService } from '../../services/auth/signup.service';
 import { UserCreationService } from '../../services/user-creation-service';
+import { MessagesContainer } from '../messages-container/messages-container';
 
 @Component({
   selector: 'app-base-user-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MessagesContainer],
   templateUrl: './base-user-form.html',
   styleUrl: './base-user-form.css'
 })

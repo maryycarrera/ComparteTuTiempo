@@ -6,10 +6,12 @@ import { environment } from '../../../environments/environment';
 import { ResourcesService } from '../../services/resources/resources.service';
 import { Logout } from '../../auth/logout/logout';
 import { AdminEditDTO } from '../../services/admin/dto/admin-edit-dto';
+import { ErrorHandler } from '../../util/error-handler';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-admin-profile',
-  imports: [ReactiveFormsModule, FormsModule, Logout],
+  imports: [ReactiveFormsModule, FormsModule, Logout, MessagesContainer],
   templateUrl: './admin-profile.html',
   styleUrl: './admin-profile.css'
 })
@@ -18,13 +20,14 @@ export class AdminProfile {
   currentAdmin?: AdminDTO;
   errorMessage?: string;
   successMessage?: string;
-  timeout = 3000; // 3 segundos
+  timeout = environment.msgTimeout;
   editMode: boolean = false;
   isEditingPicture: boolean = false;
 
   private adminService = inject(AdminService);
   private resourcesService = inject(ResourcesService);
   private fb = inject(FormBuilder);
+  private errorHandler = new ErrorHandler();
 
   profileForm = this.fb.group({
     username: [''],
@@ -107,7 +110,7 @@ export class AdminProfile {
   }
 
   private setError(err: any) {
-    this.errorMessage = err && err.message ? err.message : String(err);
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
   edit() {

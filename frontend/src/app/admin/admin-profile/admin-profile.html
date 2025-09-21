@@ -2,20 +2,15 @@
     <p class="main-title">Mi Perfil</p>
 </div>
 
-<div class="success-message-container">
-@if (errorMessage) {
-    <div class="alert alert-danger mb-4">{{ errorMessage }}</div>
-}
-@if (successMessage) {
-    <div class="alert alert-success mb-4">{{ successMessage }}</div>
-}
-</div>
+<app-messages-container [errorMessage]="errorMessage" [successMessage]="successMessage"></app-messages-container>
 
 <div class="profile-container">
     @if (!isEditingPicture) {
         <div class="profile-pic d-flex flex-column align-items-center">
             <img [src]="profilePicture" alt="Foto de perfil" width="200" height="200" />
-            <button type="button" class="btn btn-tertiary btn-sm mt-3" (click)="isEditingPicture = true">Cambiar foto de perfil</button>
+            @if (!editMode) {
+                <button type="button" class="btn btn-tertiary btn-sm mt-3" (click)="isEditingPicture = true">Cambiar foto de perfil</button>
+            }
         </div>
     } @else {
         <div class="profile-pic d-flex flex-column align-items-center">

@@ -6,10 +6,12 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AdminDTO } from '../../services/admin/dto/admin-dto';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ErrorHandler } from '../../util/error-handler';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-admin-info',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MessagesContainer],
   templateUrl: './admin-info.html',
   styleUrl: './admin-info.css'
 })
@@ -21,6 +23,7 @@ export class AdminInfo implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
+  private errorHandler = new ErrorHandler();
   private objectUrl?: string;
 
   static readonly DEFAULT_PROFILE_PICTURE: string = environment.hostUrl + 'profilepics/black.png';
@@ -30,7 +33,7 @@ export class AdminInfo implements OnInit, OnDestroy {
   fullName?: string;
   errorMessage?: string;
   successMessage?: string;
-  timeout = 3000; // 3 segundos
+  timeout = environment.msgTimeout;
 
   profilePicture: string = AdminInfo.DEFAULT_PROFILE_PICTURE;
 
@@ -77,12 +80,12 @@ export class AdminInfo implements OnInit, OnDestroy {
                 this.profilePicture = this.objectUrl;
               },
               error: (err) => {
-                this.errorMessage = err && err.message ? err.message : String(err);
+                this.setError(err);
               }
             });
           },
           error: (error) => {
-            this.errorMessage = error && error.message ? error.message : String(error);
+            this.setError(error);
           }
         });
       })
@@ -94,6 +97,10 @@ export class AdminInfo implements OnInit, OnDestroy {
     if (this.objectUrl) {
       URL.revokeObjectURL(this.objectUrl);
     }
+  }
+
+  private setError(err: any) {
+    this.errorMessage = this.errorHandler.extractMessage(err);
   }
 
 }
