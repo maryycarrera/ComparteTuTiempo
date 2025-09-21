@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
 import { MemberProfileDTO } from '../../services/member/dto/member-profile-dto';
 import { MemberService } from '../../services/member/member.service';
 import { ResourcesService } from '../../services/resources/resources.service';
@@ -9,7 +9,7 @@ import { MemberEditDTO } from '../../services/member/dto/member-edit-dto';
 
 @Component({
   selector: 'app-member-profile',
-  imports: [ReactiveFormsModule, Logout],
+  imports: [ReactiveFormsModule, Logout, FormsModule],
   templateUrl: './member-profile.html',
   styleUrl: './member-profile.css'
 })
@@ -83,111 +83,115 @@ export class MemberProfile {
         }
         // Filtrar la opción actual de colorOptions
         this.colorOptions = this.allColorOptions.filter(opt => opt.value !== currentColor);
-        this.resourcesService.getProfilePicture(picUrl).subscribe({
-          next: (blob) => {
-            this.profilePicture = URL.createObjectURL(blob);
-          },
-          error: (err) => {
-            this.errorMessage = err && err.message ? err.message : String(err);
-          }
-        });
+        this.getProfilePicture(picUrl);
       },
       error: (err) => {
-        this.errorMessage = err && err.message ? err.message : String(err);
+        this.setError(err);
       },
       complete: () => {
         console.info('Datos del perfil cargados correctamente');
       },
     })
   }
+
+  // Getters para el template
+  get name() {
+    return this.profileForm.get('name')!;
+  }
+  get lastName() {
+    return this.profileForm.get('lastName')!;
+  }
+  get biography() {
+    return this.profileForm.get('biography')!;
+  }
   
-    private getProfilePicture(picUrl: string) {
-      this.resourcesService.getProfilePicture(picUrl).subscribe({
-        next: (blob) => {
-          this.profilePicture = URL.createObjectURL(blob);
-        },
-        error: (err) => {
-          this.setError(err);
-        }
-      });
-    }
-  
-    private setError(err: any) {
-      this.errorMessage = err && err.message ? err.message : String(err);
-    }
-  
-    edit() {
-      this.editMode = true;
-      this.profileForm.enable();
-    }
-  
-    cancel() {
-      this.editMode = false;
-      this.profileForm.patchValue({
-        name: this.currentMember?.name,
-        lastName: this.currentMember?.lastName,
-        biography: this.currentMember?.biography
-      });
-      this.profileForm.disable();
-      this.profileForm.markAsUntouched();
-      this.errorMessage = undefined;
-    }
-  
-    save() {
-      if (this.profileForm.valid && this.currentMember) {
-        const nameControl = this.profileForm.get('name');
-        const lastNameControl = this.profileForm.get('lastName');
-        const biographyControl = this.profileForm.get('biography');
-        if (!nameControl || !lastNameControl || nameControl.value == null || lastNameControl.value == null) {
-          this.setError('Por favor, complete todos los campos requeridos.');
-          return;
-        }
-        const updatedMember: MemberEditDTO = {
-          name: nameControl.value,
-          lastName: lastNameControl.value,
-          biography: biographyControl && biographyControl.value != null ? biographyControl.value : ''
-        }
-        this.memberService.editProfile(updatedMember).subscribe({
-          next: (response) => {
-            this.currentMember = response.object;
-            this.editMode = false;
-            this.profileForm.disable();
-            this.profileForm.markAsUntouched();
-            this.errorMessage = undefined;
-            this.successMessage = response.message ? response.message : 'Perfil actualizado con éxito.';
-            setTimeout(() => this.successMessage = undefined, this.timeout);
-          },
-          error: (err) => {
-            this.setError(err);
-          }
-        })
+  private getProfilePicture(picUrl: string) {
+    this.resourcesService.getProfilePicture(picUrl).subscribe({
+      next: (blob) => {
+        this.profilePicture = URL.createObjectURL(blob);
+      },
+      error: (err) => {
+        this.setError(err);
       }
-    }
-  
-    cancelProfilePictureEdit() {
-      this.isEditingPicture = false;
-      this.selectedColor = '';
-      this.errorMessage = undefined;
-    }
-  
-    saveProfilePicture() {
-      if (!this.selectedColor) {
-        this.errorMessage = 'Debe seleccionar un color para la foto de perfil.';
+    });
+  }
+
+  private setError(err: any) {
+    this.errorMessage = err && err.message ? err.message : String(err);
+  }
+
+  edit() {
+    this.editMode = true;
+    this.profileForm.enable();
+  }
+
+  cancel() {
+    this.editMode = false;
+    this.profileForm.patchValue({
+      name: this.currentMember?.name,
+      lastName: this.currentMember?.lastName,
+      biography: this.currentMember?.biography
+    });
+    this.profileForm.disable();
+    this.profileForm.markAsUntouched();
+    this.errorMessage = undefined;
+  }
+
+  save() {
+    if (this.profileForm.valid && this.currentMember) {
+      const nameControl = this.profileForm.get('name');
+      const lastNameControl = this.profileForm.get('lastName');
+      const biographyControl = this.profileForm.get('biography');
+      if (!nameControl || !lastNameControl || nameControl.value == null || lastNameControl.value == null) {
+        this.setError('Por favor, complete todos los campos requeridos.');
         return;
       }
-      let selectedColorUrl = environment.hostUrl + 'profilepics/' + this.selectedColor + '.png';
-      this.memberService.editProfilePicture(this.selectedColor).subscribe({
+      const updatedMember: MemberEditDTO = {
+        name: nameControl.value,
+        lastName: lastNameControl.value,
+        biography: biographyControl && biographyControl.value != null ? biographyControl.value : ''
+      }
+      this.memberService.editProfile(updatedMember).subscribe({
         next: (response) => {
-          this.getProfilePicture(selectedColorUrl);
-          this.successMessage = response.message ? response.message : 'Foto de perfil actualizada con éxito.';
+          this.currentMember = response.object;
+          this.editMode = false;
+          this.profileForm.disable();
+          this.profileForm.markAsUntouched();
+          this.errorMessage = undefined;
+          this.successMessage = response.message ? response.message : 'Perfil actualizado con éxito.';
           setTimeout(() => this.successMessage = undefined, this.timeout);
         },
         error: (err) => {
           this.setError(err);
         }
       })
-      this.isEditingPicture = false;
-      this.selectedColor = '';
     }
+  }
+
+  cancelProfilePictureEdit() {
+    this.isEditingPicture = false;
+    this.selectedColor = '';
+    this.errorMessage = undefined;
+  }
+
+  saveProfilePicture() {
+    if (!this.selectedColor) {
+      this.errorMessage = 'Debe seleccionar un color para la foto de perfil.';
+      return;
+    }
+    let selectedColorUrl = environment.hostUrl + 'profilepics/' + this.selectedColor + '.png';
+    this.memberService.editProfilePicture(this.selectedColor).subscribe({
+      next: (response) => {
+        this.getProfilePicture(selectedColorUrl);
+        this.successMessage = response.message ? response.message : 'Foto de perfil actualizada con éxito.';
+        setTimeout(() => this.successMessage = undefined, this.timeout);
+      },
+      error: (err) => {
+        this.setError(err);
+      }
+    })
+    this.isEditingPicture = false;
+    this.selectedColor = '';
+  }
 
 }
