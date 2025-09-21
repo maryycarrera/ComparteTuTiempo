@@ -7,10 +7,11 @@ import { environment } from '../../../environments/environment';
 import { Logout } from '../../auth/logout/logout';
 import { MemberEditDTO } from '../../services/member/dto/member-edit-dto';
 import { ErrorHandler } from '../../util/error-handler';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-member-profile',
-  imports: [ReactiveFormsModule, Logout, FormsModule],
+  imports: [ReactiveFormsModule, Logout, FormsModule, MessagesContainer],
   templateUrl: './member-profile.html',
   styleUrl: './member-profile.css'
 })

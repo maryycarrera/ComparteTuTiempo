@@ -5,10 +5,11 @@ import { MemberSolidarityFund } from '../../../member/member-solidarity-fund/mem
 import { AdminSolidarityFund } from '../../../admin/admin-solidarity-fund/admin-solidarity-fund';
 import { SolidarityFundService } from '../../../services/solidarity-fund/solidarity-fund.service';
 import { ErrorHandler } from '../../../util/error-handler';
+import { MessagesContainer } from '../../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-solidarity-fund',
-  imports: [MemberSolidarityFund, AdminSolidarityFund],
+  imports: [MemberSolidarityFund, AdminSolidarityFund, MessagesContainer],
   templateUrl: './solidarity-fund.html',
   styleUrl: './solidarity-fund.css'
 })

@@ -1,7 +1,5 @@
 <form [formGroup]="form">
-    @if (errorMsg && errorMsg !== '') {
-        <p class="alert alert-danger">{{errorMsg}}</p>
-    }
+    <app-messages-container [errorMessage]="errorMsg"></app-messages-container>
 
     <div class="mb-3">
         <label for="name" class="form-label">Nombre</label>

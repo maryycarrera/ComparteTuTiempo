@@ -7,10 +7,11 @@ import { environment } from '../../../environments/environment';
 import { AdminDTO } from '../../services/admin/dto/admin-dto';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandler } from '../../util/error-handler';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-admin-info',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MessagesContainer],
   templateUrl: './admin-info.html',
   styleUrl: './admin-info.css'
 })

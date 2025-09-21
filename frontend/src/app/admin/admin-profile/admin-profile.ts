@@ -7,10 +7,11 @@ import { ResourcesService } from '../../services/resources/resources.service';
 import { Logout } from '../../auth/logout/logout';
 import { AdminEditDTO } from '../../services/admin/dto/admin-edit-dto';
 import { ErrorHandler } from '../../util/error-handler';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-admin-profile',
-  imports: [ReactiveFormsModule, FormsModule, Logout],
+  imports: [ReactiveFormsModule, FormsModule, Logout, MessagesContainer],
   templateUrl: './admin-profile.html',
   styleUrl: './admin-profile.css'
 })

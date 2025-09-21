@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
 import { LoginRequest } from '../../services/auth/payload/request/login-request';
 import { environment } from '../../../environments/environment';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MessagesContainer],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })

@@ -8,10 +8,11 @@ import { BaseIconButton } from '../../components/base-icon-button/base-icon-butt
 import { LoginService } from '../../services/auth/login.service';
 import { ErrorHandler } from '../../util/error-handler';
 import { environment } from '../../../environments/environment';
+import { MessagesContainer } from '../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-admin-list',
-  imports: [ReactiveFormsModule, BaseIconButton],
+  imports: [ReactiveFormsModule, BaseIconButton, MessagesContainer],
   templateUrl: './admin-list.html',
   styleUrl: './admin-list.css'
 })

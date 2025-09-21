@@ -2,12 +2,7 @@
     <p class="main-title">Iniciar Sesión</p>
 </div>
 <form [formGroup]="loginForm">
-        @if (loginError && loginError !== '') {
-            <p class="alert alert-danger">{{loginError}}</p>
-        }
-        @if (loginSuccess && loginSuccess !== '') {
-            <p class="alert alert-success">{{loginSuccess}}</p>
-        }
+    <app-messages-container [errorMessage]="loginError" [successMessage]="loginSuccess"></app-messages-container>
     <div class="mb-3">
         <label for="username" class="form-label">Nombre de usuario</label>
         <input type="text" class="form-control" id="username" formControlName="username">

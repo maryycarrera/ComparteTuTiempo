@@ -7,10 +7,11 @@ import { ResourcesService } from '../../../services/resources/resources.service'
 import { environment } from '../../../../environments/environment';
 import { MemberForMemberDTO } from '../../../services/member/dto/member-for-member-dto';
 import { ErrorHandler } from '../../../util/error-handler';
+import { MessagesContainer } from '../../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-member-info',
-  imports: [],
+  imports: [MessagesContainer],
   templateUrl: './member-info.html',
   styleUrl: './member-info.css'
 })

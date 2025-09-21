@@ -8,10 +8,11 @@ import { FormsModule } from '@angular/forms';
 import { BaseIconButton } from '../../../components/base-icon-button/base-icon-button';
 import { ErrorHandler } from '../../../util/error-handler';
 import { environment } from '../../../../environments/environment';
+import { MessagesContainer } from '../../../components/messages-container/messages-container';
 
 @Component({
   selector: 'app-member-list',
-  imports: [BaseIconButton, FormsModule],
+  imports: [BaseIconButton, FormsModule, MessagesContainer],
   templateUrl: './member-list.html',
   styleUrl: './member-list.css'
 })
