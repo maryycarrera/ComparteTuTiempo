@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/auth/login.service';
 import { LoginRequest } from '../../services/auth/payload/request/login-request';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class Login {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private loginService = inject(LoginService);
-  timeout = 3000; // 3 segundos
+  timeout = environment.msgTimeout;
 
   loginError: string = '';
   loginSuccess?: string;

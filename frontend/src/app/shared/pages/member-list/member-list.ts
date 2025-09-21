@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BaseIconButton } from '../../../components/base-icon-button/base-icon-button';
 import { ErrorHandler } from '../../../util/error-handler';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-member-list',
@@ -26,6 +27,7 @@ export class MemberList implements OnInit, OnDestroy {
   members?: (MemberListDTO|MemberListForAdminDTO)[];
   searchText: string = '';
   filteredMembers?: (MemberListDTO|MemberListForAdminDTO)[];
+  timeout = environment.msgTimeout;
 
   ngOnInit(): void {
     this.subscription.add(
@@ -58,7 +60,7 @@ export class MemberList implements OnInit, OnDestroy {
         this.members = this.members?.filter(m => m.id !== memberId);
         this.filterMembers();
         this.successMessage = typeof msg === 'string' ? msg : 'Miembro eliminado con éxito.';
-        setTimeout(() => this.successMessage = undefined, 3000); // Ocultar tras 3s
+        setTimeout(() => this.successMessage = undefined, this.timeout);
       },
       error: (error) => {
         this.setError(error);

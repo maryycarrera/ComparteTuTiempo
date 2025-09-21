@@ -19,7 +19,7 @@ export class MemberProfile {
   currentMember?: MemberProfileDTO;
   errorMessage?: string;
   successMessage?: string;
-  timeout = 3000; // 3 segundos
+  timeout = environment.msgTimeout;
   editMode: boolean = false;
   isEditingPicture: boolean = false;
 

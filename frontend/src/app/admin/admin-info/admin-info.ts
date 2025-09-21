@@ -32,7 +32,7 @@ export class AdminInfo implements OnInit, OnDestroy {
   fullName?: string;
   errorMessage?: string;
   successMessage?: string;
-  timeout = 3000; // 3 segundos
+  timeout = environment.msgTimeout;
 
   profilePicture: string = AdminInfo.DEFAULT_PROFILE_PICTURE;
 

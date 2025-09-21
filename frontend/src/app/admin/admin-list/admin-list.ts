@@ -7,6 +7,7 @@ import { AdminForListDTO } from '../../services/admin/dto/admin-for-list-dto';
 import { BaseIconButton } from '../../components/base-icon-button/base-icon-button';
 import { LoginService } from '../../services/auth/login.service';
 import { ErrorHandler } from '../../util/error-handler';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-list',
@@ -26,7 +27,7 @@ export class AdminList implements OnInit, OnDestroy {
   errorMessage?: string;
   successMessage?: string;
   admins?: AdminForListDTO[];
-  timeout = 3000; // 3 segundos
+  timeout = environment.msgTimeout;
 
   ngOnInit(): void {
     const navigation = this.router.getCurrentNavigation();
