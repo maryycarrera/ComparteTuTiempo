@@ -11,4 +11,4 @@ WORKDIR /app
 RUN npm install -g http-server
 COPY --from=build /app/dist/frontend/ ./dist
 EXPOSE 80
-CMD ["http-server", "./dist/browser", "-p", "80"]
+CMD ["http-server", "./dist/browser", "-p", "80", "--history-api-fallback=index.html"]
