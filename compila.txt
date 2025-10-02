@@ -1,6 +1,8 @@
-## Descargar y ejecutar el proyecto para desarrollo
-
 Estas instrucciones están copiadas y adaptadas del archivo README del código fuente. Se recomienda consultar dicho archivo para visualizar mejor el contenido. No obstante, se pueden seguir los pasos perfectamente leyendo el presente documento .txt.
+
+Hay dos opciones para ejecutar el proyecto en desarrollo: desde el código fuente o usando Docker. Estas opciones están explicadas en el primer y segundo apartado de este documento, respectivamente.
+
+## Descargar y ejecutar el proyecto para desarrollo
 
 > [!WARNING]
 > Se necesita tener instalados Java, Node.js y MariaDB en las versiones indicadas a continuación. También se pueden utilizar versiones superiores de estas tecnologías, pero es recomendable usar las mismas con las que se ha desarrollado este proyecto.
