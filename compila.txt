@@ -40,3 +40,29 @@ En otra terminal:
     npm start
 
 El frontend de la aplicación estará disponible en http://localhost:4200.
+
+---
+
+## Credenciales de ComparteTuTiempo
+
+Las credenciales de los usuarios base de ComparteTuTiempo son las siguientes:
+
+| usuario           | contraseña  |
+| - | - |
+| **Administrador** |
+| admin1            | Sys4dm1n*!  |
+| admin2            | Sys4dm1n*!  |
+| admin3            | Sys4dm1n*!  |
+| admin4            | Sys4dm1n*!  |
+| **Miembro**       |
+| member1           | m13mbr0CTT* |
+| member2           | m13mbr0CTT* |
+| member3           | m13mbr0CTT* |
+| member4           | m13mbr0CTT* |
+| member5           | m13mbr0CTT* |
+| member6           | m13mbr0CTT* |
+| member7           | m13mbr0CTT* |
+| member8           | m13mbr0CTT* |
+| member9           | m13mbr0CTT* |
+| member10          | m13mbr0CTT* |
+| maryycarrera      | m13mbr0CTT* |
