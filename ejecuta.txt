@@ -1,0 +1,63 @@
+## Utilizar la aplicación ComparteTuTiempo en producción
+
+Estas instrucciones están copiadas y adaptadas del archivo README del código fuente. Se recomienda consultar dicho archivo para visualizar mejor el contenido. No obstante, se pueden seguir los pasos perfectamente leyendo el presente documento .txt.
+
+Se puede levantar toda la aplicación usando las imágenes públicas de Docker Hub y el archivo `docker-compose.prod.yml`.
+
+### Requisitos previos
+
+Antes de comenzar, asegúrate de tener instalado en tu sistema:
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+> [!NOTE]
+> Si instalas Docker Desktop, Docker Compose ya vendrá instalado por defecto. Asegúrate de que la _engine_ esté ejecutándose antes de continuar.
+
+Una vez instalado Docker, puedes seguir estos pasos:
+1. Renombra el archivo `docker-compose.prod.yml` a `docker-compose.yml` (opcional, para facilitar el uso de comandos estándar).
+2. Abre una terminal en la ruta en la que se encuentre el archivo anterior.
+3. Ejecuta el siguiente comando:
+    docker compose up -d
+   O, si prefieres ver los _logs_:
+    docker compose up
+
+Esto descargará automáticamente las imágenes necesarias:
+- Backend: `marycarrera/comparte-tu-tiempo-backend:latest`
+- Frontend: `marycarrera/comparte-tu-tiempo-frontend:latest`
+- Base de datos: `mariadb:11.7.2`
+
+La aplicación estará disponible en:
+- Backend: http://localhost:8080
+- Frontend: http://localhost
+
+Para detener el contenedor de la aplicación:
+docker compose down
+
+Si prefieres detener el contenedor eliminando también los volúmenes:
+docker compose down -v
+
+---
+
+## Credenciales de ComparteTuTiempo
+
+Las credenciales de los usuarios base de ComparteTuTiempo son las siguientes:
+
+| usuario           | contraseña  |
+| - | - |
+| **Administrador** |
+| admin1            | Sys4dm1n*!  |
+| admin2            | Sys4dm1n*!  |
+| admin3            | Sys4dm1n*!  |
+| admin4            | Sys4dm1n*!  |
+| **Miembro**       |
+| member1           | m13mbr0CTT* |
+| member2           | m13mbr0CTT* |
+| member3           | m13mbr0CTT* |
+| member4           | m13mbr0CTT* |
+| member5           | m13mbr0CTT* |
+| member6           | m13mbr0CTT* |
+| member7           | m13mbr0CTT* |
+| member8           | m13mbr0CTT* |
+| member9           | m13mbr0CTT* |
+| member10          | m13mbr0CTT* |
+| maryycarrera      | m13mbr0CTT* |
