@@ -1,0 +1,42 @@
+## Descargar y ejecutar el proyecto para desarrollo
+
+Estas instrucciones están copiadas y adaptadas del archivo README del código fuente. Se recomienda consultar dicho archivo para visualizar mejor el contenido. No obstante, se pueden seguir los pasos perfectamente leyendo el presente documento .txt.
+
+> [!WARNING]
+> Se necesita tener instalados Java, Node.js y MariaDB en las versiones indicadas a continuación. También se pueden utilizar versiones superiores de estas tecnologías, pero es recomendable usar las mismas con las que se ha desarrollado este proyecto.
+> Java 21.0.8
+> Node.js 22.18.0
+> MariaDB 11.7.2
+
+### Base de Datos (MariaDB)
+
+Para configurar la base de datos **MariaDB/MySQL**:
+- Abre una terminal y accede a MariaDB como root:
+    mysql -u root -p
+- Crea la base de datos:
+    CREATE DATABASE compartetutiempo;
+- Crea el usuario y asigna permisos:
+    CREATE USER 'compartetutiempo'@'localhost' IDENTIFIED BY 'compartetutiempo';
+    GRANT ALL PRIVILEGES ON compartetutiempo.* TO 'compartetutiempo'@'localhost';
+    FLUSH PRIVILEGES;
+    EXIT;
+- Ajusta los valores en `src/main/resources/application.properties` si usas otros datos.
+
+### Backend (Spring Boot)
+
+Para instalar las dependencias y ejecutar el backend, en la misma o en otra terminal escribe:
+.\mvnw spring-boot:run
+
+El backend estará disponible en http://localhost:8080.
+
+### Frontend (Angular)
+
+En otra terminal:
+
+1. **Instala las dependencias:**
+    cd frontend
+    npm install
+2. **Ejecuta la aplicación:**
+    npm start
+
+El frontend de la aplicación estará disponible en http://localhost:4200.
