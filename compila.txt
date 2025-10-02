@@ -43,6 +43,41 @@ El frontend de la aplicación estará disponible en http://localhost:4200.
 
 ---
 
+## Usar Docker para desarrollo
+
+Antes de comenzar, asegúrate de tener instalado en tu sistema:
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+> [!NOTE]
+> Si instalas Docker Desktop, Docker Compose ya vendrá instalado por defecto. Asegúrate de que la _engine_ esté ejecutándose antes de continuar.
+
+Una vez instalado Docker, puedes seguir estos pasos:
+1. Asegúrate de tener el archivo `docker-compose.yml` en la raíz del proyecto.
+2. Abre una terminal en la ruta donde está el archivo `docker-compose.yml`.
+3. Ejecuta el siguiente comando:
+   docker compose up -d
+   
+   O, si prefieres ver los logs:
+   docker compose up
+
+Esto construirá y levantará los servicios usando el código fuente local:
+- Backend: se construye desde el Dockerfile del proyecto.
+- Frontend: se construye desde el Dockerfile en la carpeta `frontend`.
+- Base de datos: usa la imagen `mariadb:11.7.2`.
+
+La aplicación estará disponible en:
+- Backend: http://localhost:8080
+- Frontend: http://localhost
+
+Para detener los contenedores:
+docker compose down
+
+Si prefieres detener y eliminar también los volúmenes:
+docker compose down -v
+
+---
+
 ## Credenciales de ComparteTuTiempo
 
 Las credenciales de los usuarios base de ComparteTuTiempo son las siguientes:
